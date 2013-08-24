@@ -10,9 +10,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-import javax.swing.JScrollPane;
+import javax.swing.JPanel;
 
-public class TilesetPanel extends JScrollPane implements MouseListener, MouseMotionListener {
+public class TilesetPanel extends JPanel implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	
 	public static final int PANEL_WIDTH = 448;
@@ -26,6 +26,8 @@ public class TilesetPanel extends JScrollPane implements MouseListener, MouseMot
 	private int start;
 	private ArrayList<Integer> selectedElements = new ArrayList<Integer>();
 
+	public boolean active = true;
+	
 	static {
 		instance = new TilesetPanel();
 	}
@@ -98,6 +100,9 @@ public class TilesetPanel extends JScrollPane implements MouseListener, MouseMot
 		selectedElements.clear();
 		selectedElements.add(last);
 		start = last;
+		active = true;
+		SpritesPanel.getInstance().active = false;
+		repaint();
 	}
 
 	public void mouseDragged(MouseEvent e) {

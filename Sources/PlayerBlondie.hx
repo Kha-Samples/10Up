@@ -5,4 +5,18 @@ class PlayerBlondie extends Player {
 		super(x, y, "jumpman4");
 		Player.setPlayer(3, this);
 	}
+	
+	/**
+	  Tanzen
+	**/
+	override public function useSpecialAbilityA(gameTime : Float) : Void {
+		
+	}
+	
+	/**
+	  Reparieren
+	**/
+	override public function useSpecialAbilityB(gameTime : Float) : Void {
+		
+	}
 }

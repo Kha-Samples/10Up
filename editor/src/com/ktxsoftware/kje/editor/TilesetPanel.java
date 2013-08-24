@@ -36,7 +36,7 @@ public class TilesetPanel extends JScrollPane implements MouseListener, MouseMot
 
 	private TilesetPanel() {
 		tileset = new Tileset(
-				"../game/data/sml_tiles.png",
+				"../Assets/Graphics/sml_tiles.png",
 				Level.TILE_WIDTH, Level.TILE_HEIGHT);
 		setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 		addMouseMotionListener(this);

@@ -66,6 +66,13 @@ class Jumpman extends Sprite {
 		return jumpmans[index];
 	}
 	
+	public static function getJumpmanIndex(): Int {
+		for (i in 0...4) {
+			if (jumpmans[i] == currentPlayer) return i;
+		}
+		return -1;
+	}
+	
 	public static function setJumpman(index: Int, jumpman: Jumpman): Void {
 		jumpmans[index] = jumpman;
 	}

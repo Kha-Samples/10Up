@@ -19,6 +19,7 @@ import kha.Tilemap;
 
 enum Mode {
 	Game;
+	Pause;
 	Highscore;
 	EnterHighscore;
 }
@@ -165,7 +166,7 @@ class TenUp extends Game {
 	}
 	
 	public override function update() {
-		super.update();
+		if (mode != Pause) super.update();
 		//if (Jumpman.getInstance() == null) return;
 		//Scene.the.camx = Std.int(Jumpman.getInstance().x) + Std.int(Jumpman.getInstance().width / 2);
 	}
@@ -193,13 +194,46 @@ class TenUp extends Game {
 			painter.drawString("Enter your name", width / 2 - 100, 200);
 			painter.drawString(highscoreName, width / 2 - 50, 250);
 			//break;
-		case Game:
+		case Game, Pause:
 			super.render(painter);
 			painter.translate(0, 0);
-			painter.setColor(Color.fromBytes(0, 0, 0));
+			//painter.setColor(Color.fromBytes(0, 0, 0));
 			//painter.drawString("Score: " + Std.string(Jumpman.getInstance().getScore()), 20, 25);
 			//painter.drawString("Round: " + Std.string(Jumpman.getInstance().getRound()), width - 100, 25);
-			//break;
+			
+			if (Jumpman.getJumpmanIndex() == 0) {
+				painter.setColor(Color.fromBytes(255, 255, 255));
+				painter.fillRect(15, 455, 50, 50);
+			}
+			painter.setColor(Color.fromBytes(255, 0, 0));
+			painter.fillRect(20, 460, 40, 40);
+			
+			if (Jumpman.getJumpmanIndex() == 1) {
+				painter.setColor(Color.fromBytes(255, 255, 255));
+				painter.fillRect(75, 455, 50, 50);
+			}
+			painter.setColor(Color.fromBytes(0, 255, 0));
+			painter.fillRect(80, 460, 40, 40);
+			
+			if (Jumpman.getJumpmanIndex() == 2) {
+				painter.setColor(Color.fromBytes(255, 255, 255));
+				painter.fillRect(135, 455, 50, 50);
+			}
+			painter.setColor(Color.fromBytes(0, 0, 255));
+			painter.fillRect(140, 460, 40, 40);
+			
+			if (Jumpman.getJumpmanIndex() == 3) {
+				painter.setColor(Color.fromBytes(255, 255, 255));
+				painter.fillRect(195, 455, 50, 50);
+			}
+			painter.setColor(Color.fromBytes(255, 255, 0));
+			painter.fillRect(200, 460, 40, 40);
+			
+			if (mode == Pause) {
+				painter.setColor(Color.fromBytes(0, 0, 0));
+				painter.setFont(font);
+				painter.drawString("Pause", width / 2 - font.stringWidth("Pause") / 2, height / 2 - font.getHeight() / 2);
+			}
 		}
 	}
 
@@ -214,6 +248,14 @@ class TenUp extends Game {
 			case RIGHT:
 				Jumpman.current().right = true;
 			default:
+			}
+		case Pause:
+			switch (button) {
+				case LEFT:
+					prevPlayer();
+				case RIGHT:
+					nextPlayer();
+				default:
 			}
 		default:
 		}
@@ -230,14 +272,36 @@ class TenUp extends Game {
 			case RIGHT:
 				Jumpman.current().right = false;
 			default:
-			}	
+			}
 		default:
 		}
 	}
 	
+	private function nextPlayer(): Void {
+		var index = Jumpman.getJumpmanIndex() + 1;
+		if (index > 3) index = 0;
+		Jumpman.getJumpman(index).setCurrent();
+	}
+	
+	private function prevPlayer(): Void {
+		var index = Jumpman.getJumpmanIndex() - 1;
+		if (index < 0) index = 3;
+		Jumpman.getJumpman(index).setCurrent();
+	}
+	
 	override public function keyDown(key : Key, char : String) : Void {
-		if (key == null) {
-			if (mode == Mode.EnterHighscore) {
+		if (key == Key.CHAR) {
+			if (mode == Mode.Game) {
+				if (char == " ") {
+					mode = Pause;
+				}
+			}
+			else if (mode == Mode.Pause) {
+				if (char == " ") {
+					mode = Game;
+				}
+			}
+			else if (mode == Mode.EnterHighscore) {
 				if (highscoreName.length < 20) highscoreName += shiftPressed ? char.toUpperCase() : char.toLowerCase();
 			}
 		}

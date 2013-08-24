@@ -371,16 +371,20 @@ class TenUp extends Game {
 	}
 	
 	public var crosshair(default, null) : Crosshair;
-	var mouseX : Int;
-	var mouseY : Int;
+	
 	override public function mouseMove(x:Int, y:Int) : Void {
-		var vx = mouseX - x;
-		var vy = mouseY - y;
-		//var vl = Math.sqrt( vx * vx + vy * vy );
-		
-		crosshair.changeAngle( Math.PI * vy / height );
-		
-		mouseX = x;
-		mouseY = y;
+		crosshair.setAngle( Scene.the.camx + x, Scene.the.camy + y );
+	}
+	
+	override public function mouseDown(x:Int, y:Int) : Void {
+		if (mode == Game) {
+			Player.current().prepareSpecialAbilityA( currentGameTime );
+		}
+	}
+	
+	override public function mouseUp(x:Int, y:Int) : Void {
+		if (mode == Game) {
+			Player.current().useSpecialAbilityA( currentGameTime );
+		}
 	}
 }

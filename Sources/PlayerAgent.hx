@@ -9,7 +9,12 @@ class PlayerAgent extends Player {
 		Player.setPlayer(0, this);
 	}
 	
-	var lastFired : Float;
+	var lastFired : Float = 0;
+	
+	override public function prepareSpecialAbilityA(gameTime:Float) : Void {
+		TenUp.getInstance().crosshair.visible = true;
+	}
+	
 	/**
 	  Pistole
 	**/
@@ -19,7 +24,7 @@ class PlayerAgent extends Player {
 			var vy = TenUp.getInstance().crosshair.y;
 			
 			var projectile = new PistolProjectile( null, 5, 5, this.z);
-			projectile.x = this.x + (this.lookRight ? this.width + 0.5 * projectile.width : -0.5 * projectile.width);
+			projectile.x = this.x + (this.lookRight ? 0.5 * this.width + 0.5 * projectile.width : -0.5 * projectile.width);
 			projectile.y = this.y + 10;
 			projectile.speedx = 10 * vx;
 			projectile.speedy = 10 * vy;
@@ -27,6 +32,7 @@ class PlayerAgent extends Player {
 			Scene.the.addProjectile( projectile );
 			lastFired = gameTime;
 		}
+		TenUp.getInstance().crosshair.visible = false;
 	}
 	
 	/**

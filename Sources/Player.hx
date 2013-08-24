@@ -7,6 +7,7 @@ import kha.Music;
 import kha.Rectangle;
 import kha.Sound;
 import kha.Sprite;
+import projectiles.PistolProjectile;
 
 class Player extends TimeTravelSprite {
 	public var left : Bool;
@@ -213,5 +214,11 @@ class Player extends TimeTravelSprite {
 	
 	public function useSpecialAbilityB(gameTime : Float) : Void {
 		
+	}
+	
+	override public function hit(sprite:Sprite):Void {
+		if (Std.is( sprite, PistolProjectile )) {
+			sleep(); // TODO: Die!
+		}
 	}
 }

@@ -1,8 +1,8 @@
 package;
 
-class Jumpman1 extends Jumpman {
+class PlayerAgent extends Player {
 	public function new(x: Float, y: Float) {
 		super(x, y, "jumpman");
-		Jumpman.setJumpman(0, this);
+		Player.setPlayer(0, this);
 	}
 }

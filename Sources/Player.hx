@@ -8,7 +8,7 @@ import kha.Rectangle;
 import kha.Sound;
 import kha.Sprite;
 
-class Jumpman extends Sprite {
+class Player extends Sprite {
 	public var left : Bool;
 	public var right : Bool;
 	public var up : Bool;
@@ -28,8 +28,8 @@ class Jumpman extends Sprite {
 	var diesound : Sound;
 	var score : Int;
 	var round : Int;
-	private static var currentPlayer = null;
-	private static var jumpmans: Array<Jumpman>;
+	private static var currentPlayer: Player = null;
+	private static var jumpmans: Array<Player>;
 	
 	public function new(x: Float, y: Float, image: String) {
 		super(Loader.the.getImage(image), 16 * 4, 16 * 4, 0);
@@ -59,29 +59,29 @@ class Jumpman extends Sprite {
 	
 	
 	public static function init(): Void {
-		jumpmans = new Array<Jumpman>();
+		jumpmans = new Array<Player>();
 	}
 	
-	public static function getJumpman(index: Int): Jumpman {
+	public static function getPlayer(index: Int): Player {
 		return jumpmans[index];
 	}
 	
-	public static function getJumpmanIndex(): Int {
+	public static function getPlayerIndex(): Int {
 		for (i in 0...4) {
 			if (jumpmans[i] == currentPlayer) return i;
 		}
 		return -1;
 	}
 	
-	public static function setJumpman(index: Int, jumpman: Jumpman): Void {
+	public static function setPlayer(index: Int, jumpman: Player): Void {
 		jumpmans[index] = jumpman;
 	}
 	
-	public static function current() {
+	public static function current(): Player {
 		return currentPlayer;
 	}
 	
-	public function setCurrent() {
+	public function setCurrent(): Void {
 		currentPlayer = this;
 	}
 	

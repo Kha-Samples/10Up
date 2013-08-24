@@ -1,129 +1,205 @@
 {
-	"format": 1,
-	"game":
-	{
-		"name": "TenUp",
-		"width": 600,
-		"height": 520
-	},
-	"assets":
-	[
-		{
-			"id": "9c8c0db0-d7cc-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "blockcoin.png",
-			"name": "blockcoin"
-		},
-		{
-			"id": "a7a42c00-d7cc-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "bonusblock.png",
-			"name": "bonusblock"
-		},
-		{
-			"id": "12116430-d7ce-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "coin.png",
-			"name": "coin"
-		},
-		{
-			"id": "2348bd70-d7ce-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "fly.png",
-			"name": "fly"
-		},
-		{
-			"id": "2348bd71-d7ce-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "gumba.png",
-			"name": "gumba"
-		},
-		{
-			"id": "2348bd72-d7ce-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "jumpman.png",
-			"name": "jumpman"
-		},
-		{
-			"id": "2348bd73-d7ce-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "koopa.png",
-			"name": "koopa"
-		},
-		{
-			"id": "2348bd74-d7ce-11e1-9b23-0800200c9a66",
-			"type": "image",
-			"file": "sml_tiles.png",
-			"name": "sml_tiles"
-		},
-		{
-			"id": "2348bd75-d7ce-11e1-9b23-0800200c9a66",
-			"type": "sound",
-			"file": "coin",
-			"name": "coin"
-		},
-		{
-			"id": "2348bd76-d7ce-11e1-9b23-0800200c9a66",
-			"type": "sound",
-			"file": "die",
-			"name": "die"
-		},
-		{
-			"id": "2348bd77-d7ce-11e1-9b23-0800200c9a66",
-			"type": "sound",
-			"file": "jump",
-			"name": "jump"
-		},
-		{
-			"id": "2348bd78-d7ce-11e1-9b23-0800200c9a66",
-			"type": "sound",
-			"file": "stomp",
-			"name": "stomp"
-		},
-		{
-			"id": "2348bd79-d7ce-11e1-9b23-0800200c9a66",
-			"type": "music",
-			"file": "level1",
-			"name": "level1"
-		},
-		{
-			"id": "5c950390-d7ce-11e1-9b23-0800200c9a66",
-			"type": "blob",
-			"file": "level.map",
-			"name": "level.map"
-		},
-		{
-			"id": "15b1ea20-4032-11e2-a25f-0800200c9a66",
-			"type": "blob",
-			"file": "Arial12.kravur",
-			"name": "Arial12.kravur"
-		}
-	],
-	"rooms":
-	[
-		{
-			"id" : "657f6c70-d7ce-11e1-9b23-0800200c9a66",
-			"name": "level1",
-			"parent": null,
-			"neighbours": [],
-			"assets":
-			[
-				"9c8c0db0-d7cc-11e1-9b23-0800200c9a66",
-				"a7a42c00-d7cc-11e1-9b23-0800200c9a66",
-				"12116430-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd70-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd71-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd72-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd73-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd74-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd75-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd76-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd77-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd78-d7ce-11e1-9b23-0800200c9a66",
-				"2348bd79-d7ce-11e1-9b23-0800200c9a66",
-				"5c950390-d7ce-11e1-9b23-0800200c9a66",
-				"15b1ea20-4032-11e2-a25f-0800200c9a66"
-			]
-		}
-	]
+  "format": 1,
+  "game": {
+    "name": "TenUp",
+    "width": 600,
+    "height": 520
+  },
+  "assets": [
+    {
+      "id": "9c8c0db0-d7cc-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "blockcoin.png",
+      "name": "blockcoin",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "a7a42c00-d7cc-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "bonusblock.png",
+      "name": "bonusblock",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "12116430-d7ce-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "coin.png",
+      "name": "coin",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd70-d7ce-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "fly.png",
+      "name": "fly",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd71-d7ce-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "gumba.png",
+      "name": "gumba",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd72-d7ce-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "jumpman.png",
+      "name": "jumpman",
+      "scale": 1.0,
+      "circle": false,
+      "background":
+      {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
+    },
+    {
+      "id": "2348bd73-d7ce-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "koopa.png",
+      "name": "koopa",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd74-d7ce-11e1-9b23-0800200c9a66",
+      "type": "image",
+      "file": "sml_tiles.png",
+      "name": "sml_tiles",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd75-d7ce-11e1-9b23-0800200c9a66",
+      "type": "sound",
+      "file": "coin",
+      "name": "coin",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd76-d7ce-11e1-9b23-0800200c9a66",
+      "type": "sound",
+      "file": "die",
+      "name": "die",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd77-d7ce-11e1-9b23-0800200c9a66",
+      "type": "sound",
+      "file": "jump",
+      "name": "jump",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd78-d7ce-11e1-9b23-0800200c9a66",
+      "type": "sound",
+      "file": "stomp",
+      "name": "stomp",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "2348bd79-d7ce-11e1-9b23-0800200c9a66",
+      "type": "music",
+      "file": "level1",
+      "name": "level1",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "5c950390-d7ce-11e1-9b23-0800200c9a66",
+      "type": "blob",
+      "file": "level.map",
+      "name": "level.map",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "15b1ea20-4032-11e2-a25f-0800200c9a66",
+      "type": "blob",
+      "file": "Arial12.kravur",
+      "name": "Arial12.kravur",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "04bf9738-4fe2-4966-8088-70ff042801ed",
+      "type": "image",
+      "file": "jumpman2.png",
+      "name": "jumpman2",
+      "scale": 1.0,
+      "circle": false,
+      "background":
+      {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
+    },
+    {
+      "id": "14c3245b-82c0-4693-a131-e6f255c872de",
+      "type": "image",
+      "file": "jumpman3.png",
+      "name": "jumpman3",
+      "scale": 1.0,
+      "circle": false,
+      "background":
+      {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
+    },
+    {
+      "id": "f00b98f6-70a7-4217-a6d6-a54965b634c9",
+      "type": "image",
+      "file": "jumpman4.png",
+      "name": "jumpman4",
+      "scale": 1.0,
+      "circle": false,
+      "background":
+      {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
+    }
+  ],
+  "rooms": [
+    {
+      "id": "657f6c70-d7ce-11e1-9b23-0800200c9a66",
+      "name": "level1",
+      "neighbours": [],
+      "assets": [
+        "9c8c0db0-d7cc-11e1-9b23-0800200c9a66",
+        "a7a42c00-d7cc-11e1-9b23-0800200c9a66",
+        "12116430-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd70-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd71-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd72-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd73-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd74-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd75-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd76-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd77-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd78-d7ce-11e1-9b23-0800200c9a66",
+        "2348bd79-d7ce-11e1-9b23-0800200c9a66",
+        "5c950390-d7ce-11e1-9b23-0800200c9a66",
+        "15b1ea20-4032-11e2-a25f-0800200c9a66",
+        "04bf9738-4fe2-4966-8088-70ff042801ed",
+        "14c3245b-82c0-4693-a131-e6f255c872de",
+        "f00b98f6-70a7-4217-a6d6-a54965b634c9"
+      ]
+    }
+  ]
 }

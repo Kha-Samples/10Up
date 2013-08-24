@@ -80,9 +80,9 @@ class TenUp extends Game {
 	}
 	
 	public function startGame() {
-		if (Jumpman.getInstance() == null) new Jumpman(music);
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
+		Jumpman.init();
 		var tilemap : Tilemap = new Tilemap("sml_tiles", 32, 32, map, tileColissions);
 		Scene.the.setColissionMap(tilemap);
 		Scene.the.addBackgroundTilemap(tilemap, 1);
@@ -93,13 +93,16 @@ class TenUp extends Game {
 				switch (originalmap[x][y]) {
 				case 15:
 					map[x][y] = 0;
-					Scene.the.addEnemy(new Gumba(x * TILE_WIDTH, y * TILE_HEIGHT));
+					Scene.the.addHero(new Jumpman1(x * TILE_WIDTH, y * TILE_HEIGHT));
 				case 16:
 					map[x][y] = 0;
-					Scene.the.addEnemy(new Koopa(x * TILE_WIDTH, y * TILE_HEIGHT - 16));
+					Scene.the.addHero(new Jumpman2(x * TILE_WIDTH, y * TILE_HEIGHT));
 				case 17:
 					map[x][y] = 0;
-					Scene.the.addEnemy(new Fly(x * TILE_WIDTH - 32, y * TILE_HEIGHT - 8));
+					Scene.the.addHero(new Jumpman3(x * TILE_WIDTH, y * TILE_HEIGHT));
+				case 18:
+					map[x][y] = 0;
+					Scene.the.addHero(new Jumpman4(x * TILE_WIDTH, y * TILE_HEIGHT));
 				case 46:
 					map[x][y] = 0;
 					Scene.the.addEnemy(new Coin(x * TILE_WIDTH, y * TILE_HEIGHT));
@@ -115,8 +118,8 @@ class TenUp extends Game {
 			}
 		}
 		music.play();
-		Jumpman.getInstance().reset();
-		Scene.the.addHero(Jumpman.getInstance());
+		Jumpman.getJumpman(0).setCurrent();
+		//Jumpman.getInstance().reset();
 		Configuration.setScreen(this);
 	}
 	
@@ -163,12 +166,12 @@ class TenUp extends Game {
 	
 	public override function update() {
 		super.update();
-		if (Jumpman.getInstance() == null) return;
-		Scene.the.camx = Std.int(Jumpman.getInstance().x) + Std.int(Jumpman.getInstance().width / 2);
+		//if (Jumpman.getInstance() == null) return;
+		//Scene.the.camx = Std.int(Jumpman.getInstance().x) + Std.int(Jumpman.getInstance().width / 2);
 	}
 	
 	public override function render(painter : Painter) {
-		if (Jumpman.getInstance() == null) return;
+		//if (Jumpman.getInstance() == null) return;
 		painter.setFont(font);
 		switch (mode) {
 		case Highscore:
@@ -194,8 +197,8 @@ class TenUp extends Game {
 			super.render(painter);
 			painter.translate(0, 0);
 			painter.setColor(Color.fromBytes(0, 0, 0));
-			painter.drawString("Score: " + Std.string(Jumpman.getInstance().getScore()), 20, 25);
-			painter.drawString("Round: " + Std.string(Jumpman.getInstance().getRound()), width - 100, 25);
+			//painter.drawString("Score: " + Std.string(Jumpman.getInstance().getScore()), 20, 25);
+			//painter.drawString("Round: " + Std.string(Jumpman.getInstance().getRound()), width - 100, 25);
 			//break;
 		}
 	}
@@ -205,11 +208,11 @@ class TenUp extends Game {
 		case Game:
 			switch (button) {
 			case UP, BUTTON_1, BUTTON_2:
-				Jumpman.getInstance().setUp();
+				Jumpman.current().setUp();
 			case LEFT:
-				Jumpman.getInstance().left = true;
+				Jumpman.current().left = true;
 			case RIGHT:
-				Jumpman.getInstance().right = true;
+				Jumpman.current().right = true;
 			default:
 			}
 		default:
@@ -221,11 +224,11 @@ class TenUp extends Game {
 		case Game:
 			switch (button) {
 			case UP, BUTTON_1, BUTTON_2:
-				Jumpman.getInstance().up = false;
+				Jumpman.current().up = false;
 			case LEFT:
-				Jumpman.getInstance().left = false;
+				Jumpman.current().left = false;
 			case RIGHT:
-				Jumpman.getInstance().right = false;
+				Jumpman.current().right = false;
 			default:
 			}	
 		default:
@@ -242,7 +245,7 @@ class TenUp extends Game {
 			if (highscoreName.length > 0) {
 				switch (key) {
 				case ENTER:
-					getHighscores().addScore(highscoreName, Jumpman.getInstance().getScore());
+					//getHighscores().addScore(highscoreName, Jumpman.getInstance().getScore());
 					mode = Mode.Highscore;
 				case BACKSPACE:
 					highscoreName = highscoreName.substr(0, highscoreName.length - 1);

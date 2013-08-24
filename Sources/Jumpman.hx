@@ -9,7 +9,6 @@ import kha.Sound;
 import kha.Sprite;
 
 class Jumpman extends Sprite {
-	static var instance : Jumpman;
 	public var left : Bool;
 	public var right : Bool;
 	public var up : Bool;
@@ -27,14 +26,15 @@ class Jumpman extends Sprite {
 	var stompsound : Sound;
 	var jumpsound : Sound;
 	var diesound : Sound;
-	var music : Music;
 	var score : Int;
 	var round : Int;
+	private static var currentPlayer = null;
+	private static var jumpmans: Array<Jumpman>;
 	
-	public function new(music : Music) {
-		super(Loader.the.getImage("jumpman"), 16 * 4, 16 * 4, 0);
-		instance = this;
-		x = y = 50;
+	public function new(x: Float, y: Float, image: String) {
+		super(Loader.the.getImage(image), 16 * 4, 16 * 4, 0);
+		this.x = x;
+		this.y = y;
 		standing = false;
 		walkLeft = new Animation([2, 3, 4, 3], 6);
 		walkRight = new Animation([7, 8, 9, 8], 6);
@@ -44,7 +44,6 @@ class Jumpman extends Sprite {
 		jumpRight = Animation.create(10);
 		setAnimation(jumpRight);
 		collider = new Rectangle(16, 32, 32, 32);
-		this.music = music;
 		score = 0;
 		round = 1;
 		up = false;
@@ -58,8 +57,25 @@ class Jumpman extends Sprite {
 		diesound = Loader.the.getSound("die");
 	}
 	
-	public static function getInstance() : Jumpman {
-		return instance;
+	
+	public static function init(): Void {
+		jumpmans = new Array<Jumpman>();
+	}
+	
+	public static function getJumpman(index: Int): Jumpman {
+		return jumpmans[index];
+	}
+	
+	public static function setJumpman(index: Int, jumpman: Jumpman): Void {
+		jumpmans[index] = jumpman;
+	}
+	
+	public static function current() {
+		return currentPlayer;
+	}
+	
+	public function setCurrent() {
+		currentPlayer = this;
 	}
 	
 	public function reset() {
@@ -137,7 +153,6 @@ class Jumpman extends Sprite {
 	}
 	
 	public function die() {
-		music.stop();
 		diesound.play();
 		setAnimation(Animation.create(0));
 		speedy = -8;

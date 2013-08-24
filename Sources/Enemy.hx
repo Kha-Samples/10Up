@@ -20,6 +20,6 @@ class Enemy extends Sprite {
 	}
 	
 	public override function hit(sprite: Sprite) {
-		Jumpman.getInstance().hitEnemy(this);
+		//Jumpman.getInstance().hitEnemy(this);
 	}
 }

@@ -13,7 +13,7 @@ class Exit extends Sprite {
 	
 	public override function hit(sprite : Sprite) {
 		Scene.the.removeEnemy(this);
-		Jumpman.getInstance().nextRound();
+		//Jumpman.getInstance().nextRound();
 		TenUp.getInstance().startGame();
 	}
 }

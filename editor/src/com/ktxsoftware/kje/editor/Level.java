@@ -10,6 +10,8 @@ import java.awt.event.MouseMotionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -24,6 +26,20 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 	private int levelWidth = 256;
 	private int levelHeight = 224 / 16;
 	private int[][] map;
+	
+	class PlacedSprite {
+		public int x;
+		public int y;
+		public Sprite sprite;
+		
+		public PlacedSprite(int x, int y, Sprite sprite) {
+			this.x = x;
+			this.y = y;
+			this.sprite = sprite;
+		}
+	}
+	
+	private List<PlacedSprite> sprites = new ArrayList<PlacedSprite>();
 
 	static {
 		instance = new Level();
@@ -58,6 +74,12 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 		g.setColor(Color.BLACK);
 		for (int x = rect.x / TILE_WIDTH * TILE_WIDTH; x < rect.x + rect.width; x += TILE_WIDTH) g.drawLine(x, rect.y, x, rect.y + rect.height);
 		for (int y = rect.y / TILE_HEIGHT * TILE_HEIGHT; y < rect.y + rect.height; y += TILE_HEIGHT) g.drawLine(rect.x, y, rect.x + rect.width, y);
+		
+		for (PlacedSprite sprite : sprites) {
+			g.setColor(Color.BLUE);
+			g.fillRect(sprite.x, sprite.y, sprite.sprite.width, sprite.sprite.height);
+			sprite.sprite.paint(g, sprite.x, sprite.y, false, true);
+		}
 	}
 
 	public void save(DataOutputStream stream) {
@@ -65,6 +87,12 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 			stream.writeInt(levelWidth);
 			stream.writeInt(levelHeight);
 			for (int x = 0; x < levelWidth; ++x) for (int y = 0; y < levelHeight; ++y) stream.writeInt(map[x][y]);
+			stream.writeInt(sprites.size());
+			for (PlacedSprite sprite : sprites) {
+				stream.writeInt(sprite.sprite.index);
+				stream.writeInt(sprite.x);
+				stream.writeInt(sprite.y);
+			}
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -85,6 +113,13 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 			levelHeight = stream.readInt();
 			map = new int[levelWidth][levelHeight];
 			for (int x = 0; x < levelWidth; ++x) for (int y = 0; y < levelHeight; ++y) map[x][y] = stream.readInt();
+			int count = stream.readInt();
+			for (int i = 0; i < count; ++i) {
+				int index = stream.readInt();
+				int x = stream.readInt();
+				int y = stream.readInt();
+				sprites.add(new PlacedSprite(x, y, SpritesPanel.getInstance().getSprite(index)));
+			}
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -102,16 +137,21 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		int x = e.getX() / TILE_WIDTH;
-		int y = e.getY() / TILE_HEIGHT;
-		int smallestX = Integer.MAX_VALUE;
-		int smallestY = Integer.MAX_VALUE;
-		int widthCount = TilesetPanel.PANEL_WIDTH / Level.TILE_WIDTH;
-		for (int index : TilesetPanel.getInstance().getSelectedElements()) {
-			if (smallestX > index % widthCount) smallestX = index % widthCount;
-			if (smallestY > index / widthCount) smallestY = index / widthCount;
+		if (TilesetPanel.getInstance().active) {
+			int x = e.getX() / TILE_WIDTH;
+			int y = e.getY() / TILE_HEIGHT;
+			int smallestX = Integer.MAX_VALUE;
+			int smallestY = Integer.MAX_VALUE;
+			int widthCount = TilesetPanel.PANEL_WIDTH / Level.TILE_WIDTH;
+			for (int index : TilesetPanel.getInstance().getSelectedElements()) {
+				if (smallestX > index % widthCount) smallestX = index % widthCount;
+				if (smallestY > index / widthCount) smallestY = index / widthCount;
+			}
+			for (int index : TilesetPanel.getInstance().getSelectedElements()) map[x + index % widthCount - smallestX][y + index / widthCount - smallestY] = index;
 		}
-		for (int index : TilesetPanel.getInstance().getSelectedElements()) map[x + index % widthCount - smallestX][y + index / widthCount - smallestY] = index;
+		else {
+			sprites.add(new PlacedSprite(e.getX(), e.getY(), SpritesPanel.getInstance().last));
+		}
 		repaint();
 	}
 	

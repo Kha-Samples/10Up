@@ -4,6 +4,6 @@ import kha.Starter;
 
 class Main {
 	public static function main() {
-		new Starter().start(new 10Seconds());
+		new Starter().start(new TenSeconds());
 	}
 }

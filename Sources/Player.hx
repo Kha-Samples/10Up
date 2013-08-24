@@ -8,7 +8,7 @@ import kha.Rectangle;
 import kha.Sound;
 import kha.Sprite;
 
-class Player extends Sprite {
+class Player extends TimeTravelSprite {
 	public var left : Bool;
 	public var right : Bool;
 	public var up : Bool;
@@ -189,5 +189,21 @@ class Player extends Sprite {
 			score += 100;
 		}
 		else die();
+	}
+	
+	public function prepareSpecialAbilityA(gameTime : Float) : Void {
+		
+	}
+	
+	public function useSpecialAbilityA(gameTime : Float) : Void {
+		
+	}
+	
+	public function prepareSpecialAbilityB(gameTime : Float) : Void {
+		
+	}
+	
+	public function useSpecialAbilityB(gameTime : Float) : Void {
+		
 	}
 }

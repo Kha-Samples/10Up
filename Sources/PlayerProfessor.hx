@@ -11,6 +11,9 @@ class PlayerProfessor extends Player {
 	}
 	
 	var canFireTimeWeapon = true;
+	/**
+	  Time Cannon
+	**/
 	override public function useSpecialAbilityA( gameTime : Float ) : Void {
 		if (canFireTimeWeapon) {
 			canFireTimeWeapon = false;

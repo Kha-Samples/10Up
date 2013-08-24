@@ -5,4 +5,18 @@ class PlayerAgent extends Player {
 		super(x, y, "jumpman");
 		Player.setPlayer(0, this);
 	}
+	
+	/**
+	  Pistole
+	**/
+	override public function useSpecialAbilityA(gameTime : Float) : Void {
+		
+	}
+	
+	/**
+	  Haken
+	**/
+	override public function useSpecialAbilityB(gameTime : Float) : Void {
+		
+	}
 }

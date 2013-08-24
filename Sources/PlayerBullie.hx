@@ -5,4 +5,18 @@ class PlayerBullie extends Player {
 		super(x, y, "jumpman3");
 		Player.setPlayer(2, this);
 	}
+	
+	/**
+	  Hauen
+	**/
+	override public function useSpecialAbilityA(gameTime : Float) : Void {
+		
+	}
+	
+	/**
+	  Heben
+	**/
+	override public function useSpecialAbilityB(gameTime : Float) : Void {
+		
+	}
 }

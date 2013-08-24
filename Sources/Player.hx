@@ -28,6 +28,7 @@ class Player extends Sprite {
 	var diesound : Sound;
 	var score : Int;
 	var round : Int;
+	private var time: Float;
 	private static var currentPlayer: Player = null;
 	private static var jumpmans: Array<Player>;
 	
@@ -51,12 +52,12 @@ class Player extends Sprite {
 		left = false;
 		lookRight = true;
 		killed = false;
+		time = 0;
 		jumpcount = 0;
 		stompsound = Loader.the.getSound("stomp");
 		jumpsound = Loader.the.getSound("jump");
 		diesound = Loader.the.getSound("die");
 	}
-	
 	
 	public static function init(): Void {
 		jumpmans = new Array<Player>();
@@ -83,6 +84,14 @@ class Player extends Sprite {
 	
 	public function setCurrent(): Void {
 		currentPlayer = this;
+	}
+	
+	public function timeLeft(): Float {
+		return 10 - time;
+	}
+	
+	public function elapse(time: Float): Void {
+		this.time += time;
 	}
 	
 	public function reset() {

@@ -167,6 +167,9 @@ class TenUp extends Game {
 	
 	public override function update() {
 		if (mode != Pause) super.update();
+		if (mode == Game) {
+			Player.current().elapse(1 / 60);
+		}
 		//if (Player.getInstance() == null) return;
 		//Scene.the.camx = Std.int(Player.getInstance().x) + Std.int(Player.getInstance().width / 2);
 	}
@@ -201,33 +204,10 @@ class TenUp extends Game {
 			//painter.drawString("Score: " + Std.string(Player.getInstance().getScore()), 20, 25);
 			//painter.drawString("Round: " + Std.string(Player.getInstance().getRound()), width - 100, 25);
 			
-			if (Player.getPlayerIndex() == 0) {
-				painter.setColor(Color.fromBytes(255, 255, 255));
-				painter.fillRect(15, 455, 50, 50);
-			}
-			painter.setColor(Color.fromBytes(255, 0, 0));
-			painter.fillRect(20, 460, 40, 40);
-			
-			if (Player.getPlayerIndex() == 1) {
-				painter.setColor(Color.fromBytes(255, 255, 255));
-				painter.fillRect(75, 455, 50, 50);
-			}
-			painter.setColor(Color.fromBytes(0, 255, 0));
-			painter.fillRect(80, 460, 40, 40);
-			
-			if (Player.getPlayerIndex() == 2) {
-				painter.setColor(Color.fromBytes(255, 255, 255));
-				painter.fillRect(135, 455, 50, 50);
-			}
-			painter.setColor(Color.fromBytes(0, 0, 255));
-			painter.fillRect(140, 460, 40, 40);
-			
-			if (Player.getPlayerIndex() == 3) {
-				painter.setColor(Color.fromBytes(255, 255, 255));
-				painter.fillRect(195, 455, 50, 50);
-			}
-			painter.setColor(Color.fromBytes(255, 255, 0));
-			painter.fillRect(200, 460, 40, 40);
+			drawPlayerInfo(painter, 0, 20, 460, Color.fromBytes(255, 0, 0));
+			drawPlayerInfo(painter, 1, 80, 460, Color.fromBytes(0, 255, 0));
+			drawPlayerInfo(painter, 2, 140, 460, Color.fromBytes(0, 0, 255));
+			drawPlayerInfo(painter, 3, 200, 460, Color.fromBytes(255, 255, 0));
 			
 			if (mode == Pause) {
 				painter.setColor(Color.fromBytes(0, 0, 0));
@@ -235,6 +215,19 @@ class TenUp extends Game {
 				painter.drawString("Pause", width / 2 - font.stringWidth("Pause") / 2, height / 2 - font.getHeight() / 2);
 			}
 		}
+	}
+	
+	private function drawPlayerInfo(painter: Painter, index: Int, x: Float, y: Float, color: Color): Void {
+		if (Player.getPlayerIndex() == index) {
+			painter.setColor(Color.fromBytes(255, 255, 255));
+			painter.fillRect(x - 5, y - 5, 50, 50);
+		}
+		painter.setColor(color);
+		painter.fillRect(x, y, 40, 40);
+		painter.setColor(Color.fromBytes(50, 50, 50));
+		painter.fillRect(x, y + 30, 40, 10);
+		painter.setColor(Color.fromBytes(0, 255, 255));
+		painter.fillRect(x, y + 30, Player.getPlayer(index).timeLeft() * 4, 10);
 	}
 
 	override public function buttonDown(button : Button) : Void {

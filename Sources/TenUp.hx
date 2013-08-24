@@ -46,6 +46,7 @@ class TenUp extends Game {
 		shiftPressed = false;
 		highscoreName = "";
 		mode = Mode.Game;
+		crosshair = new Crosshair();
 	}
 	
 	public static function getInstance(): TenUp {
@@ -226,6 +227,8 @@ class TenUp extends Game {
 			drawPlayerInfo(painter, 2, 140, 460, Color.fromBytes(0, 0, 255));
 			drawPlayerInfo(painter, 3, 200, 460, Color.fromBytes(255, 255, 0));
 			
+			crosshair.render( painter );
+			
 			if (mode == Pause) {
 				painter.setColor(Color.fromBytes(0, 0, 0));
 				painter.setFont(font);
@@ -365,5 +368,19 @@ class TenUp extends Game {
 	
 	override public function keyUp(key : Key, char : String) : Void {
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
+	}
+	
+	public var crosshair(default, null) : Crosshair;
+	var mouseX : Int;
+	var mouseY : Int;
+	override public function mouseMove(x:Int, y:Int) : Void {
+		var vx = mouseX - x;
+		var vy = mouseY - y;
+		//var vl = Math.sqrt( vx * vx + vy * vy );
+		
+		crosshair.changeAngle( Math.PI * vy / height );
+		
+		mouseX = x;
+		mouseY = y;
 	}
 }

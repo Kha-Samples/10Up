@@ -1,4 +1,4 @@
-package ;
+package projectiles;
 
 import kha.Direction;
 import kha.Image;

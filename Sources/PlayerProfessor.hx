@@ -1,8 +1,10 @@
 package;
+
 import kha.Color;
 import kha.Loader;
 import kha.Painter;
 import kha.Scene;
+import projectiles.TimeProjectile;
 
 class PlayerProfessor extends Player {
 	public function new(x: Float, y: Float) {

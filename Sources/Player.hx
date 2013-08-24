@@ -193,6 +193,12 @@ class Player extends TimeTravelSprite {
 		else sleep();
 	}
 	
+	override public function timeLeap() : Void {
+		super.timeLeap();
+		time = 0;
+		killed = false;
+	}
+	
 	public function prepareSpecialAbilityA(gameTime : Float) : Void {
 		
 	}

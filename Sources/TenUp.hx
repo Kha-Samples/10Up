@@ -334,6 +334,9 @@ class TenUp extends Game {
 			if (mode == Mode.Game) {
 				if (char == " ") {
 					mode = Pause;
+					Player.current().right = false;
+					Player.current().left = false;
+					Player.current().up = false;
 				}
 			}
 			else if (mode == Mode.Pause) {

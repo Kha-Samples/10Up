@@ -186,9 +186,21 @@ class TenUp extends Game {
 		if (mode != Pause) {
 			super.update();
 		}
-		//if (Player.getInstance() == null) return;
-		//Scene.the.camx = Std.int(Player.getInstance().x) + Std.int(Player.getInstance().width / 2);
-		
+		if (mode == Game && Player.current() != null) {
+			Scene.the.camx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
+		}
+		else if (mode == Pause) {
+			var aimx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
+			var camspeed: Int = 5;
+			if (Scene.the.camx > aimx) {
+				Scene.the.camx -= camspeed;
+				if (Scene.the.camx < aimx) Scene.the.camx = aimx; 
+			}
+			else if (Scene.the.camx < aimx) {
+				Scene.the.camx += camspeed;
+				if (Scene.the.camx > aimx) Scene.the.camx = aimx; 
+			}
+		}
 		lastTime = currentTime;
 	}
 	

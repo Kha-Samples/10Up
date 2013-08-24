@@ -87,11 +87,13 @@ class Player extends Sprite {
 	}
 	
 	public function timeLeft(): Float {
-		return 10 - time;
+		return Math.max(10 - time, 0);
 	}
 	
 	public function elapse(time: Float): Void {
+		if (killed) return;
 		this.time += time;
+		if (this.time > 10) sleep();
 	}
 	
 	public function reset() {
@@ -122,10 +124,6 @@ class Player extends Sprite {
 		}
 		if (lastupcount > 0) --lastupcount;
 		if (!killed) {
-			if (y > 600) {
-				die();
-				return;
-			}
 			if (right) {
 				if (standing) setAnimation(walkRight);
 				speedx = 3.0 * Math.round(Math.pow(1.1, getRound()));
@@ -168,12 +166,11 @@ class Player extends Sprite {
 		else if (dir == Direction.DOWN) speedy = 0;
 	}
 	
-	public function die() {
+	public function sleep() {
 		diesound.play();
 		setAnimation(Animation.create(0));
-		speedy = -8;
+		speedy = 0;
 		speedx = 0;
-		collides = false;
 		killed = true;
 	}
 	
@@ -188,6 +185,6 @@ class Player extends Sprite {
 			standing = false;
 			score += 100;
 		}
-		else die();
+		else sleep();
 	}
 }

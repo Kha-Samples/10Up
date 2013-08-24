@@ -52,6 +52,10 @@ class TenUp extends Game {
 		return instance;
 	}
 	
+	public function pause(): Void {
+		if (nextPlayer()) mode = Pause;
+	}
+	
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
 		Loader.the.loadRoom("level1", initLevel);
@@ -291,16 +295,38 @@ class TenUp extends Game {
 		}
 	}
 	
-	private function nextPlayer(): Void {
-		var index = Player.getPlayerIndex() + 1;
-		if (index > 3) index = 0;
-		Player.getPlayer(index).setCurrent();
+	private function nextPlayer(): Bool {
+		var count: Int = 0;
+		var index = Player.getPlayerIndex();
+		while (true) {
+			++index;
+			if (index > 3) index = 0;
+			var player = Player.getPlayer(index);
+			++count;
+			if (!player.isSleeping()) {
+				player.setCurrent();
+				return true;
+			}
+			if (count > 4) return false;
+		}
+		return false;
 	}
 	
-	private function prevPlayer(): Void {
-		var index = Player.getPlayerIndex() - 1;
-		if (index < 0) index = 3;
-		Player.getPlayer(index).setCurrent();
+	private function prevPlayer(): Bool {
+		var count: Int = 0;
+		var index = Player.getPlayerIndex();
+		while (true) {
+			--index;
+			if (index < 0) index = 3;
+			var player = Player.getPlayer(index);
+			++count;
+			if (!player.isSleeping()) {
+				player.setCurrent();
+				return true;
+			}
+			if (count > 4) return false;
+		}
+		return false;
 	}
 	
 	override public function keyDown(key : Key, char : String) : Void {

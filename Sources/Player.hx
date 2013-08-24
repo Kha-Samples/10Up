@@ -172,6 +172,11 @@ class Player extends TimeTravelSprite {
 		speedy = 0;
 		speedx = 0;
 		killed = true;
+		TenUp.getInstance().pause();
+	}
+	
+	public function isSleeping(): Bool {
+		return killed;
 	}
 	
 	public function hitEnemy(enemy : Enemy) {

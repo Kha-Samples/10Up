@@ -12,6 +12,7 @@ import kha.LoadingScreen;
 import kha.Music;
 import kha.Painter;
 import kha.Scene;
+import kha.Scheduler;
 import kha.Score;
 import kha.Configuration;
 import kha.Tile;
@@ -34,10 +35,13 @@ class TenUp extends Game {
 	var shiftPressed : Bool;
 	private var font: Font;
 	
-	var mode : Mode;
+	public var currentGameTime(default, null) : Float;
+	var lastTime : Float;
+	
+	public var mode(default, null) : Mode;
 	
 	public function new() {
-		super("SML", false);
+		super("10Up", false);
 		instance = this;
 		shiftPressed = false;
 		highscoreName = "";
@@ -122,6 +126,8 @@ class TenUp extends Game {
 		Player.getPlayer(0).setCurrent();
 		//Player.getInstance().reset();
 		Configuration.setScreen(this);
+		currentGameTime = 0;
+		lastTime = Scheduler.time();
 	}
 	
 	public function showHighscore() {
@@ -166,12 +172,19 @@ class TenUp extends Game {
 	}
 	
 	public override function update() {
-		if (mode != Pause) super.update();
+		var currentTime = Scheduler.time();
 		if (mode == Game) {
-			Player.current().elapse(1 / 60);
+			var lastGameTime = currentGameTime;
+			currentGameTime += currentTime - lastTime;
+			Player.current().elapse(currentGameTime - lastGameTime);
+		}
+		if (mode != Pause) {
+			super.update();
 		}
 		//if (Player.getInstance() == null) return;
 		//Scene.the.camx = Std.int(Player.getInstance().x) + Std.int(Player.getInstance().width / 2);
+		
+		lastTime = currentTime;
 	}
 	
 	public override function render(painter : Painter) {
@@ -234,12 +247,16 @@ class TenUp extends Game {
 		switch (mode) {
 		case Game:
 			switch (button) {
-			case UP, BUTTON_1, BUTTON_2:
+			case UP:
 				Player.current().setUp();
 			case LEFT:
 				Player.current().left = true;
 			case RIGHT:
 				Player.current().right = true;
+			case BUTTON_1:
+				Player.current().prepareSpecialAbilityA(currentGameTime);
+			case BUTTON_2:
+				Player.current().prepareSpecialAbilityB(currentGameTime);
 			default:
 			}
 		case Pause:
@@ -258,12 +275,16 @@ class TenUp extends Game {
 		switch (mode) {
 		case Game:
 			switch (button) {
-			case UP, BUTTON_1, BUTTON_2:
+			case UP:
 				Player.current().up = false;
 			case LEFT:
 				Player.current().left = false;
 			case RIGHT:
 				Player.current().right = false;
+			case BUTTON_1:
+				Player.current().useSpecialAbilityA(currentGameTime);
+			case BUTTON_2:
+				Player.current().useSpecialAbilityB(currentGameTime);
 			default:
 			}
 		default:

@@ -4,6 +4,7 @@ import kha.Animation;
 import kha.Direction;
 import kha.Loader;
 import kha.Music;
+import kha.Painter;
 import kha.Rectangle;
 import kha.Sound;
 import kha.Sprite;
@@ -219,6 +220,61 @@ class Player extends TimeTravelSprite {
 	override public function hit(sprite:Sprite):Void {
 		if (Std.is( sprite, PistolProjectile )) {
 			sleep(); // TODO: Die!
+		}
+	}
+	
+	
+	// Crosshair:
+	var isCrosshairVisible : Bool = false;
+	var crosshairX : Float;
+	var crosshairY : Float;
+	
+	public function updateCrosshair( mouseX : Float, mouseY : Float ) {
+		if (Player.current() != null) {
+			var vx = mouseX - x;
+			var vy = mouseY - y + 10;
+			if (Player.current().lookRight) {
+				vx -= 0.5 * width;
+				if (vx < 0) {
+					vx = 0;
+				}
+			} else {
+				if ( vx > 0) {
+					vx = 0;
+				}
+			}
+			
+			var vl = Math.sqrt( vx * vx + vy * vy );
+			if (vl < 0.001) {
+				return;
+			}
+			crosshairX = vx / vl;
+			crosshairY = vy / vl;
+		}
+		
+		/*
+		if (angle > 0.5 * Math.PI) {
+			angle = 0.5 * Math.PI;
+		} else if ( angle < -0.5 * Math.PI ) {
+			angle = -0.5 * Math.PI;
+		}
+		x = 1 * Math.cos( angle );
+		y = -1 * Math.sin( angle );
+		*/
+	}
+	
+	
+	override public function render(painter:Painter):Void {
+		super.render(painter);
+		if ( isCrosshairVisible ) {
+			painter.setColor( kha.Color.fromBytes( 255, 0, 0, 150 ) );
+			
+			var px = x + 50 * crosshairX + (lookRight ? 0.5 * width : 0);
+			var py = y + 10 + 50 * crosshairY;
+			painter.drawLine( px - 10 * crosshairX, py - 10 * crosshairY, px - 2 * crosshairX, py - 2 * crosshairY );
+			painter.drawLine( px + 10 * crosshairX, py + 10 * crosshairY, px + 2 * crosshairX, py + 2 * crosshairY );
+			painter.drawLine( px - 10 * crosshairY, py + 10 * crosshairX, px - 2 * crosshairY, py + 2 * crosshairX );
+			painter.drawLine( px + 10 * crosshairY, py - 10 * crosshairX, px + 2 * crosshairY, py - 2 * crosshairX );
 		}
 	}
 }

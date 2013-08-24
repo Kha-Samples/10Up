@@ -380,7 +380,7 @@ class TenUp extends Game {
 	}
 	
 	override public function mouseMove(x:Int, y:Int) : Void {
-		if (mode == Game) {
+		if (mode == Game && Player.current() != null) {
 			Player.current().updateCrosshair(  x, y );
 		}
 	}

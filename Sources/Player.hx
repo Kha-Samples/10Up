@@ -251,16 +251,6 @@ class Player extends TimeTravelSprite {
 			crosshairX = vx / vl;
 			crosshairY = vy / vl;
 		}
-		
-		/*
-		if (angle > 0.5 * Math.PI) {
-			angle = 0.5 * Math.PI;
-		} else if ( angle < -0.5 * Math.PI ) {
-			angle = -0.5 * Math.PI;
-		}
-		x = 1 * Math.cos( angle );
-		y = -1 * Math.sin( angle );
-		*/
 	}
 	
 	

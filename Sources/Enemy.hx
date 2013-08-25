@@ -4,7 +4,7 @@ import kha.Image;
 import kha.Loader;
 import kha.Sprite;
 
-class Enemy extends Sprite {
+class Enemy extends DestructibleSprite {
 	private var killed: Bool;
 	
 	public function new(x: Float, y: Float) {
@@ -12,6 +12,17 @@ class Enemy extends Sprite {
 		killed = false;
 		this.x = x;
 		this.y = y;
+		health = 50;
+	}
+	
+	override private function set_health(value:Int):Int {
+		if ( value <= 0 ) {
+			kill();
+		} else if ( value < _health ) {
+			trace ( 'new health: $value' );
+			// TODO: pain cry
+		}
+		return super.set_health(value);
 	}
 
 	public function kill() {

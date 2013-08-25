@@ -145,7 +145,7 @@ class TenUp extends Game {
 			case 3:
 				Scene.the.addHero(new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 4:
-				Scene.the.addEnemy(new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				Scene.the.addOther(new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
 		

@@ -4,9 +4,13 @@ import kha.Scene;
 import projectiles.PistolProjectile;
 
 class PlayerAgent extends Player {
+	private var graple: GrapleHook;
+	
 	public function new(x: Float, y: Float) {
 		super(x, y, "jumpman");
 		Player.setPlayer(0, this);
+		graple = new GrapleHook();
+		Scene.the.addHero(graple);
 	}
 	
 	var lastFired : Float = 0;
@@ -37,5 +41,11 @@ class PlayerAgent extends Player {
 	**/
 	override public function useSpecialAbilityB(gameTime : Float) : Void {
 		
+	}
+	
+	override public function update() {
+		super.update();
+		graple.x = x + 10;
+		graple.y = y + 5;
 	}
 }

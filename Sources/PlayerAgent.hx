@@ -12,6 +12,7 @@ class PlayerAgent extends Player {
 	private var grapleLength: Float;
 	private var grapleBack = false;
 	private var maxGrapleLength: Float = 350;
+	private var pulling = false;
 	
 	public function new(x: Float, y: Float) {
 		super(x, y, "jumpman");
@@ -50,6 +51,8 @@ class PlayerAgent extends Player {
 	**/
 	override public function useSpecialAbilityB(gameTime : Float) : Void {
 		grapleVec = new Vector2(crosshairX, crosshairY);
+		grapleBack = false;
+		grapleLength = 0;
 	}
 	
 	override public function update() {
@@ -59,29 +62,56 @@ class PlayerAgent extends Player {
 		graple.rotation.angle = Math.atan2(crosshairY, crosshairX);
 		
 		if (grapleVec != null) {
-			if (grapleBack) {
-				grapleLength -= 10;
-				if (grapleLength < 0) {
+			if (pulling) {
+				x += grapleVec.x * 5;
+				y += grapleVec.y * 5;
+				grapleLength -= grapleVec.length * 5;
+				if (grapleLength < 20) {
 					grapleLength = 0;
-					grapleBack = false;
+					pulling = false;
 					grapleVec = null;
+					accy = 0.2;
 				}
 			}
 			else {
-				grapleLength += 10;
-				if (grapleLength > maxGrapleLength) {
-					grapleLength -= (grapleLength - maxGrapleLength);
-					grapleBack = true;
+				if (grapleBack) {
+					grapleLength -= 10;
+					if (grapleLength < 0) {
+						grapleLength = 0;
+						grapleBack = false;
+						grapleVec = null;
+					}
+				}
+				else {
+					grapleLength += 10;
+					if (grapleLength > maxGrapleLength) {
+						grapleLength -= (grapleLength - maxGrapleLength);
+						grapleBack = true;
+					}
+					if (Scene.the.collidesPoint(new Vector2(hookX(), hookY()))) {
+						grapleBack = false;
+						pulling = true;
+						accy = 0;
+						speedy = 0;
+					}
 				}
 			}
 		}
+	}
+	
+	private function hookX(): Float {
+		return x + 10 + grapleVec.x * grapleLength;
+	}
+	
+	private function hookY(): Float {
+		return y + 5 + grapleVec.y * grapleLength;
 	}
 	
 	override public function render(painter:Painter): Void {
 		super.render(painter);
 		if (grapleVec != null) {
 			painter.setColor(Color.fromBytes(0, 0, 0));
-			painter.drawLine(x + 10, y + 5, x + 10 + grapleVec.x * grapleLength, y + 5 + grapleVec.y * grapleLength);
+			painter.drawLine(x + 10, y + 5, hookX(), hookY());
 		}
 	}
 }

@@ -1,22 +1,31 @@
 package;
 
+import kha.Animation;
 import kha.Loader;
 import kha.Scene;
 import kha.Sprite;
 
 class Door extends Sprite {
 	private var opened = false;
+	private var openAnim: Animation;
+	private var closedAnim: Animation;
 	
 	public function new(x: Int, y: Int) {
 		super(Loader.the.getImage("door"), 32, 64, 0);
 		this.x = x;
 		this.y = y;
 		accy = 0;
+		openAnim = Animation.create(0);
+		closedAnim = Animation.create(1);
+		setAnimation(openAnim);
 	}
 	
 	public override function hit(sprite: Sprite) {
 		if (opened) return;
 		if (sprite.x < x + collisionRect().width / 2) sprite.x = x - sprite.collisionRect().width - 1;
-		else opened = true;
+		else {
+			opened = true;
+			setAnimation(closedAnim);
+		}
 	}
 }

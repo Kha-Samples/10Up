@@ -30,7 +30,7 @@ enum Mode {
 
 class TenUp extends Game {
 	static var instance: TenUp;
-	var music : Music;
+	//var music : Music;
 	var tileColissions : Array<Tile>;
 	var map : Array<Array<Int>>;
 	var originalmap : Array<Array<Int>>;
@@ -110,7 +110,7 @@ class TenUp extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		music = Loader.the.getMusic("level1");
+		//music = Loader.the.getMusic("level1");
 		startGame(spriteCount, sprites);
 	}
 	
@@ -147,7 +147,7 @@ class TenUp extends Game {
 			}
 		}
 		
-		music.play();
+		//music.play();
 		Player.getPlayer(0).setCurrent();
 		//Player.getInstance().reset();
 		Configuration.setScreen(this);
@@ -159,7 +159,7 @@ class TenUp extends Game {
 	public function showHighscore() {
 		Scene.the.clear();
 		mode = Mode.EnterHighscore;
-		music.stop();
+		//music.stop();
 	}
 	
 	private static function isCollidable(tilenumber : Int) : Bool {

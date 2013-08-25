@@ -2,15 +2,20 @@ package projectiles;
 
 import kha.Direction;
 import kha.Image;
+import kha.math.Vector2;
 import kha.Painter;
 import kha.Scene;
 import kha.Sprite;
 
 class PistolProjectile extends Projectile {
 	
-	public function new(image:Image, width:Int=0, height:Int=0, z:Int=1) {
-		super(image, width, height, z);
+	public function new(dir: Vector2, width:Int=0, height:Int=0, z:Int=1) {
+		super(null, width, height, z);
 		
+		speedx = 15 * dir.x;
+		speedy = 15 * dir.y;
+		accx = 0;
+		accy = 0;
 		creatureDamage = 50;
 	}
 	

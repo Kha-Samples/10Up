@@ -24,23 +24,6 @@ class DestructibleSprite extends TimeTravelSprite {
 		return _health;
 	}
 	
-	override public function hit(sprite:Sprite): Void {
-		if ( Std.is(sprite, Projectile) ) {
-			var projectile : Projectile = cast sprite;
-			if (projectile.isTimeWeapon) {
-				timeLeap();
-			}
-			
-			var oldHealth = health;
-			
-			if (isStucture) {
-				health -= projectile.stuctureDamage;
-			} else {
-				health -= projectile.creatureDamage;
-			}
-		}
-	}
-	
 	override private function saveCustomFieldsForTimeLeap(storage: Map<String, Dynamic>): Void {
 		super.saveCustomFieldsForTimeLeap(storage);
 		

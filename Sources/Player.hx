@@ -15,7 +15,7 @@ class Player extends DestructibleSprite {
 	public var left : Bool;
 	public var right : Bool;
 	public var up : Bool;
-	var lookRight : Bool;
+	public var lookRight(default, null) : Bool;
 	var standing : Bool;
 	var killed : Bool;
 	var jumpcount : Int;
@@ -180,7 +180,9 @@ class Player extends DestructibleSprite {
 		speedy = 0;
 		speedx = 0;
 		killed = true;
-		TenUp.getInstance().pause();
+		if (this == currentPlayer) {
+			TenUp.getInstance().pause();
+		}
 	}
 	
 	public function isSleeping(): Bool {
@@ -233,7 +235,8 @@ class Player extends DestructibleSprite {
 	override private function set_health(value:Int):Int {
 		if ( value <= 0 ) {
 			sleep();
-		} else if ( value < health ) {
+		} else if ( value < _health ) {
+			trace ( 'new health: $value' );
 			// TODO: pain cry
 		}
 		return super.set_health(value);

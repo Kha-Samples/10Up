@@ -2,6 +2,7 @@ package projectiles;
 
 import kha.Direction;
 import kha.Image;
+import kha.math.Vector2;
 import kha.Scene;
 import kha.Sprite;
 
@@ -22,7 +23,7 @@ class Projectile extends Sprite {
 		super(image, width, height, z);
 	}
 	
-	private function remove() {
+	public function remove(): Void {
 		Scene.the.removeProjectile( this );
 	}
 	
@@ -37,6 +38,16 @@ class Projectile extends Sprite {
 				if ( !isPiercing.has(CREATURES) ) {
 					remove();
 				}
+			}
+			
+			if (this.isTimeWeapon) {
+				destructible.timeLeap();
+			}
+			
+			if (destructible.isStucture) {
+				destructible.health -= this.stuctureDamage;
+			} else {
+				destructible.health -= this.creatureDamage;
 			}
 		} else {
 			if ( !isPiercing.has(OTHER_SPRITES) ) {

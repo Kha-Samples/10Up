@@ -198,6 +198,14 @@
       "name": "10up-logo",
       "scale": 1.0,
       "circle": false
+    },
+    {
+      "id": "2a7ceaee-cc08-4ad2-80d5-7839b6f45f1a",
+      "type": "image",
+      "file": "fist.png",
+      "name": "fist",
+      "scale": 1.0,
+      "circle": false
     }
   ],
   "rooms": [
@@ -225,7 +233,8 @@
         "14c3245b-82c0-4693-a131-e6f255c872de",
         "f00b98f6-70a7-4217-a6d6-a54965b634c9",
         "ca727c64-2e8d-46e5-a5c0-2da3ae23dd30",
-        "66f588d6-998a-49d5-a7d6-e2a9a747be51"
+        "66f588d6-998a-49d5-a7d6-e2a9a747be51",
+        "2a7ceaee-cc08-4ad2-80d5-7839b6f45f1a"
       ]
     },
     {

@@ -34,12 +34,9 @@ class PlayerAgent extends Player {
 	**/
 	override public function useSpecialAbilityA(gameTime : Float) : Void {
 		if (lastFired + 0.2 < gameTime) {
-			var projectile = new PistolProjectile( null, 5, 5, this.z);
+			var projectile = new PistolProjectile( crosshair, 5, 5, this.z);
 			projectile.x = muzzlePoint.x + (lookRight ? 0.8 : -0.8) * (projectile.width * crosshair.x);
 			projectile.y = muzzlePoint.y + (lookRight ? 0.8 : -0.8) * (projectile.height * crosshair.y);
-			projectile.speedx = 15 * crosshair.x;
-			projectile.speedy = 15 * crosshair.y;
-			projectile.accy = 0;
 			Scene.the.addProjectile( projectile );
 			lastFired = gameTime;
 		}

@@ -1,14 +1,17 @@
 package;
 
 import kha.Image;
+import kha.Loader;
 import kha.Sprite;
 
 class Enemy extends Sprite {
 	private var killed: Bool;
 	
-	public function new(image: Image, width: Int, height: Int) {
-		super(image, width, height, 0);
+	public function new(x: Float, y: Float) {
+		super(Loader.the.getImage("enemy"), 16 * 4, 16 * 4, 0);
 		killed = false;
+		this.x = x;
+		this.y = y;
 	}
 
 	public function kill() {

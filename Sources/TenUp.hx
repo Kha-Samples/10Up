@@ -37,6 +37,7 @@ class TenUp extends Game {
 	var highscoreName : String;
 	var shiftPressed : Bool;
 	private var font: Font;
+	private var level: Level;
 	
 	public var currentGameTime(default, null) : Float;
 	var lastTime : Float;
@@ -81,6 +82,7 @@ class TenUp extends Game {
 	}
 
 	public function initLevel(): Void {
+		level = new levels.Level1();
 		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
 		tileColissions = new Array<Tile>();
 		for (i in 0...140) {
@@ -179,6 +181,7 @@ class TenUp extends Game {
 			var lastGameTime = currentGameTime;
 			currentGameTime += currentTime - lastTime;
 			Player.current().elapse(currentGameTime - lastGameTime);
+			level.update(currentGameTime);
 		}
 		if (mode != Pause) {
 			super.update();

@@ -108,14 +108,6 @@
       "circle": false
     },
     {
-      "id": "2348bd79-d7ce-11e1-9b23-0800200c9a66",
-      "type": "music",
-      "file": "level1",
-      "name": "level1",
-      "scale": 1.0,
-      "circle": false
-    },
-    {
       "id": "5c950390-d7ce-11e1-9b23-0800200c9a66",
       "type": "blob",
       "file": "level.map",
@@ -206,6 +198,32 @@
       "name": "fist",
       "scale": 1.0,
       "circle": false
+    },
+    {
+      "id": "1a57efc0-0d8c-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "door.png",
+      "name": "door",
+      "scale": 1.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
+    },
+    {
+      "id": "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "enemy.png",
+      "name": "enemy",
+      "scale": 1.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
     }
   ],
   "rooms": [
@@ -226,7 +244,6 @@
         "2348bd76-d7ce-11e1-9b23-0800200c9a66",
         "2348bd77-d7ce-11e1-9b23-0800200c9a66",
         "2348bd78-d7ce-11e1-9b23-0800200c9a66",
-        "2348bd79-d7ce-11e1-9b23-0800200c9a66",
         "5c950390-d7ce-11e1-9b23-0800200c9a66",
         "15b1ea20-4032-11e2-a25f-0800200c9a66",
         "04bf9738-4fe2-4966-8088-70ff042801ed",
@@ -234,7 +251,10 @@
         "f00b98f6-70a7-4217-a6d6-a54965b634c9",
         "ca727c64-2e8d-46e5-a5c0-2da3ae23dd30",
         "66f588d6-998a-49d5-a7d6-e2a9a747be51",
-        "2a7ceaee-cc08-4ad2-80d5-7839b6f45f1a"
+        "2a7ceaee-cc08-4ad2-80d5-7839b6f45f1a",
+        "66f588d6-998a-49d5-a7d6-e2a9a747be51",
+        "1a57efc0-0d8c-11e3-8ffd-0800200c9a66",
+        "6f40f5e0-0da5-11e3-8ffd-0800200c9a66"
       ]
     },
     {

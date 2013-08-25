@@ -17,7 +17,8 @@ public class SpritesPanel extends JPanel implements MouseListener, MouseMotionLi
 	private static SpritesPanel instance;
 	private List<Sprite> sprites = new ArrayList<Sprite>();
 	private Point mouse = new Point(100, 0);
-	public Sprite last = null;
+	private Sprite last = null;
+	public Sprite clicked = null;
 	public boolean active = false;
 	
 	static {
@@ -30,6 +31,11 @@ public class SpritesPanel extends JPanel implements MouseListener, MouseMotionLi
 
 	private SpritesPanel() {
 		sprites.add(new Sprite("../Assets/Graphics/jumpman.png", 0, 16 * 4, 16 * 4));
+		sprites.add(new Sprite("../Assets/Graphics/jumpman2.png", 1, 16 * 4, 16 * 4));
+		sprites.add(new Sprite("../Assets/Graphics/jumpman3.png", 2, 16 * 4, 16 * 4));
+		sprites.add(new Sprite("../Assets/Graphics/jumpman4.png", 3, 16 * 4, 16 * 4));
+		sprites.add(new Sprite("../Assets/Graphics/door.png", 4, 32, 64));
+		sprites.add(new Sprite("../Assets/Graphics/enemy.png", 5, 16 * 4, 16 * 4));
 		addMouseMotionListener(this);
 		addMouseListener(this);
 	}
@@ -70,6 +76,7 @@ public class SpritesPanel extends JPanel implements MouseListener, MouseMotionLi
 	public void mousePressed(MouseEvent e) {
 		for (Sprite sprite : sprites) sprite.selected = false;
 		last.selected = true;
+		clicked = last;
 		active = true;
 		TilesetPanel.getInstance().active = false;
 		repaint();

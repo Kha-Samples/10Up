@@ -1,6 +1,7 @@
 package ;
 
 import kha.Animation;
+import kha.Direction;
 import kha.Image;
 import kha.Rectangle;
 import kha.Sprite;
@@ -25,7 +26,9 @@ class TimedSpriteInfo {
 	var collides : Bool;
 	var z : Int;
 	
-	public function new( time : Float, source : Sprite ) {
+	var customFields : Map<String, Dynamic>;
+	
+	public function new( time : Float, source : TimeTravelSprite ) {
 		this.time = time;
 		
 		if ( source.animation != null ) {
@@ -51,9 +54,12 @@ class TimedSpriteInfo {
 		maxspeedy = source.maxspeedy;
 		collides = source.collides;
 		z = source.z;
+		
+		customFields = new Map<String,Dynamic>();
+		source.saveCustomFieldsForTimeLeap( customFields );
 	}
 	
-	public function apply(dest : Sprite) : Void {
+	public function apply(dest : TimeTravelSprite) : Void {
 		dest.animation = animation;
 		
 		dest.collider = collider;
@@ -69,17 +75,22 @@ class TimedSpriteInfo {
 		dest.maxspeedy = maxspeedy;
 		dest.collides = collides;
 		dest.z = z;
+		
+		dest.restoreCustomFieldsFromTimeLeap( customFields );
 	}
 }
 
 class TimeTravelSprite extends Sprite {
 	var timeTravelInfos : List<TimedSpriteInfo>;
-
+	public var isUseable(default, null) : Bool = false;
+	
 	public function new(image:Image, width:Int=0, height:Int=0, z:Int=1) {
 		super(image, width, height, z);
 		
 		timeTravelInfos = new List();
 	}
+	
+	public function useFrom( dir : Direction ) { }
 	
 	override public function update():Void {
 		super.update();
@@ -94,6 +105,9 @@ class TimeTravelSprite extends Sprite {
 			timeTravelInfos.add( new TimedSpriteInfo( currentTime, this ) );
 		}
 	}
+	
+	private function saveCustomFieldsForTimeLeap( storage : Map < String, Dynamic > ) : Void { }
+	private function restoreCustomFieldsFromTimeLeap( storage : Map < String, Dynamic > ) : Void { }
 	
 	public function timeLeap() : Void {
 		// TODO: animate

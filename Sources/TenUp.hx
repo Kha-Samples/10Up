@@ -389,15 +389,17 @@ class TenUp extends Game {
 		}
 	}
 	
-	override public function mouseDown(x:Int, y:Int) : Void {
+	override public function mouseDown(x: Int, y: Int): Void {
 		if (mode == Game) {
-			Player.current().prepareSpecialAbilityA( currentGameTime );
+			if (shiftPressed) Player.current().prepareSpecialAbilityB(currentGameTime);
+			else Player.current().prepareSpecialAbilityA(currentGameTime);
 		}
 	}
 	
-	override public function mouseUp(x:Int, y:Int) : Void {
+	override public function mouseUp(x: Int, y: Int): Void {
 		if (mode == Game) {
-			Player.current().useSpecialAbilityA( currentGameTime );
+			if (shiftPressed) Player.current().useSpecialAbilityB(currentGameTime);
+			else Player.current().useSpecialAbilityA(currentGameTime);
 		}
 	}
 }

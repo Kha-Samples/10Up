@@ -64,6 +64,7 @@ class Player extends DestructibleSprite {
 		diesound = Loader.the.getSound("die");
 		_health = 50;
 		crosshair = new Vector2(1, 0);
+		isLiftable = true;
 	}
 	
 	public static function init(): Void {

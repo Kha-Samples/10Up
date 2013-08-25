@@ -1,5 +1,6 @@
 package;
 
+import kha.Painter;
 import kha.Scene;
 import projectiles.PistolProjectile;
 
@@ -47,5 +48,10 @@ class PlayerAgent extends Player {
 		super.update();
 		graple.x = x + 10;
 		graple.y = y + 5;
+		graple.rotation.angle = Math.atan2(crosshairY, crosshairX);
+	}
+	
+	override public function render(painter:Painter): Void {
+		super.render(painter);
 	}
 }

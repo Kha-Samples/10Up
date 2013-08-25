@@ -12,8 +12,8 @@ class PistolProjectile extends Projectile {
 	public function new(dir: Vector2, width:Int=0, height:Int=0, z:Int=1) {
 		super(null, width, height, z);
 		
-		speedx = 15 * dir.x;
-		speedy = 15 * dir.y;
+		speedx = 10 * dir.x;
+		speedy = 10 * dir.y;
 		accx = 0;
 		accy = 0;
 		creatureDamage = 50;

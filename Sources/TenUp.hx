@@ -131,15 +131,6 @@ class TenUp extends Game {
 				case 18:
 					map[x][y] = 0;
 					Scene.the.addHero(new PlayerBlondie(x * TILE_WIDTH, y * TILE_HEIGHT));
-				case 46:
-					map[x][y] = 0;
-					Scene.the.addEnemy(new Coin(x * TILE_WIDTH, y * TILE_HEIGHT));
-				case 52:
-					map[x][y] = 52;
-					Scene.the.addEnemy(new Exit(x * TILE_WIDTH, y * TILE_HEIGHT));
-				case 56:
-					map[x][y] = 1;
-					Scene.the.addEnemy((new BonusBlock(x * TILE_WIDTH, y * TILE_HEIGHT)));
 				default:
 					map[x][y] = originalmap[x][y];
 				}
@@ -166,30 +157,6 @@ class TenUp extends Game {
 		case 6: return true;
 		case 7: return true;
 		case 8: return true;
-		case 26: return true;
-		case 33: return true;
-		case 39: return true;
-		case 48: return true;
-		case 49: return true;
-		case 50: return true;
-		case 53: return true;
-		case 56: return true;
-		case 60: return true;
-		case 61: return true;
-		case 62: return true;
-		case 63: return true;
-		case 64: return true;
-		case 65: return true;
-		case 67: return true;
-		case 68: return true;
-		case 70: return true;
-		case 74: return true;
-		case 75: return true;
-		case 76: return true;
-		case 77: return true;
-		case 84: return true;
-		case 86: return true;
-		case 87: return true;
 		default:
 			return false;
 		}

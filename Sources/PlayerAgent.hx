@@ -73,7 +73,7 @@ class PlayerAgent extends Player {
 					pulling = false;
 					grapleVec = null;
 					accy = 0.2;
-					speedy = 0;
+					speedy = -5;
 				}
 			}
 			else {

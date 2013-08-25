@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -15,7 +17,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-public class Level extends JPanel implements MouseListener, MouseMotionListener{
+public class Level extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
 	public static final int TILE_WIDTH = 32;
@@ -26,6 +28,8 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 	private int levelWidth = 256;
 	private int levelHeight = 224 / 16;
 	private int[][] map;
+	
+	private boolean shift, ctrl;
 	
 	class PlacedSprite {
 		public int x;
@@ -150,7 +154,26 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 			for (int index : TilesetPanel.getInstance().getSelectedElements()) map[x + index % widthCount - smallestX][y + index / widthCount - smallestY] = index;
 		}
 		else {
-			sprites.add(new PlacedSprite(e.getX(), e.getY(), SpritesPanel.getInstance().last));
+			int x = e.getX();
+			int y = e.getY();
+			
+			if (ctrl) {
+				for (PlacedSprite sprite : sprites) {
+					if (x > sprite.x && y > sprite.y && x < sprite.x + sprite.sprite.width && y < sprite.y + sprite.sprite.height) {
+						sprites.remove(sprite);
+						break;
+					}
+				}
+			}
+			else {
+				if (shift) {
+					x /= TILE_WIDTH;
+					y /= TILE_HEIGHT;
+					x *= TILE_WIDTH;
+					y *= TILE_HEIGHT;
+				}
+				sprites.add(new PlacedSprite(x, y, SpritesPanel.getInstance().clicked));
+			}
 		}
 		repaint();
 	}
@@ -164,11 +187,14 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 	public void mouseExited(MouseEvent e) { }
 	
 	public void mouseDragged(MouseEvent e) {
+		InfoBar.getInstance().update(e.getX(), e.getY());
 		map[e.getX() / TILE_WIDTH][e.getY() / TILE_HEIGHT] = TilesetPanel.getInstance().getSelectedElements().get(0);
 		repaint();
 	}
 	
-	public void mouseMoved(MouseEvent e) {}
+	public void mouseMoved(MouseEvent e) {
+		InfoBar.getInstance().update(e.getX(), e.getY());
+	}
 	
 	public void resizeLevel(int w, int h) {
 		int[][] newmap = new int[w][h];
@@ -187,5 +213,22 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 	public void resetMaps() {
 		map = new int[levelWidth][levelHeight];
 		repaint();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT) shift = true;
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) ctrl = true;
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT) shift = false;
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) ctrl = false;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 }

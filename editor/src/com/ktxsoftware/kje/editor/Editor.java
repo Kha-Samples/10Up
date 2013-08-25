@@ -1,8 +1,11 @@
 package com.ktxsoftware.kje.editor;
 
 import java.awt.Dimension;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -13,9 +16,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 
-public class Editor extends JFrame{
+public class Editor extends JFrame {
 	private static final long serialVersionUID = 1L;
 
+	private class Dispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+            	Level.getInstance().keyPressed(e);
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+            	Level.getInstance().keyReleased(e);
+            } else if (e.getID() == KeyEvent.KEY_TYPED) {
+            	Level.getInstance().keyTyped(e);
+            }
+            return false;
+        }
+    }
+	
 	public Editor() {
 		super("Editor");
 		try {
@@ -27,6 +44,8 @@ public class Editor extends JFrame{
 		setDefaultLookAndFeelDecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(1000, 600));
+
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new Dispatcher());
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -75,6 +94,7 @@ public class Editor extends JFrame{
 		bottom.add(spritesScrollPane);
 		
 		main.add(bottom);
+		main.add(InfoBar.getInstance());
 		add(main);
 		
 		pack();

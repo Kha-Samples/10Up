@@ -198,6 +198,19 @@
       "name": "10up-logo",
       "scale": 1.0,
       "circle": false
+    },
+    {
+      "id": "1a57efc0-0d8c-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "door.png",
+      "name": "door",
+      "scale": 1.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
     }
   ],
   "rooms": [
@@ -225,7 +238,8 @@
         "14c3245b-82c0-4693-a131-e6f255c872de",
         "f00b98f6-70a7-4217-a6d6-a54965b634c9",
         "ca727c64-2e8d-46e5-a5c0-2da3ae23dd30",
-        "66f588d6-998a-49d5-a7d6-e2a9a747be51"
+        "66f588d6-998a-49d5-a7d6-e2a9a747be51",
+        "1a57efc0-0d8c-11e3-8ffd-0800200c9a66"
       ]
     },
     {

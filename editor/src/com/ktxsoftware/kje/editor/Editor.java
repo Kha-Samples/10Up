@@ -80,6 +80,7 @@ public class Editor extends JFrame{
 		pack();
 		setSize(1280, 720);
 		setVisible(true);
+		Level.getInstance().repaint();
 	}
 
 	public static void main(String[] args) {

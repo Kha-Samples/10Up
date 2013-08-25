@@ -36,7 +36,7 @@ public class ResizeDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Level.getInstance().resize(Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
+					Level.getInstance().resizeLevel(Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
 				}
 				catch (Exception ex) {
 					ex.printStackTrace();

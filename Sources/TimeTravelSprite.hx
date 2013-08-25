@@ -84,6 +84,7 @@ class TimedSpriteInfo {
 class TimeTravelSprite extends Sprite {
 	var timeTravelInfos : List<TimedSpriteInfo>;
 	public var isUseable(default, null) : Bool = false;
+	public var isLiftable(default, null) : Bool = false;
 	
 	public function new(image:Image, width:Int=0, height:Int=0, z:Int=1) {
 		super(image, width, height, z);

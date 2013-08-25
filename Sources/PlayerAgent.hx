@@ -46,7 +46,12 @@ class PlayerAgent extends Player {
 	/**
 	  Haken
 	**/
+	override public function prepareSpecialAbilityB(gameTime:Float) : Void {
+		isCrosshairVisible = true;
+	}
+	
 	override public function useSpecialAbilityB(gameTime : Float) : Void {
+		// TODO: Fixme!
 		grapleVec = new Vector2(crosshair.x, crosshair.y);
 		grapleBack = false;
 		grapleLength = 0;

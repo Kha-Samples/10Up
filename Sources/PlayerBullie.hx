@@ -21,6 +21,22 @@ class PlayerBullie extends Player {
 		if (fistOfDoom != null) {
 			fistOfDoom.remove();
 		}
+		if (lifted != null) {
+			lifted = null;
+		}
+	}
+	
+	override public function update() {
+		super.update();
+		
+		if (lifted != null) {
+			var lc = lifted.center;
+			var ldiffx = lifted.x - lc.x;
+			var ldiffy = lifted.y - lc.y;
+			var c = center;
+			lifted.x = c.x + ldiffx;
+			lifted.y = c.y + ldiffy - 0.5 * lifted.height;
+		}
 	}
 	
 	/**
@@ -43,7 +59,47 @@ class PlayerBullie extends Player {
 	/**
 	  Heben
 	**/
+	var lifted : TimeTravelSprite;
+	  
+	override public function prepareSpecialAbilityB(gameTime: Float): Void {
+		if (lifted == null) {
+			var rect = collisionRect();
+			for ( i in 0...Scene.the.countHeroes() ) {
+				if (Std.is( Scene.the.getHero(i), TimeTravelSprite )) {
+					var hero : TimeTravelSprite = cast Scene.the.getHero(i);
+					if ( hero != this && hero.isLiftable ) {
+						if ( rect.collision( hero.collisionRect() ) ) {
+							lifted = hero;
+							return;
+						}
+					}
+				}
+			}
+			for ( i in 0...Scene.the.countOthers() ) {
+				if (Std.is( Scene.the.getOther(i), TimeTravelSprite )) {
+					var other : TimeTravelSprite = cast Scene.the.getOther(i);
+					if ( other.isLiftable ) {
+						if ( rect.collision( other.collisionRect() ) ) {
+							lifted = other;
+							return;
+						}
+					}
+				}
+			}
+			for ( i in 0...Scene.the.countEnemies() ) {
+				if (Std.is( Scene.the.getEnemy(i), TimeTravelSprite )) {
+					var enemy : TimeTravelSprite = cast Scene.the.getEnemy(i);
+					if ( enemy.isLiftable ) {
+						if ( rect.collision( enemy.collisionRect() ) ) {
+							lifted = enemy;
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
 	override public function useSpecialAbilityB(gameTime : Float) : Void {
-		
+		lifted = null;
 	}
 }

@@ -16,6 +16,8 @@ class Player extends DestructibleSprite {
 	public var right : Bool;
 	public var up : Bool;
 	public var lookRight(default, null) : Bool;
+	public var walking: Bool = false;
+	public var index: Int;
 	var standing : Bool;
 	var killed : Bool;
 	var jumpcount : Int;
@@ -88,6 +90,7 @@ class Player extends DestructibleSprite {
 	
 	public static function setPlayer(index: Int, jumpman: Player): Void {
 		jumpmans[index] = jumpman;
+		jumpman.index = index;
 	}
 	
 	public static function current(): Player {
@@ -131,18 +134,25 @@ class Player extends DestructibleSprite {
 	}
 	
 	public override function update() {
+		walking = false;
 		if (killed && y > 600) {
 			TenUp.getInstance().showHighscore();
 		}
 		if (lastupcount > 0) --lastupcount;
 		if (!killed) {
 			if (right) {
-				if (standing) setAnimation(walkRight);
+				if (standing) {
+					setAnimation(walkRight);
+					walking = true;
+				}
 				speedx = 3.0 * Math.round(Math.pow(1.1, getRound()));
 				lookRight = true;
 			}
 			else if (left) {
-				if (standing) setAnimation(walkLeft);
+				if (standing) {
+					setAnimation(walkLeft);
+					walking = true;
+				}
 				speedx = -3.0 * Math.round(Math.pow(1.1, getRound()));
 				lookRight = false;
 			}

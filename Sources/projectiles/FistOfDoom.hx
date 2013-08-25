@@ -51,7 +51,7 @@ class FistOfDoom extends Projectile {
 	public function releaseDoom() : Void {
 		collides = true;
 		speedx = 0;
-		accx = 1;
+		accx = 1.3;
 		hasHit = new List();
 	}
 	
@@ -91,7 +91,7 @@ class FistOfDoom extends Projectile {
 				remove();
 			}
 			
-			creatureDamage = Math.round( ( (owner.lookRight ? owner.speedx : -owner.speedx) + dmgSpeed ) * 5.0 );
+			creatureDamage = Math.round( ( (owner.lookRight ? owner.speedx : -owner.speedx) + dmgSpeed ) * 7.5 );
 			stuctureDamage = creatureDamage;
 			//trace ( 'relspeed: $dmgSpeed' );
 			//trace ( 'absspeed: ${( (owner.lookRight ? owner.speedx : -owner.speedx) + speedx )}' );

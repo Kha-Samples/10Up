@@ -10,7 +10,7 @@ import kha.Sound;
 import kha.Sprite;
 import projectiles.PistolProjectile;
 
-class Player extends TimeTravelSprite {
+class Player extends DestructibleSprite {
 	public var left : Bool;
 	public var right : Bool;
 	public var up : Bool;
@@ -59,6 +59,7 @@ class Player extends TimeTravelSprite {
 		stompsound = Loader.the.getSound("stomp");
 		jumpsound = Loader.the.getSound("jump");
 		diesound = Loader.the.getSound("die");
+		health = 50;
 	}
 	
 	public static function init(): Void {
@@ -217,12 +218,14 @@ class Player extends TimeTravelSprite {
 		
 	}
 	
-	override public function hit(sprite:Sprite):Void {
-		if (Std.is( sprite, PistolProjectile )) {
-			sleep(); // TODO: Die!
+	override private function set_health(value:Int):Int {
+		if ( value <= 0 ) {
+			sleep();
+		} else if ( value < health ) {
+			// TODO: pain cry
 		}
+		return super.set_health(value);
 	}
-	
 	
 	// Crosshair:
 	var isCrosshairVisible : Bool = false;

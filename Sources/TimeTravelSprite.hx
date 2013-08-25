@@ -3,6 +3,7 @@ package ;
 import kha.Animation;
 import kha.Direction;
 import kha.Image;
+import kha.math.Vector2;
 import kha.Rectangle;
 import kha.Sprite;
 
@@ -88,6 +89,11 @@ class TimeTravelSprite extends Sprite {
 		super(image, width, height, z);
 		
 		timeTravelInfos = new List();
+	}
+	
+	public var center(get, never) : Vector2;
+	@:noComplete @:extern private inline function get_center() : Vector2 {
+		return new Vector2(Math.round(x - collider.x) + 0.5 * width, Math.round(y - collider.y) + 0.5 * height);
 	}
 	
 	public function useFrom( dir : Direction ) { }

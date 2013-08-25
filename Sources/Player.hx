@@ -3,6 +3,7 @@ package;
 import kha.Animation;
 import kha.Direction;
 import kha.Loader;
+import kha.math.Vector2;
 import kha.Music;
 import kha.Painter;
 import kha.Rectangle;
@@ -34,6 +35,8 @@ class Player extends DestructibleSprite {
 	private static var currentPlayer: Player = null;
 	private static var jumpmans: Array<Player>;
 	
+	var muzzlePoint : Vector2;
+	
 	public function new(x: Float, y: Float, image: String) {
 		super(Loader.the.getImage(image), 16 * 4, 16 * 4, 0);
 		this.x = x;
@@ -60,6 +63,7 @@ class Player extends DestructibleSprite {
 		jumpsound = Loader.the.getSound("jump");
 		diesound = Loader.the.getSound("die");
 		_health = 50;
+		crosshair = new Vector2(1, 0);
 	}
 	
 	public static function init(): Void {
@@ -154,6 +158,7 @@ class Player extends DestructibleSprite {
 		}
 		if (jumpcount > 0) --jumpcount;
 		super.update();
+		updateMuzzlePoint();
 	}
 	
 	public function setUp() {
@@ -236,45 +241,54 @@ class Player extends DestructibleSprite {
 	
 	// Crosshair:
 	var isCrosshairVisible : Bool = false;
-	var crosshairX : Float;
-	var crosshairY : Float;
+	var crosshair : Vector2;
 	
 	public function updateCrosshair( mouseX : Float, mouseY : Float ) {
 		if (Player.current() != null) {
-			var vx = mouseX - x;
-			var vy = mouseY - y + 10;
+			var v = center;
+			v.x = mouseX - v.x;
+			v.y = mouseY - v.y;
+			//v.y += 0.1 * height;
 			if (Player.current().lookRight) {
-				vx -= 0.5 * width;
-				if (vx < 0) {
-					vx = 0;
+				v.x -= width;
+				if (v.x < 0) {
+					v.x = 0;
 				}
 			} else {
-				if ( vx > 0) {
-					vx = 0;
+				if ( v.x > 0) {
+					v.x = 0;
 				}
 			}
 			
-			var vl = Math.sqrt( vx * vx + vy * vy );
+			var vl = v.length;
 			if (vl < 0.001) {
 				return;
 			}
-			crosshairX = vx / vl;
-			crosshairY = vy / vl;
+			crosshair = v.div( vl );
 		}
+		updateMuzzlePoint();
 	}
 	
+	private function updateMuzzlePoint(): Void {
+		muzzlePoint = center;
+		muzzlePoint.x += 0.5 * crosshair.x * width;
+		muzzlePoint.y += 0.5 * crosshair.y * height;
+	}
 	
 	override public function render(painter:Painter):Void {
 		super.render(painter);
 		if ( isCrosshairVisible ) {
 			painter.setColor( kha.Color.fromBytes( 255, 0, 0, 150 ) );
 			
-			var px = x + 50 * crosshairX + (lookRight ? 0.5 * width : 0);
-			var py = y + 10 + 50 * crosshairY;
-			painter.drawLine( px - 10 * crosshairX, py - 10 * crosshairY, px - 2 * crosshairX, py - 2 * crosshairY );
-			painter.drawLine( px + 10 * crosshairX, py + 10 * crosshairY, px + 2 * crosshairX, py + 2 * crosshairY );
-			painter.drawLine( px - 10 * crosshairY, py + 10 * crosshairX, px - 2 * crosshairY, py + 2 * crosshairX );
-			painter.drawLine( px + 10 * crosshairY, py - 10 * crosshairX, px + 2 * crosshairY, py - 2 * crosshairX );
+			var px = muzzlePoint.x + 50 * crosshair.x;
+			var py = muzzlePoint.y + 50 * crosshair.y;
+			painter.drawLine( px - 10 * crosshair.x, py - 10 * crosshair.y, px - 2 * crosshair.x, py - 2 * crosshair.y );
+			painter.drawLine( px + 10 * crosshair.x, py + 10 * crosshair.y, px + 2 * crosshair.x, py + 2 * crosshair.y );
+			painter.drawLine( px - 10 * crosshair.y, py + 10 * crosshair.x, px - 2 * crosshair.y, py + 2 * crosshair.x );
+			painter.drawLine( px + 10 * crosshair.y, py - 10 * crosshair.x, px + 2 * crosshair.y, py - 2 * crosshair.x );
+			
+			//painter.drawLine( muzzlePoint.x, muzzlePoint.y, muzzlePoint.x + 50 * crosshair.x, muzzlePoint.y + 50 * crosshair.y); 
+			//painter.fillRect( muzzlePoint.x - 4, muzzlePoint.y - 4, 9, 9);
 		}
 	}
 }

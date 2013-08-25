@@ -25,10 +25,10 @@ class PlayerProfessor extends Player {
 			canFireTimeWeapon = false;
 			
 			var projectile = new TimeProjectile( /*Loader.the.getImage("TimeProjectile")*/ null, 10, 10, this.z);
-			projectile.x = this.x + (this.lookRight ? 0.5 * this.width + 0.5 * projectile.width : -0.5 * projectile.width);
-			projectile.y = this.y + 10;
-			projectile.speedx = 10 * crosshairX;
-			projectile.speedy = 10 * crosshairY;
+			projectile.x = muzzlePoint.x + (lookRight ? 0.8 : -0.8) * (projectile.width * crosshair.x);
+			projectile.y = muzzlePoint.y + (lookRight ? 0.8 : -0.8) * (projectile.height * crosshair.y);
+			projectile.speedx = 10 * crosshair.x;
+			projectile.speedy = 10 * crosshair.y;
 			projectile.accy = 0;
 			Scene.the.addProjectile( projectile );
 			isCrosshairVisible = false;

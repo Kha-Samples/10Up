@@ -35,10 +35,10 @@ class PlayerAgent extends Player {
 	override public function useSpecialAbilityA(gameTime : Float) : Void {
 		if (lastFired + 0.2 < gameTime) {
 			var projectile = new PistolProjectile( null, 5, 5, this.z);
-			projectile.x = this.x + (this.lookRight ? 0.5 * this.width + 0.5 * projectile.width : -0.5 * projectile.width);
-			projectile.y = this.y + 10;
-			projectile.speedx = 10 * crosshairX;
-			projectile.speedy = 10 * crosshairY;
+			projectile.x = muzzlePoint.x + (lookRight ? 0.8 : -0.8) * (projectile.width * crosshair.x);
+			projectile.y = muzzlePoint.y + (lookRight ? 0.8 : -0.8) * (projectile.height * crosshair.y);
+			projectile.speedx = 15 * crosshair.x;
+			projectile.speedy = 15 * crosshair.y;
 			projectile.accy = 0;
 			Scene.the.addProjectile( projectile );
 			lastFired = gameTime;
@@ -50,7 +50,7 @@ class PlayerAgent extends Player {
 	  Haken
 	**/
 	override public function useSpecialAbilityB(gameTime : Float) : Void {
-		grapleVec = new Vector2(crosshairX, crosshairY);
+		grapleVec = new Vector2(crosshair.x, crosshair.y);
 		grapleBack = false;
 		grapleLength = 0;
 	}
@@ -59,7 +59,7 @@ class PlayerAgent extends Player {
 		super.update();
 		graple.x = x + 10;
 		graple.y = y + 5;
-		graple.rotation.angle = Math.atan2(crosshairY, crosshairX);
+		graple.rotation.angle = Math.atan2(crosshair.y, crosshair.x);
 		
 		if (grapleVec != null) {
 			if (pulling) {

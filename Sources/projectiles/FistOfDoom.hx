@@ -24,6 +24,7 @@ class FistOfDoom extends Projectile {
 		
 		isPiercing.set( DESTRUCTIBLE_STRUCTURES );
 		isPiercing.set( CREATURES );
+		isPiercing.set( OTHER_SPRITES );
 		
 		collides = false;
 		speedx = -2;

@@ -79,6 +79,7 @@ class TenUp extends Game {
 		Scene.the.addHero( logo );
 		mode = StartScreen;
 		Configuration.setScreen(this);
+        //flash.Lib.current.stage.displayState = FULL_SCREEN;
 	}
 
 	public function initLevel(): Void {
@@ -145,7 +146,9 @@ class TenUp extends Game {
 			case 3:
 				Scene.the.addHero(new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 4:
-				Scene.the.addOther(new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				var door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				level.doors.push( door );
+				Scene.the.addOther(door);
 			}
 		}
 		
@@ -156,6 +159,16 @@ class TenUp extends Game {
 		currentGameTime = 0;
 		lastTime = Scheduler.time();
 		mode = Pause;
+	}
+	
+	public function victory() : Void {
+		// TODO: Win!
+		showHighscore();
+	}
+	
+	public function defeat() : Void {
+		// TODO: loose.
+		showHighscore();
 	}
 	
 	public function showHighscore() {

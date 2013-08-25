@@ -19,6 +19,7 @@ import kha.Tile;
 import kha.Tilemap;
 
 enum Mode {
+	Loading;
 	Game;
 	Pause;
 	Highscore;
@@ -45,7 +46,7 @@ class TenUp extends Game {
 		instance = this;
 		shiftPressed = false;
 		highscoreName = "";
-		mode = Mode.Game;
+		mode = Mode.Loading;
 	}
 	
 	public static function getInstance(): TenUp {
@@ -132,6 +133,7 @@ class TenUp extends Game {
 		Configuration.setScreen(this);
 		currentGameTime = 0;
 		lastTime = Scheduler.time();
+		mode = Game;
 	}
 	
 	public function showHighscore() {
@@ -243,6 +245,8 @@ class TenUp extends Game {
 				painter.setFont(font);
 				painter.drawString("Pause", width / 2 - font.stringWidth("Pause") / 2, height / 2 - font.getHeight() / 2);
 			}
+		case Loading:
+			super.render(painter);
 		}
 	}
 	

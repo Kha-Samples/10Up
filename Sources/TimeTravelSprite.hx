@@ -56,10 +56,10 @@ class TimedSpriteInfo {
 		z = source.z;
 		
 		customFields = new Map<String,Dynamic>();
-		source.saveCustomFields( customFields );
+		source.saveCustomFieldsForTimeLeap( customFields );
 	}
 	
-	public function apply(dest : Sprite) : Void {
+	public function apply(dest : TimeTravelSprite) : Void {
 		dest.animation = animation;
 		
 		dest.collider = collider;
@@ -75,6 +75,8 @@ class TimedSpriteInfo {
 		dest.maxspeedy = maxspeedy;
 		dest.collides = collides;
 		dest.z = z;
+		
+		dest.restoreCustomFieldsFromTimeLeap( customFields );
 	}
 }
 
@@ -104,7 +106,8 @@ class TimeTravelSprite extends Sprite {
 		}
 	}
 	
-	private function saveCustomFields( storage : Map < String, Dynamic > ) : Void { }
+	private function saveCustomFieldsForTimeLeap( storage : Map < String, Dynamic > ) : Void { }
+	private function restoreCustomFieldsFromTimeLeap( storage : Map < String, Dynamic > ) : Void { }
 	
 	public function timeLeap() : Void {
 		// TODO: animate

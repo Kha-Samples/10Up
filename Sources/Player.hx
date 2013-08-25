@@ -59,7 +59,7 @@ class Player extends DestructibleSprite {
 		stompsound = Loader.the.getSound("stomp");
 		jumpsound = Loader.the.getSound("jump");
 		diesound = Loader.the.getSound("die");
-		health = 50;
+		_health = 50;
 	}
 	
 	public static function init(): Void {
@@ -196,10 +196,17 @@ class Player extends DestructibleSprite {
 		else sleep();
 	}
 	
-	override public function timeLeap() : Void {
-		super.timeLeap();
-		time = 0;
-		killed = false;
+	override private function saveCustomFieldsForTimeLeap(storage: Map<String, Dynamic>): Void {
+		super.saveCustomFieldsForTimeLeap(storage);
+		
+		storage.set("time", time);
+		storage.set("killed", killed);
+	}
+	override private function restoreCustomFieldsFromTimeLeap(storage: Map<String, Dynamic>): Void {
+		super.restoreCustomFieldsFromTimeLeap(storage);
+		
+		time = storage["time"];
+		killed = storage["killed"];
 	}
 	
 	public function prepareSpecialAbilityA(gameTime : Float) : Void {

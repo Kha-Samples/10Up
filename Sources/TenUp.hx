@@ -15,11 +15,13 @@ import kha.Scene;
 import kha.Scheduler;
 import kha.Score;
 import kha.Configuration;
+import kha.Sprite;
 import kha.Tile;
 import kha.Tilemap;
 
 enum Mode {
 	Loading;
+	StartScreen;
 	Game;
 	Pause;
 	Highscore;
@@ -59,7 +61,23 @@ class TenUp extends Game {
 	
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
-		Loader.the.loadRoom("level1", initLevel);
+		Loader.the.loadRoom("start", initStart);
+	}
+	
+	public function enterLevel( level : String ) : Void {
+		Configuration.setScreen( new LoadingScreen() );
+		Loader.the.loadRoom( level, initLevel );
+	}
+	
+	public function initStart(): Void {
+		var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
+		logo.x = 0.5 * width - 0.5 * logo.width;
+		logo.y = 0.5 * height - 0.5 * logo.height;
+		Scene.the.clear();
+		Scene.the.setBackgroundColor(Color.fromBytes(0, 0, 0));
+		Scene.the.addHero( logo );
+		mode = StartScreen;
+		Configuration.setScreen(this);
 	}
 
 	public function initLevel(): Void {
@@ -133,7 +151,7 @@ class TenUp extends Game {
 		Configuration.setScreen(this);
 		currentGameTime = 0;
 		lastTime = Scheduler.time();
-		mode = Game;
+		mode = Pause;
 	}
 	
 	public function showHighscore() {
@@ -245,7 +263,7 @@ class TenUp extends Game {
 				painter.setFont(font);
 				painter.drawString("Pause", width / 2 - font.stringWidth("Pause") / 2, height / 2 - font.getHeight() / 2);
 			}
-		case Loading:
+		case Loading, StartScreen:
 			super.render(painter);
 		}
 	}
@@ -381,6 +399,10 @@ class TenUp extends Game {
 	
 	override public function keyUp(key : Key, char : String) : Void {
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
+		
+		if (mode == StartScreen) {
+			enterLevel( "level1" );
+		}
 	}
 	
 	override public function mouseMove(x:Int, y:Int) : Void {
@@ -396,8 +418,12 @@ class TenUp extends Game {
 	}
 	
 	override public function mouseUp(x:Int, y:Int) : Void {
-		if (mode == Game) {
-			Player.current().useSpecialAbilityA( currentGameTime );
+		switch (mode) {
+			case Game:
+				Player.current().useSpecialAbilityA( currentGameTime );
+			case StartScreen:
+				enterLevel( "level1" );
+			default:
 		}
 	}
 }

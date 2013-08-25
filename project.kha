@@ -176,12 +176,28 @@
       "file": "graplehook.png",
       "name": "graplehook",
       "scale": 1.0,
-      "circle": false,
       "background": {
         "red": 255,
         "green": 174,
         "blue": 201
-      }
+      },
+      "circle": false
+    },
+    {
+      "id": "66f588d6-998a-49d5-a7d6-e2a9a747be51",
+      "type": "image",
+      "file": "10up.png",
+      "name": "10up",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "c659517f-66d8-4dcb-958a-cf727ccb6113",
+      "type": "image",
+      "file": "10up-logo.png",
+      "name": "10up-logo",
+      "scale": 1.0,
+      "circle": false
     }
   ],
   "rooms": [
@@ -208,7 +224,16 @@
         "04bf9738-4fe2-4966-8088-70ff042801ed",
         "14c3245b-82c0-4693-a131-e6f255c872de",
         "f00b98f6-70a7-4217-a6d6-a54965b634c9",
-        "ca727c64-2e8d-46e5-a5c0-2da3ae23dd30"
+        "ca727c64-2e8d-46e5-a5c0-2da3ae23dd30",
+        "66f588d6-998a-49d5-a7d6-e2a9a747be51"
+      ]
+    },
+    {
+      "id": "4f6ef48a-79d3-4e3f-a5e2-1490ba1d7190",
+      "name": "start",
+      "neighbours": [],
+      "assets": [
+        "c659517f-66d8-4dcb-958a-cf727ccb6113"
       ]
     }
   ]

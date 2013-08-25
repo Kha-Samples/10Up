@@ -148,7 +148,7 @@ class TenUp extends Game {
 			case 4:
 				var door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				level.doors.push( door );
-				Scene.the.addEnemy(door);
+				Scene.the.addOther(door);
 			}
 		}
 		

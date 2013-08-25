@@ -35,11 +35,13 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 		public int x;
 		public int y;
 		public Sprite sprite;
+		public int id;
 		
-		public PlacedSprite(int x, int y, Sprite sprite) {
+		public PlacedSprite(int x, int y, Sprite sprite, int id) {
 			this.x = x;
 			this.y = y;
 			this.sprite = sprite;
+			this.id = id;
 		}
 	}
 	
@@ -83,6 +85,7 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 			g.setColor(Color.BLUE);
 			g.fillRect(sprite.x, sprite.y, sprite.sprite.width, sprite.sprite.height);
 			sprite.sprite.paint(g, sprite.x, sprite.y, false, true);
+			g.drawString("" + sprite.id, sprite.x + 5, sprite.y + 15);
 		}
 	}
 
@@ -113,6 +116,7 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 
 	public void load(DataInputStream stream) {
 		try {
+			sprites.clear();
 			levelWidth = stream.readInt();
 			levelHeight = stream.readInt();
 			map = new int[levelWidth][levelHeight];
@@ -122,7 +126,11 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 				int index = stream.readInt();
 				int x = stream.readInt();
 				int y = stream.readInt();
-				sprites.add(new PlacedSprite(x, y, SpritesPanel.getInstance().getSprite(index)));
+				int id = 0;
+				for (PlacedSprite sprite : sprites) {
+					if (sprite.sprite.index == index) ++id;
+				}
+				sprites.add(new PlacedSprite(x, y, SpritesPanel.getInstance().getSprite(index), id));
 			}
 		}
 		catch (IOException ex) {
@@ -172,7 +180,11 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 					x *= TILE_WIDTH;
 					y *= TILE_HEIGHT;
 				}
-				sprites.add(new PlacedSprite(x, y, SpritesPanel.getInstance().clicked));
+				int id = 0;
+				for (PlacedSprite sprite : sprites) {
+					if (sprite.sprite.index == SpritesPanel.getInstance().clicked.index) ++id;
+				}
+				sprites.add(new PlacedSprite(x, y, SpritesPanel.getInstance().clicked, id));
 			}
 		}
 		repaint();

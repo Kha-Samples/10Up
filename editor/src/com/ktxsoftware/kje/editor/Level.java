@@ -170,6 +170,18 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener{
 	
 	public void mouseMoved(MouseEvent e) {}
 	
+	public void resize(int w, int h) {
+		int[][] newmap = new int[w][h];
+		for (int y = 0; y < h; ++y) {
+			for (int x = 0; x < w; ++x) {
+				if (x < levelWidth && y < levelHeight) newmap[x][y] = map[x][y];
+			}
+		}
+		map = newmap;
+		levelWidth = w;
+		levelHeight = h;
+	}
+	
 	public void resetMaps() {
 		map = new int[levelWidth][levelHeight];
 		repaint();

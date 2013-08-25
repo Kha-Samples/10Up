@@ -34,6 +34,7 @@ public class Editor extends JFrame{
 		JMenuItem newLevel = new JMenuItem("New");
 		JMenuItem loadLevel = new JMenuItem("Load");
 		JMenuItem saveLevel = new JMenuItem("Save");
+		JMenuItem resizeLevel = new JMenuItem("Resize");
 		
 		loadLevel.addActionListener(new Loader(this));
 		saveLevel.addActionListener(new Saver(this));
@@ -43,10 +44,17 @@ public class Editor extends JFrame{
 				Level.getInstance().resetMaps();
 			}
 		});
+		resizeLevel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ResizeDialog(Editor.this);
+			}
+		});
 
 		file.add(newLevel);
 		file.add(loadLevel);
 		file.add(saveLevel);
+		file.add(resizeLevel);
 
 		menuBar.add(file);
 		

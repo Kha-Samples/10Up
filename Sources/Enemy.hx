@@ -3,9 +3,11 @@ package;
 import kha.Animation;
 import kha.Image;
 import kha.Loader;
+import kha.math.Random;
 import kha.math.Vector2;
 import kha.Rectangle;
 import kha.Sprite;
+import projectiles.PistolProjectile;
 
 class Enemy extends DestructibleSprite {
 	private var killed: Bool;
@@ -17,6 +19,7 @@ class Enemy extends DestructibleSprite {
 	private var heard: Array<Player>;
 	private var distances: Array<Float>;
 	private var focus: Player = null;
+	private var nextShootTime: Float = 0;
 	
 	public function new(x: Float, y: Float) {
 		super(Loader.the.getImage("enemy"), 16 * 4, 16 * 4, 0);
@@ -57,6 +60,16 @@ class Enemy extends DestructibleSprite {
 		//Jumpman.getInstance().hitEnemy(this);
 	}
 	
+	private function tryToShoot(): Void {
+		if (TenUp.getInstance().currentGameTime > nextShootTime) {
+			var projectile = new PistolProjectile(new Vector2(focus.x, focus.y).sub(new Vector2(x, y)), 5, 5, this.z);
+			projectile.x = x;
+			projectile.y = y;
+			kha.Scene.the.addProjectile(projectile);
+			nextShootTime = TenUp.getInstance().currentGameTime + 2 + Random.getUpTo(2);
+		}
+	}
+	
 	override public function update(): Void {
 		super.update();
 		var watchRect = new Rectangle(x, y - 30, 300, 50);
@@ -90,5 +103,6 @@ class Enemy extends DestructibleSprite {
 			}
 			focus = nearest;
 		}
+		if (focus != null) tryToShoot();
 	}
 }

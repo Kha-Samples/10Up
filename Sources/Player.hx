@@ -70,6 +70,10 @@ class Player extends DestructibleSprite {
 		jumpmans = new Array<Player>();
 	}
 	
+	public static function getPlayerCount(): Int {
+		return jumpmans.length;
+	}
+	
 	public static function getPlayer(index: Int): Player {
 		return jumpmans[index];
 	}

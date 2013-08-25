@@ -6,7 +6,7 @@ import kha.Scene;
 import kha.Sprite;
 
 class Door extends DestructibleSprite {
-	private var opened = false;
+	public var opened(default,set) = false;
 	private var openAnim: Animation;
 	private var closedAnim: Animation;
 	private var crackedAnim: Animation;
@@ -23,6 +23,26 @@ class Door extends DestructibleSprite {
 		destroyedAnim = Animation.create(3);
 		setAnimation(closedAnim);
 		health = 100;
+		isStucture = true;
+	}
+	
+	private function set_opened(value : Bool) : Bool {
+		if (opened == value) {
+			return opened;
+		}
+		if ( opened = value ) {
+			setAnimation(openAnim);
+		} else {
+			if ( health <= 0 ) {
+				setAnimation(destroyedAnim);
+			} else if ( health < 75 ) {
+				setAnimation(crackedAnim);
+			}
+			else {
+				setAnimation(closedAnim);
+			}
+		}
+		return opened;
 	}
 	
 	override private function set_health(value:Int):Int {
@@ -46,7 +66,6 @@ class Door extends DestructibleSprite {
 		if (sprite.x < x + collisionRect().width / 2) sprite.x = x - sprite.collisionRect().width - 1;
 		else if ( Std.is(sprite, Player) ) {
 			opened = true;
-			setAnimation(openAnim);
 		}
 	}
 }

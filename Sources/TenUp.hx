@@ -103,11 +103,18 @@ class TenUp extends Game {
 				map[x].push(0);
 			}
 		}
+		var spriteCount = blob.readS32BE();
+		var sprites = new Array<Int>();
+		for (i in 0...spriteCount) {
+			sprites.push(blob.readS32BE());
+			sprites.push(blob.readS32BE());
+			sprites.push(blob.readS32BE());
+		}
 		music = Loader.the.getMusic("level1");
-		startGame();
+		startGame(spriteCount, sprites);
 	}
 	
-	public function startGame() {
+	public function startGame(spriteCount: Int, sprites: Array<Int>) {
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 		Player.init();
@@ -119,23 +126,27 @@ class TenUp extends Game {
 		for (x in 0...originalmap.length) {
 			for (y in 0...originalmap[0].length) {
 				switch (originalmap[x][y]) {
-				case 15:
-					map[x][y] = 0;
-					Scene.the.addHero(new PlayerAgent(x * TILE_WIDTH, y * TILE_HEIGHT));
-				case 16:
-					map[x][y] = 0;
-					Scene.the.addHero(new PlayerProfessor(x * TILE_WIDTH, y * TILE_HEIGHT));
-				case 17:
-					map[x][y] = 0;
-					Scene.the.addHero(new PlayerBullie(x * TILE_WIDTH, y * TILE_HEIGHT));
-				case 18:
-					map[x][y] = 0;
-					Scene.the.addHero(new PlayerBlondie(x * TILE_WIDTH, y * TILE_HEIGHT));
 				default:
 					map[x][y] = originalmap[x][y];
 				}
 			}
 		}
+		
+		for (i in 0...spriteCount) {
+			switch (sprites[i * 3]) {
+			case 0:
+				Scene.the.addHero(new PlayerAgent(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 1:
+				Scene.the.addHero(new PlayerProfessor(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 2:
+				Scene.the.addHero(new PlayerBullie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 3:
+				Scene.the.addHero(new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 4:
+				Scene.the.addEnemy(new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			}
+		}
+		
 		music.play();
 		Player.getPlayer(0).setCurrent();
 		//Player.getInstance().reset();

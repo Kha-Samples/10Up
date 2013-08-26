@@ -104,7 +104,7 @@ class Enemy extends DestructibleSprite {
 				var xMax = xMin + width;
 				var xDist = Math.min( Math.abs(myXmin - xMax), Math.abs( myXmax - xMin ) );
 				distances[i] = new Vector2( xDist, y - player.y ).length;
-				trace ( distances[i] );
+				//trace ( distances[i] );
 				if (watchRect.collision(player.collisionRect())) {
 					if ( focus == null || (minDistance > distances[i]) ) {
 						focus = player;
@@ -148,7 +148,7 @@ class Enemy extends DestructibleSprite {
 				speedx = 3;
 			}
 		} else {
-			watchCounter = (watchCounter + 1) % 10;
+			watchCounter = (watchCounter + 1) % 30;
 		}
 	}
 	

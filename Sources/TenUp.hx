@@ -564,4 +564,35 @@ class TenUp extends Game {
 		default:
 		}
 	}
+	
+	override public function rightMouseDown(x: Int, y: Int): Void {
+		if ( mode == MissionBriefing ) {
+			return;
+		}
+		mouseX = x + Scene.the.screenOffsetX;
+		mouseY = y + Scene.the.screenOffsetY;
+		if (mode == Game) {
+			Player.current().prepareSpecialAbilityB(currentGameTime);
+			mouseUpAction = Player.current().useSpecialAbilityB;
+		}
+	}
+	
+	override public function rightMouseUp(x: Int, y: Int): Void {
+		if ( mode == MissionBriefing ) {
+			level.anyKey = true;
+			return;
+		}
+		mouseX = x + Scene.the.screenOffsetX;
+		mouseY = y + Scene.the.screenOffsetY;
+		switch (mode) {
+		case Game:
+			if (mouseUpAction != null) {
+				mouseUpAction( currentGameTime );
+				mouseUpAction = null;
+			}
+		case StartScreen:
+			enterLevel(2);
+		default:
+		}
+	}
 }

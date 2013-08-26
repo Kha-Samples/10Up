@@ -110,6 +110,7 @@ class TenUp extends Game {
 	private function initLevel(levelNumber: Int): Void {
 		level.init();
 		font = Loader.the.loadFont("arial", new FontStyle(false, false, false), 34);
+		minis = new Array();
 		minis.push(Loader.the.getImage("agentmini"));
 		minis.push(Loader.the.getImage("professormini"));
 		minis.push(Loader.the.getImage("rowdymini"));

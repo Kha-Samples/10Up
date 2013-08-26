@@ -116,6 +116,14 @@
       "circle": false
     },
     {
+      "id": "2e51b8c0-0e5a-11e3-8ffd-0800200c9a66",
+      "type": "blob",
+      "file": "level2",
+      "name": "level2",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
       "id": "15b1ea20-4032-11e2-a25f-0800200c9a66",
       "type": "blob",
       "file": "Arial12.kravur",
@@ -263,7 +271,8 @@
         "66f588d6-998a-49d5-a7d6-e2a9a747be51",
         "1a57efc0-0d8c-11e3-8ffd-0800200c9a66",
         "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
-        "45b099f1-445e-4417-bb25-554b1429c0aa"
+        "45b099f1-445e-4417-bb25-554b1429c0aa",
+        "2e51b8c0-0e5a-11e3-8ffd-0800200c9a66"
       ]
     },
     {

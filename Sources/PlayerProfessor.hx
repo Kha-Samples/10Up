@@ -23,16 +23,16 @@ class PlayerProfessor extends Player {
 		var c = center;
 		timecannon.x = c.x - 0.5 * timecannon.width;
 		//graple.x = x + 10;
-		timecannon.y = c.y - 0.5 * timecannon.height + 5;
+		timecannon.y = c.y - 0.5 * timecannon.height - 7;
 		timecannon.rotation.angle = Math.atan2(crosshair.y, crosshair.x);
 		if (lookRight) {
-			timecannon.x += 10;
+			timecannon.x += 15;
 			if (timecannon.animation.indices != timecannon.rightAnim.indices) {
 				timecannon.animation.indices = timecannon.rightAnim.indices;
 				timecannon.rotation.center.x = timecannon.width - timecannon.rotation.center.x;
 			}
 		} else {
-			timecannon.x -= 10;
+			timecannon.x -= 15;
 			timecannon.rotation.angle = timecannon.rotation.angle + Math.PI;
 			if (timecannon.animation.indices != timecannon.leftAnim.indices) {
 				timecannon.animation.indices = timecannon.leftAnim.indices;

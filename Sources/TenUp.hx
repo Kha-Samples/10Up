@@ -340,7 +340,11 @@ class TenUp extends Game {
 		painter.setColor(Color.fromBytes(50, 50, 50));
 		painter.fillRect(x, y + 30, 40, 10);
 		painter.setColor(Color.fromBytes(150, 0, 0));
-		painter.fillRect(x, y + 20, 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth, 10);
+		var healthBar = 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth;
+		if (healthBar < 0) healthBar = 0;
+		painter.fillRect(x, y + 20, healthBar, 10);
+		painter.setColor(Color.ColorBlack);
+		painter.fillRect(x + healthBar, y + 20, 40 - healthBar, 10);
 		painter.setColor(Color.fromBytes(0, 255, 255));
 		painter.fillRect(x, y + 30, Player.getPlayer(index).timeLeft() * 4, 10);
 	}

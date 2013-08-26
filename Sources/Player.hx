@@ -7,6 +7,7 @@ import kha.math.Vector2;
 import kha.Music;
 import kha.Painter;
 import kha.Rectangle;
+import kha.Scene;
 import kha.Sound;
 import kha.Sprite;
 import projectiles.PistolProjectile;
@@ -253,6 +254,7 @@ class Player extends DestructibleSprite {
 			sleep();
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
+			for (i in 0...30) Scene.the.addOther(new Blood(x + 20, y + 20));
 			// TODO: pain cry
 		} else if ( value > _health && _health <= 0 ) {
 			killed = timeLeft() > 0;

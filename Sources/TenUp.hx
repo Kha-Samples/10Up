@@ -352,7 +352,7 @@ class TenUp extends Game {
 			if (index > 3) index = 0;
 			var player = Player.getPlayer(index);
 			++count;
-			if (!player.isSleeping()) {
+			if (!player.isSleeping() && !player.isTimeLeaping) {
 				player.setCurrent();
 				return true;
 			}
@@ -369,7 +369,7 @@ class TenUp extends Game {
 			if (index < 0) index = 3;
 			var player = Player.getPlayer(index);
 			++count;
-			if (!player.isSleeping()) {
+			if (!player.isSleeping() && !player.isTimeLeaping) {
 				player.setCurrent();
 				return true;
 			}

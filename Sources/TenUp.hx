@@ -9,6 +9,7 @@ import kha.HighscoreList;
 import kha.Key;
 import kha.Loader;
 import kha.LoadingScreen;
+import kha.math.Random;
 import kha.Music;
 import kha.Painter;
 import kha.Scene;
@@ -29,7 +30,7 @@ enum Mode {
 }
 
 class TenUp extends Game {
-	static var instance: TenUp;
+	public static var instance(default, null): TenUp;
 	//var music : Music;
 	var tileColissions : Array<Tile>;
 	var map : Array<Array<Int>>;
@@ -37,9 +38,10 @@ class TenUp extends Game {
 	var highscoreName : String;
 	var shiftPressed : Bool;
 	private var font: Font;
-	private var level: Level;
+	public var level(default, null): Level;
 	
 	public var currentGameTime(default, null) : Float;
+	public var currentTimeDiff(default, null) : Float;
 	var lastTime : Float;
 	
 	public var mode(default, null) : Mode;
@@ -71,6 +73,7 @@ class TenUp extends Game {
 	}
 	
 	public function initStart(): Void {
+		Random.init( Math.round( Scheduler.time() * 1000 ) );
 		var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
 		logo.x = 0.5 * width - 0.5 * logo.width;
 		logo.y = 0.5 * height - 0.5 * logo.height;
@@ -136,19 +139,33 @@ class TenUp extends Game {
 		}
 		
 		for (i in 0...spriteCount) {
+			var sprite : kha.Sprite;
 			switch (sprites[i * 3]) {
 			case 0:
-				Scene.the.addHero(new PlayerAgent(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerAgent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 1:
-				Scene.the.addHero(new PlayerProfessor(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerProfessor(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 2:
-				Scene.the.addHero(new PlayerBullie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerBullie(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 3:
-				Scene.the.addHero(new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 4:
-				var door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
-				level.doors.push( door );
-				Scene.the.addOther(door);
+				sprite = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				level.doors.push( cast sprite );
+				Scene.the.addOther(sprite);
+			default:
+				trace ("That should never happen! We are therefor going to ignore it.");
+				continue;
+			}
+			if ( Std.is( sprite, DestructibleSprite ) ) {
+				level.timeTravelSprites.push( cast sprite );
+				level.destructibleSprites.push( cast sprite );
+			} else if ( Std.is( sprite, TimeTravelSprite ) ) {
+				level.timeTravelSprites.push( cast sprite );
 			}
 		}
 		
@@ -192,14 +209,15 @@ class TenUp extends Game {
 		var currentTime = Scheduler.time();
 		if (mode == Game) {
 			var lastGameTime = currentGameTime;
-			currentGameTime += currentTime - lastTime;
+			currentTimeDiff = currentTime - lastTime;
+			currentGameTime += currentTimeDiff;
 			Player.current().elapse(currentGameTime - lastGameTime);
 			level.update(currentGameTime);
 		}
 		if (mode != Pause) {
 			super.update();
 		}
-		if (mode == Game && Player.current() != null) {
+		if (mode == Game) {
 			Scene.the.camx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 		}
 		else if (mode == Pause) {
@@ -262,6 +280,7 @@ class TenUp extends Game {
 		}
 	}
 	
+	@:access(Player) 
 	private function drawPlayerInfo(painter: Painter, index: Int, x: Float, y: Float, color: Color): Void {
 		if (Player.getPlayerIndex() == index) {
 			painter.setColor(Color.fromBytes(255, 255, 255));
@@ -271,6 +290,8 @@ class TenUp extends Game {
 		painter.fillRect(x, y, 40, 40);
 		painter.setColor(Color.fromBytes(50, 50, 50));
 		painter.fillRect(x, y + 30, 40, 10);
+		painter.setColor(Color.fromBytes(150, 0, 0));
+		painter.fillRect(x, y + 20, 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth, 10);
 		painter.setColor(Color.fromBytes(0, 255, 255));
 		painter.fillRect(x, y + 30, Player.getPlayer(index).timeLeft() * 4, 10);
 	}
@@ -407,16 +428,25 @@ class TenUp extends Game {
 	
 	override public function mouseDown(x: Int, y: Int): Void {
 		if (mode == Game) {
-			if (shiftPressed) Player.current().prepareSpecialAbilityB(currentGameTime);
-			else Player.current().prepareSpecialAbilityA(currentGameTime);
+			if (shiftPressed) {
+				Player.current().prepareSpecialAbilityB(currentGameTime);
+				mouseUpAction = Player.current().useSpecialAbilityB;
+			}
+			else {
+				Player.current().prepareSpecialAbilityA(currentGameTime);
+				mouseUpAction = Player.current().useSpecialAbilityA;
+			}
 		}
 	}
 	
+	private var mouseUpAction : Float->Void;
 	override public function mouseUp(x: Int, y: Int): Void {
 		switch (mode) {
 		case Game:
-			if (shiftPressed) Player.current().useSpecialAbilityB(currentGameTime);
-			else Player.current().useSpecialAbilityA(currentGameTime);
+			if (mouseUpAction != null) {
+				mouseUpAction( currentGameTime );
+				mouseUpAction = null;
+			}
 		case StartScreen:
 			enterLevel( "level1" );
 		default:

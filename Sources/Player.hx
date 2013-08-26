@@ -39,8 +39,8 @@ class Player extends DestructibleSprite {
 	
 	var muzzlePoint : Vector2;
 	
-	public function new(x: Float, y: Float, image: String) {
-		super(Loader.the.getImage(image), 16 * 4, 16 * 4, 0);
+	public function new(x: Float, y: Float, image: String, maxHealth: Int = 50) {
+		super(maxHealth, Loader.the.getImage(image), 16 * 4, 16 * 4, 0);
 		this.x = x;
 		this.y = y;
 		standing = false;
@@ -64,9 +64,8 @@ class Player extends DestructibleSprite {
 		stompsound = Loader.the.getSound("stomp");
 		jumpsound = Loader.the.getSound("jump");
 		diesound = Loader.the.getSound("die");
-		_health = 50;
 		crosshair = new Vector2(1, 0);
-		isLiftable = true;
+		isRepairable = true;
 	}
 	
 	public static function init(): Void {
@@ -133,7 +132,7 @@ class Player extends DestructibleSprite {
 		++round;
 	}
 	
-	public override function update() {
+	public override function update(): Void {
 		walking = false;
 		if (killed && y > 600) {
 			TenUp.getInstance().showHighscore();
@@ -190,6 +189,7 @@ class Player extends DestructibleSprite {
 	}
 	
 	public function sleep() {
+		isLiftable = true;
 		diesound.play();
 		setAnimation(Animation.create(0));
 		speedy = 0;
@@ -223,12 +223,14 @@ class Player extends DestructibleSprite {
 		
 		storage.set("time", time);
 		storage.set("killed", killed);
+		storage.set("isLiftable", isLiftable);
 	}
 	override private function restoreCustomFieldsFromTimeLeap(storage: Map<String, Dynamic>): Void {
 		super.restoreCustomFieldsFromTimeLeap(storage);
 		
 		time = storage["time"];
 		killed = storage["killed"];
+		isLiftable = storage["isLiftable"];
 	}
 	
 	public function prepareSpecialAbilityA(gameTime : Float) : Void {

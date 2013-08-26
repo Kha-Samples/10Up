@@ -22,11 +22,10 @@ class Enemy extends DestructibleSprite {
 	private var nextShootTime: Float = 0;
 	
 	public function new(x: Float, y: Float) {
-		super(Loader.the.getImage("enemy"), 16 * 4, 16 * 4, 0);
+		super(50, Loader.the.getImage("enemy"), 16 * 4, 16 * 4, 0);
 		killed = false;
 		this.x = x;
 		this.y = y;
-		health = 50;
 		walkLeft = new Animation([2, 3, 4, 3], 6);
 		walkRight = new Animation([7, 8, 9, 8], 6);
 		standLeft = Animation.create(5);

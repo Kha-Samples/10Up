@@ -5,7 +5,7 @@ import projectiles.FistOfDoom;
 
 class PlayerBullie extends Player {
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman3");
+		super(x, y, "jumpman3", 100);
 		Player.setPlayer(2, this);
 		_health = 100;
 	}
@@ -64,36 +64,11 @@ class PlayerBullie extends Player {
 	override public function prepareSpecialAbilityB(gameTime: Float): Void {
 		if (lifted == null) {
 			var rect = collisionRect();
-			for ( i in 0...Scene.the.countHeroes() ) {
-				if (Std.is( Scene.the.getHero(i), TimeTravelSprite )) {
-					var hero : TimeTravelSprite = cast Scene.the.getHero(i);
-					if ( hero != this && hero.isLiftable ) {
-						if ( rect.collision( hero.collisionRect() ) ) {
-							lifted = hero;
-							return;
-						}
-					}
-				}
-			}
-			for ( i in 0...Scene.the.countOthers() ) {
-				if (Std.is( Scene.the.getOther(i), TimeTravelSprite )) {
-					var other : TimeTravelSprite = cast Scene.the.getOther(i);
-					if ( other.isLiftable ) {
-						if ( rect.collision( other.collisionRect() ) ) {
-							lifted = other;
-							return;
-						}
-					}
-				}
-			}
-			for ( i in 0...Scene.the.countEnemies() ) {
-				if (Std.is( Scene.the.getEnemy(i), TimeTravelSprite )) {
-					var enemy : TimeTravelSprite = cast Scene.the.getEnemy(i);
-					if ( enemy.isLiftable ) {
-						if ( rect.collision( enemy.collisionRect() ) ) {
-							lifted = enemy;
-							return;
-						}
+			for (checkSprite in TenUp.instance.level.timeTravelSprites) {
+				if ( checkSprite != this && checkSprite.isLiftable ) {
+					if ( rect.collision( checkSprite.collisionRect() ) ) {
+						lifted = checkSprite;
+						return;
 					}
 				}
 			}

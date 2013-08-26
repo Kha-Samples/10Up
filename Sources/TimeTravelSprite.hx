@@ -5,6 +5,7 @@ import kha.Direction;
 import kha.Image;
 import kha.math.Vector2;
 import kha.Rectangle;
+import kha.Scene;
 import kha.Sprite;
 
 @:access(kha.Animation) 
@@ -82,7 +83,9 @@ class TimedSpriteInfo {
 }
 
 class TimeTravelSprite extends Sprite {
+	var snapshotCounter : Int = 0;
 	var timeTravelInfos : List<TimedSpriteInfo>;
+	public var isTimeLeaping(default, null) : Bool = false;
 	public var isUseable(default, null) : Bool = false;
 	public var isLiftable(default, null) : Bool = false;
 	
@@ -93,7 +96,7 @@ class TimeTravelSprite extends Sprite {
 	}
 	
 	public var center(get, never) : Vector2;
-	@:noComplete @:extern private inline function get_center() : Vector2 {
+	@:noCompletion @:extern private inline function get_center() : Vector2 {
 		return new Vector2(Math.round(x - collider.x) + 0.5 * width, Math.round(y - collider.y) + 0.5 * height);
 	}
 	
@@ -103,24 +106,41 @@ class TimeTravelSprite extends Sprite {
 		super.update();
 		
 		if ( TenUp.getInstance().mode == Game ) {
-			var currentTime = TenUp.getInstance().currentGameTime;
-			var checkTime = currentTime - 10;
-			while ( timeTravelInfos.length > 0 && timeTravelInfos.first().time < checkTime ) {
-				timeTravelInfos.pop();
+			if ( isTimeLeaping ) {
+				if ( timeTravelInfos.length > 1 ) {
+					var timeStep = timeTravelInfos.last();
+					timeTravelInfos.remove( timeStep );
+					timeStep.apply( this );
+					collides = false;
+					isTimeLeaping = true;
+				} else {
+					var timeStep = timeTravelInfos.last();
+					timeStep.apply( this );
+					isTimeLeaping = false;
+					collides = true;
+				}
+			} else {
+				if (snapshotCounter == 0) {
+					snapshotCounter = 1;
+					var currentTime = TenUp.getInstance().currentGameTime;
+					var checkTime = currentTime - 10;
+					while ( timeTravelInfos.length > 0 && timeTravelInfos.first().time < checkTime ) {
+						timeTravelInfos.pop();
+					}
+					timeTravelInfos.add( new TimedSpriteInfo( currentTime, this ) );
+				} else {
+					snapshotCounter = (snapshotCounter + 1) % 4;
+				}
 			}
-			
-			timeTravelInfos.add( new TimedSpriteInfo( currentTime, this ) );
 		}
 	}
 	
 	private function saveCustomFieldsForTimeLeap( storage : Map < String, Dynamic > ) : Void { }
 	private function restoreCustomFieldsFromTimeLeap( storage : Map < String, Dynamic > ) : Void { }
 	
+	static var timeLeapingSprite : TimeTravelSprite;
 	public function timeLeap() : Void {
-		// TODO: animate
-		var destinationTime = timeTravelInfos.pop();
-		destinationTime.apply( this );
-		timeTravelInfos.clear();
-		timeTravelInfos.add( destinationTime );
+		collides = false;
+		isTimeLeaping = true;
 	}
 }

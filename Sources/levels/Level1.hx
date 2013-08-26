@@ -6,10 +6,15 @@ class Level1 extends Level {
 	public function new() {
 		super();
 		var timeline = new Timeline();
-		timeline.add(5, addSoldier);
+		timeline.add(4, addSoldier);
 		timeline.add(6, addSoldier);
-		timeline.add(7, addSoldier);
 		timeline.add(8, addSoldier);
+		timeline.add(10, addSoldier);
+		timeline.add(12, addSoldier);
+		timeline.add(14, addSoldier);
+		timeline.add(14.5, addSoldier);
+		timeline.add(16, addSoldier);
+		timeline.add(16.5, addSoldier);
 		setTimeline(timeline);
 		enemies = new Array();
 	}
@@ -18,6 +23,7 @@ class Level1 extends Level {
 	
 	private function addSoldier(): Void {
 		var enemy = new Enemy(20, 200);
+		enemy.update();
 		enemies.push(enemy);
 		Scene.the.addEnemy(enemy);
 	}

@@ -4,6 +4,7 @@ import kha.Animation;
 import kha.Direction;
 import kha.Image;
 import kha.math.Vector2;
+import kha.Painter;
 import kha.Rectangle;
 import kha.Scene;
 import kha.Sprite;
@@ -132,6 +133,20 @@ class TimeTravelSprite extends Sprite {
 					snapshotCounter = (snapshotCounter + 1) % 4;
 				}
 			}
+		}
+	}
+	
+	override public function render(painter:Painter): Void {
+		super.render(painter);
+		if ( isTimeLeaping ) {
+			var x = x - collider.x;
+			var y = y - collider.y;
+			var r = 0.5 + 0.5*Math.random();
+			var g = 0.5 + 0.5*Math.random();
+			var b = 0.5 + 0.5*Math.random();
+			var a = 0.2 + 0.5*Math.random();
+			painter.setColor( kha.Color.fromFloats(r, g, b, a) );
+			painter.fillRect(x, y, width, height);
 		}
 	}
 	

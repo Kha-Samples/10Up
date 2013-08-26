@@ -280,6 +280,7 @@ class TenUp extends Game {
 		}
 	}
 	
+	@:access(Player) 
 	private function drawPlayerInfo(painter: Painter, index: Int, x: Float, y: Float, color: Color): Void {
 		if (Player.getPlayerIndex() == index) {
 			painter.setColor(Color.fromBytes(255, 255, 255));
@@ -289,6 +290,8 @@ class TenUp extends Game {
 		painter.fillRect(x, y, 40, 40);
 		painter.setColor(Color.fromBytes(50, 50, 50));
 		painter.fillRect(x, y + 30, 40, 10);
+		painter.setColor(Color.fromBytes(150, 0, 0));
+		painter.fillRect(x, y + 20, 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth, 10);
 		painter.setColor(Color.fromBytes(0, 255, 255));
 		painter.fillRect(x, y + 30, Player.getPlayer(index).timeLeft() * 4, 10);
 	}
@@ -440,7 +443,10 @@ class TenUp extends Game {
 	override public function mouseUp(x: Int, y: Int): Void {
 		switch (mode) {
 		case Game:
-			mouseUpAction( currentGameTime );
+			if (mouseUpAction != null) {
+				mouseUpAction( currentGameTime );
+				mouseUpAction = null;
+			}
 		case StartScreen:
 			enterLevel( "level1" );
 		default:

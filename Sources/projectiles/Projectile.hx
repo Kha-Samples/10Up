@@ -28,30 +28,32 @@ class Projectile extends Sprite {
 	}
 	
 	override public function hit(sprite:Sprite): Void {
-		if ( Std.is( sprite, DestructibleSprite ) ) {
-			var destructible : DestructibleSprite = cast sprite;
-			if (destructible.isStucture) {
-				if ( !isPiercing.has(DESTRUCTIBLE_STRUCTURES) ) {
-					remove();
+		if ( sprite.collides && this.collides ) {
+			if ( Std.is( sprite, DestructibleSprite ) ) {
+				var destructible : DestructibleSprite = cast sprite;
+				if (destructible.isStucture) {
+					if ( !isPiercing.has(DESTRUCTIBLE_STRUCTURES) ) {
+						remove();
+					}
+				} else {
+					if ( !isPiercing.has(CREATURES) ) {
+						remove();
+					}
+				}
+				
+				if (this.isTimeWeapon) {
+					destructible.timeLeap();
+				}
+				
+				if (destructible.isStucture) {
+					destructible.health -= this.stuctureDamage;
+				} else {
+					destructible.health -= this.creatureDamage;
 				}
 			} else {
-				if ( !isPiercing.has(CREATURES) ) {
+				if ( !isPiercing.has(OTHER_SPRITES) ) {
 					remove();
 				}
-			}
-			
-			if (this.isTimeWeapon) {
-				destructible.timeLeap();
-			}
-			
-			if (destructible.isStucture) {
-				destructible.health -= this.stuctureDamage;
-			} else {
-				destructible.health -= this.creatureDamage;
-			}
-		} else {
-			if ( !isPiercing.has(OTHER_SPRITES) ) {
-				remove();
 			}
 		}
 	}

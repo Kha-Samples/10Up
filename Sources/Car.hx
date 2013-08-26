@@ -10,7 +10,7 @@ class Car extends DestructibleSprite {
 	private var startSound: Sound;
 	
 	public function new(x: Float, y: Float) {
-		super(100, Loader.the.getImage("car"), 100 * 2, 41 * 2);
+		super(100, Loader.the.getImage("car"), 100 * 2, 41 * 2, 0);
 		this.x = x;
 		this.y = y;
 		health = 0;

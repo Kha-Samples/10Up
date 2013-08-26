@@ -185,12 +185,15 @@ class TenUp extends Game {
 				Scene.the.addOther(sprite);
 			case 7:
 				sprite = new Gate(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.gates.push(cast sprite);
 				Scene.the.addOther(sprite);
 			case 8:
 				sprite = new Gatter(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.gatters.push(cast sprite);
 				Scene.the.addOther(sprite);
 			case 9:
 				sprite = new Computer(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.computers.push(cast sprite);
 				Scene.the.addOther(sprite);
 			case 10:
 				sprite = new Machinegun(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
@@ -200,6 +203,7 @@ class TenUp extends Game {
 				Scene.the.addEnemy(sprite);
 			case 12:
 				sprite = new Car(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.cars.push(cast sprite);
 				Scene.the.addOther(sprite);
 			default:
 				trace ("That should never happen! We are therefor going to ignore it.");

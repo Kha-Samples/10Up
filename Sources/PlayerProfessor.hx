@@ -48,7 +48,6 @@ class PlayerProfessor extends Player {
 		}
 	}
 	
-	
 	/**
 	  Time Cannon
 	**/
@@ -66,6 +65,18 @@ class PlayerProfessor extends Player {
 			projectile.y = muzzlePoint.y + (lookRight ? 0.8 : -0.8) * (projectile.height * crosshair.y);
 			Scene.the.addProjectile( projectile );
 			isCrosshairVisible = false;
+		}
+	}
+	
+	/**
+	  Hacking
+	 */
+	override public function useSpecialAbilityB(gameTime: Float): Void {
+		if (Level.the.computers.length > 0) {
+			var computer = Level.the.computers[0];
+			if (computer.collisionRect().collision(collisionRect())) {
+				Level.the.gates[0].open();
+			}
 		}
 	}
 }

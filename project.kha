@@ -310,6 +310,19 @@
       "name": "level1briefing1",
       "scale": 1.0,
       "circle": false
+    },
+    {
+      "id": "471e9970-0e7f-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "pause.png",
+      "name": "pause",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
     }
   ],
   "rooms": [
@@ -348,7 +361,8 @@
         "2b620320-0e6b-11e3-8ffd-0800200c9a66",
         "e2ced300-0e73-11e3-8ffd-0800200c9a66",
         "2b620320-0e6b-11e3-8ffd-0800200c9a66",
-        "99664a9b-24ef-40c0-becd-cec8e925c8fa"
+        "99664a9b-24ef-40c0-becd-cec8e925c8fa",
+        "471e9970-0e7f-11e3-8ffd-0800200c9a66"
       ]
     },
     {

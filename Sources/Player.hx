@@ -203,6 +203,14 @@ class Player extends DestructibleSprite {
 		}
 	}
 	
+	public function leftButton(): String {
+		return "";
+	}
+	
+	public function rightButton(): String {
+		return "";
+	}
+	
 	public function zzzzzXDif(): Float {
 		return 60;
 	}

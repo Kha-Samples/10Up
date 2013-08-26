@@ -41,6 +41,14 @@ class PlayerBullie extends Player {
 		}
 	}
 	
+	override public function leftButton(): String {
+		return "Punch";
+	}
+	
+	override public function rightButton(): String {
+		return "Lift";
+	}
+	
 	/**
 	  Hauen
 	**/

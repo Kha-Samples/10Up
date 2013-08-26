@@ -33,6 +33,14 @@ class PlayerAgent extends Player {
 		jumpRight = Animation.create(30);
 	}
 	
+	override public function leftButton(): String {
+		return "Shoot";
+	}
+	
+	override public function rightButton(): String {
+		return "Grapple";
+	}
+	
 	override public function zzzzzXDif(): Float {
 		return 20;
 	}

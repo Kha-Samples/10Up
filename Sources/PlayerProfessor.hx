@@ -1,8 +1,10 @@
 package;
 
+import kha.Animation;
 import kha.Color;
 import kha.Loader;
 import kha.Painter;
+import kha.Rectangle;
 import kha.Scene;
 import projectiles.TimeProjectile;
 
@@ -10,10 +12,30 @@ class PlayerProfessor extends Player {
 	var timecannon : TimeCannon;
 	
 	public function new(x: Float, y: Float) {
-		super(x, y - 8, "professor", 20 * 2, 52 * 2);
+		super(x, y - 8, "professor", Std.int(410 / 10) * 2, Std.int(455 / 7) * 2);
 		Player.setPlayer(1, this);
+				
+		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
+		walkLeft = Animation.createRange(11, 18, 4);
+		walkRight = Animation.createRange(1, 8, 4);
+		standLeft = Animation.create(10);
+		standRight = Animation.create(0);
+		jumpLeft = Animation.create(16);
+		jumpRight = Animation.create(6);
 		
 		timecannon = new TimeCannon();
+	}
+	
+	override public function zzzzzXDif(): Float {
+		return 20;
+	}
+	
+	override public function leftButton(): String {
+		return "Shoot";
+	}
+	
+	override public function rightButton(): String {
+		return "Hack";
 	}
 	
 	@:access(kha.Animation) 

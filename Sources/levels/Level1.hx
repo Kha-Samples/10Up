@@ -95,7 +95,7 @@ class Level1 extends Level {
 					return true;
 			}
 		}
-		if (state >= 2) {
+		if (state >= 3) {
 			var aimx = Std.int(doors[0].x);
 			var camspeed: Int = 5;
 			if (Scene.the.camx > aimx) {

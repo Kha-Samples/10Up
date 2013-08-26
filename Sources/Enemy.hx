@@ -79,6 +79,7 @@ class Enemy extends DestructibleSprite {
 		}
 	}
 	
+	public var patrolSpeed: Float = 5.0;
 	var watchCounter : Int = 0;
 	override public function update(): Void {
 		super.update();
@@ -129,10 +130,11 @@ class Enemy extends DestructibleSprite {
 				} else if ( minDistance > 50 ) {
 					if ( Std.is( focus, PlayerBlondie ) ) {
 						speedx *= 0.5;
+					} else {
+						tryToShoot();
 					}
-					tryToShoot();
 				} else if (minDistance < 25) {
-					speedx = (focus.x - x) > 0 ? -2 : -2;
+					speedx *= -0.5;
 				} else {
 					if ( Std.is( focus, PlayerBlondie ) ) {
 						var blondie : PlayerBlondie = cast focus;
@@ -145,7 +147,7 @@ class Enemy extends DestructibleSprite {
 					speedx = 0;
 				}
 			} else {
-				speedx = 3;
+				speedx = patrolSpeed;
 			}
 		} else {
 			watchCounter = (watchCounter + 1) % 30;

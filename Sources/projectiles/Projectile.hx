@@ -16,7 +16,7 @@ enum PiercingMode {
 class Projectile extends Sprite {
 	var isPiercing : haxe.EnumFlags<PiercingMode> = 0;
 	public var isTimeWeapon(default, null) : Bool = false;
-	public var stuctureDamage(default, null) : Int = 0;
+	public var structureDamage(default, null) : Int = 0;
 	public var creatureDamage(default, null) : Int = 0;
 	
 	public function new(image:Image, width:Int=0, height:Int=0, z:Int=1) {
@@ -47,7 +47,7 @@ class Projectile extends Sprite {
 				}
 				
 				if (destructible.isStucture) {
-					destructible.health -= this.stuctureDamage;
+					destructible.health -= this.structureDamage;
 				} else {
 					destructible.health -= this.creatureDamage;
 				}

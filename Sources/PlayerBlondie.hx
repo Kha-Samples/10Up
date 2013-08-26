@@ -67,20 +67,34 @@ class PlayerBlondie extends Player {
 		return 20;
 	}
 	
+	override public function leftButton(): String {
+		return "Dance";
+	}
+	
+	override public function rightButton(): String {
+		return "Repair";
+	}
+	
 	override public function update() {
-		super.update();
-		
 		if ( repairing != null ) {
+			animation.next();
 			var amount = Math.round( repairAmountPerSec * (TenUp.instance.currentGameTime - lastRepairTime) );
 			if ( amount > 0 ) {
 				lastRepairTime = TenUp.instance.currentGameTime;
 				repairing.health += amount;
 			}
-		}
-		
-		if (isDancing && Player.current() != this && lastDanceTime < TenUp.instance.currentGameTime) {
-			isDancing = false;
-			// TODO: stop dance animation
+		} else if (isDancing) {
+			if ( (Player.current() != this && lastDanceTime < TenUp.instance.currentGameTime)
+			  || (lastDanceTime > 0 && (up || right || left)) ) {
+				isDancing = false;
+				if (lookRight) setAnimation(standRight);
+				else setAnimation(standLeft);
+				super.update();
+			} else {
+				animation.next();
+			}
+		} else {
+			super.update();
 		}
 	}
 	
@@ -91,6 +105,9 @@ class PlayerBlondie extends Player {
 	var lastDanceTime : Float;
 	override public function prepareSpecialAbilityA(gameTime : Float) : Void {
 		isDancing = true;
+		speedx = 0;
+		lastDanceTime = 0;
+		setAnimation( danceAnimation );
 		// TODO: start dance animation
 	}
 	override public function useSpecialAbilityA(gameTime : Float) : Void {
@@ -114,6 +131,7 @@ class PlayerBlondie extends Player {
 						lastRepairTime = gameTime;
 						if (lookRight) setAnimation(repairRightAnimation);
 						else setAnimation(repairLeftAnimation);
+						speedx = 0;
 						return;
 					}
 				}

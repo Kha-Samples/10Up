@@ -29,6 +29,7 @@ class Projectile extends Sprite {
 	
 	override public function hit(sprite:Sprite): Void {
 		if ( sprite.collides && this.collides ) {
+			if (Std.is(sprite, Player) && cast(sprite, Player).isSleeping()) return;
 			if ( Std.is( sprite, DestructibleSprite ) ) {
 				var destructible : DestructibleSprite = cast sprite;
 				if (destructible.isStucture) {

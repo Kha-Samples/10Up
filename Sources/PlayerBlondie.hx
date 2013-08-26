@@ -63,6 +63,10 @@ class PlayerBlondie extends Player {
 		repairRightAnimation = Animation.createRange(30, 32, 4);
 	}
 	
+	override public function zzzzzXDif(): Float {
+		return 20;
+	}
+	
 	override public function update() {
 		super.update();
 		

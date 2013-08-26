@@ -25,26 +25,36 @@
     {
       "id": "12116430-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "coin.png",
-      "name": "coin",
-      "scale": 1.0,
+      "file": "gate.png",
+      "name": "gate",
+      "scale": 2.0,
       "circle": false
     },
     {
       "id": "2348bd70-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "fly.png",
-      "name": "fly",
-      "scale": 1.0,
-      "circle": false
+      "file": "gatter.png",
+      "name": "gatter",
+      "scale": 2.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
     },
     {
       "id": "2348bd71-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "gumba.png",
-      "name": "gumba",
-      "scale": 1.0,
-      "circle": false
+      "file": "machinegun.png",
+      "name": "machinegun",
+      "scale": 2.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
     },
     {
       "id": "2348bd72-d7ce-11e1-9b23-0800200c9a66",
@@ -62,10 +72,15 @@
     {
       "id": "2348bd73-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "koopa.png",
-      "name": "koopa",
-      "scale": 1.0,
-      "circle": false
+      "file": "boss.png",
+      "name": "boss",
+      "scale": 2.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
     },
     {
       "id": "2348bd74-d7ce-11e1-9b23-0800200c9a66",
@@ -223,9 +238,9 @@
     {
       "id": "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
       "type": "image",
-      "file": "enemy.png",
-      "name": "enemy",
-      "scale": 1.0,
+      "file": "soldier.png",
+      "name": "soldier",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -239,6 +254,32 @@
       "file": "timecannon.png",
       "name": "timecannon",
       "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "8c22dfd0-0e5d-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "car.png",
+      "name": "car",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
+    },
+    {
+      "id": "9c7e09e0-0e5d-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "computer.png",
+      "name": "computer",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
       "circle": false
     }
   ],
@@ -272,7 +313,9 @@
         "1a57efc0-0d8c-11e3-8ffd-0800200c9a66",
         "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
         "45b099f1-445e-4417-bb25-554b1429c0aa",
-        "2e51b8c0-0e5a-11e3-8ffd-0800200c9a66"
+        "2e51b8c0-0e5a-11e3-8ffd-0800200c9a66",
+        "8c22dfd0-0e5d-11e3-8ffd-0800200c9a66",
+        "9c7e09e0-0e5d-11e3-8ffd-0800200c9a66"
       ]
     },
     {

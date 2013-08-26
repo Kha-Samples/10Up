@@ -5,7 +5,7 @@ import kha.Sprite;
 
 class Car extends Sprite {
 	public function new(x: Float, y: Float) {
-		super(Loader.the.getImage("car"), 10, 10);
+		super(Loader.the.getImage("car"), 100 * 2, 41 * 2);
 		this.x = x;
 		this.y = y;
 	}

@@ -20,7 +20,9 @@ class Machinegun extends Sprite {
 		if (Level.the.gates[0].isOpen()) {
 			for (i in 0...4) {
 				var p = Player.getPlayer(i);
-				if (player == null || p.x > player.x) {
+				if (p.isSleeping()) {
+					continue;
+				} if (player == null || p.x > player.x) {
 					if (p.y > y - 30 && p.y < y + height) {
 						if (p.x > Level.the.cars[0].x + Level.the.cars[0].width) {
 							player = p;

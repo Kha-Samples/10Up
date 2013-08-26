@@ -156,7 +156,6 @@ class TenUp extends Game {
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
-		Scene.the.camx = Std.int(width / 2);
 		Player.init();
 		var tilemap : Tilemap = new Tilemap("outside", 32, 32, map, tileColissions);
 		Scene.the.setColissionMap(tilemap);
@@ -239,6 +238,7 @@ class TenUp extends Game {
 		currentGameTime = 0;
 		lastTime = Scheduler.time();
 		mode = MissionBriefing;
+		Scene.the.camx = Std.int(width / 2);
 	}
 	
 	public function victory() : Void {
@@ -560,7 +560,7 @@ class TenUp extends Game {
 				mouseUpAction = null;
 			}
 		case StartScreen:
-			enterLevel(1);
+			enterLevel(2);
 		default:
 		}
 	}

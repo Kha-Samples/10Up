@@ -18,6 +18,7 @@ class PistolProjectile extends Projectile {
 		accx = 0;
 		accy = 0;
 		creatureDamage = 50;
+		structureDamage = 1;
 		Loader.the.getSound("shot").play();
 	}
 	

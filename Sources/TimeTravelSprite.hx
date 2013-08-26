@@ -93,7 +93,7 @@ class TimeTravelSprite extends Sprite {
 	}
 	
 	public var center(get, never) : Vector2;
-	@:noComplete @:extern private inline function get_center() : Vector2 {
+	@:noCompletion @:extern private inline function get_center() : Vector2 {
 		return new Vector2(Math.round(x - collider.x) + 0.5 * width, Math.round(y - collider.y) + 0.5 * height);
 	}
 	

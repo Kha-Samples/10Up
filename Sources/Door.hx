@@ -13,7 +13,7 @@ class Door extends DestructibleSprite {
 	private var destroyedAnim: Animation;
 	
 	public function new(x: Int, y: Int) {
-		super(Loader.the.getImage("door"), 32, 64, 0);
+		super(100, Loader.the.getImage("door"), 32, 64, 0);
 		this.x = x;
 		this.y = y;
 		accy = 0;
@@ -22,8 +22,8 @@ class Door extends DestructibleSprite {
 		crackedAnim = Animation.create(2);
 		destroyedAnim = Animation.create(3);
 		setAnimation(closedAnim);
-		health = 100;
 		isStucture = true;
+		isRepairable = true;
 	}
 	
 	private function set_opened(value : Bool) : Bool {

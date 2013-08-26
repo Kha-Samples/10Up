@@ -29,7 +29,7 @@ enum Mode {
 }
 
 class TenUp extends Game {
-	static var instance: TenUp;
+	public static var instance(default, null): TenUp;
 	//var music : Music;
 	var tileColissions : Array<Tile>;
 	var map : Array<Array<Int>>;
@@ -37,9 +37,10 @@ class TenUp extends Game {
 	var highscoreName : String;
 	var shiftPressed : Bool;
 	private var font: Font;
-	private var level: Level;
+	public var level(default, null): Level;
 	
 	public var currentGameTime(default, null) : Float;
+	public var currentTimeDiff(default, null) : Float;
 	var lastTime : Float;
 	
 	public var mode(default, null) : Mode;
@@ -136,19 +137,33 @@ class TenUp extends Game {
 		}
 		
 		for (i in 0...spriteCount) {
+			var sprite : kha.Sprite;
 			switch (sprites[i * 3]) {
 			case 0:
-				Scene.the.addHero(new PlayerAgent(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerAgent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 1:
-				Scene.the.addHero(new PlayerProfessor(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerProfessor(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 2:
-				Scene.the.addHero(new PlayerBullie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerBullie(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 3:
-				Scene.the.addHero(new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				sprite = new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addHero(sprite);
 			case 4:
-				var door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
-				level.doors.push( door );
-				Scene.the.addOther(door);
+				sprite = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				level.doors.push( cast sprite );
+				Scene.the.addOther(sprite);
+			default:
+				trace ("That should never happen! We are therefor going to ignore it.");
+				continue;
+			}
+			if ( Std.is( sprite, DestructibleSprite ) ) {
+				level.timeTravelSprites.push( cast sprite );
+				level.destructibleSprites.push( cast sprite );
+			} else if ( Std.is( sprite, TimeTravelSprite ) ) {
+				level.timeTravelSprites.push( cast sprite );
 			}
 		}
 		
@@ -192,14 +207,15 @@ class TenUp extends Game {
 		var currentTime = Scheduler.time();
 		if (mode == Game) {
 			var lastGameTime = currentGameTime;
-			currentGameTime += currentTime - lastTime;
+			currentTimeDiff = currentTime - lastTime;
+			currentGameTime += currentTimeDiff;
 			Player.current().elapse(currentGameTime - lastGameTime);
 			level.update(currentGameTime);
 		}
 		if (mode != Pause) {
 			super.update();
 		}
-		if (mode == Game && Player.current() != null) {
+		if (mode == Game) {
 			Scene.the.camx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 		}
 		else if (mode == Pause) {
@@ -407,16 +423,22 @@ class TenUp extends Game {
 	
 	override public function mouseDown(x: Int, y: Int): Void {
 		if (mode == Game) {
-			if (shiftPressed) Player.current().prepareSpecialAbilityB(currentGameTime);
-			else Player.current().prepareSpecialAbilityA(currentGameTime);
+			if (shiftPressed) {
+				Player.current().prepareSpecialAbilityB(currentGameTime);
+				mouseUpAction = Player.current().useSpecialAbilityB;
+			}
+			else {
+				Player.current().prepareSpecialAbilityA(currentGameTime);
+				mouseUpAction = Player.current().useSpecialAbilityA;
+			}
 		}
 	}
 	
+	private var mouseUpAction : Float->Void;
 	override public function mouseUp(x: Int, y: Int): Void {
 		switch (mode) {
 		case Game:
-			if (shiftPressed) Player.current().useSpecialAbilityB(currentGameTime);
-			else Player.current().useSpecialAbilityA(currentGameTime);
+			mouseUpAction( currentGameTime );
 		case StartScreen:
 			enterLevel( "level1" );
 		default:

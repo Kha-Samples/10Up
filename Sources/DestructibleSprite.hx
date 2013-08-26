@@ -6,21 +6,25 @@ import projectiles.Projectile;
 
 
 class DestructibleSprite extends TimeTravelSprite {
-	var _health : Int;
+	var maxHealth : Int;
+	@:noCompletion var _health : Int;
 	public var health(get, set) : Int;
 	public var isStucture(default, null) : Bool = false;
+	public var isRepairable(default, null) : Bool = false;
 	
-	public function new(image:Image, width:Int=0, height:Int=0, z:Int=1) {
+	public function new(maxHealth : Int, image:Image, width:Int=0, height:Int=0, z:Int=1) {
 		super(image, width, height, z);
+		_health = maxHealth;
+		this.maxHealth = maxHealth;
 	}
 	
 	/**
 		Overwrite to hanlde health loss or destruction/dying.
 	**/
-	private function set_health(value: Int) : Int {
+	@:noCompletion private function set_health(value: Int) : Int {
 		return _health = value;
 	}
-	private inline function get_health() : Int {
+	@:noCompletion private inline function get_health() : Int {
 		return _health;
 	}
 	

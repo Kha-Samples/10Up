@@ -23,4 +23,11 @@ class Car extends DestructibleSprite {
 		}
 		return super.set_health(value);
 	}
+	
+	override public function hit(sprite: Sprite): Void {
+		super.hit(sprite);
+		if (Std.is(sprite, Boss)) {
+			cast(Level.the, levels.Level2).win();
+		}
+	}
 }

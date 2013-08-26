@@ -35,6 +35,10 @@ class Gate extends Sprite {
 		opened = true;
 	}
 	
+	public function isOpen(): Bool {
+		return opened;
+	}
+	
 	override public function render(painter: Painter): Void {
 		if (image != null) {
 			painter.drawImage2(image, 0, height - gateHeight, width, gateHeight, x, y, width, gateHeight);

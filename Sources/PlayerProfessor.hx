@@ -30,6 +30,14 @@ class PlayerProfessor extends Player {
 		return 20;
 	}
 	
+	override public function leftButton(): String {
+		return "Shoot";
+	}
+	
+	override public function rightButton(): String {
+		return "Hack";
+	}
+	
 	@:access(kha.Animation) 
 	override public function update() {
 		super.update();

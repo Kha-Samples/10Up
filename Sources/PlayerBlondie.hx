@@ -67,6 +67,14 @@ class PlayerBlondie extends Player {
 		return 20;
 	}
 	
+	override public function leftButton(): String {
+		return "Dance";
+	}
+	
+	override public function rightButton(): String {
+		return "Repair";
+	}
+	
 	override public function update() {
 		super.update();
 		

@@ -116,7 +116,7 @@ class TenUp extends Game {
 		case 2:
 			level = new Level2();
 		}
-		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
+		font = Loader.the.loadFont("arial", new FontStyle(false, false, false), 34);
 		minis.push(Loader.the.getImage("agentmini"));
 		minis.push(Loader.the.getImage("professormini"));
 		minis.push(Loader.the.getImage("rowdymini"));
@@ -357,6 +357,12 @@ class TenUp extends Game {
 	private function drawPlayerInfo(painter: Painter, index: Int, x: Float, y: Float, color: Color): Void {
 		if (Player.getPlayerIndex() == index) {
 			painter.setColor(Color.fromBytes(255, 255, 255));
+			
+			painter.drawString("Left Mouse", 600, y);
+			painter.drawString(Player.current().leftButton(), 620, y + 50);
+			painter.drawString("Right Mouse", 800, y);
+			painter.drawString(Player.current().rightButton(), 820, y + 50);
+			
 			//painter.fillRect(x - 5, y - 5, 50, 50);
 			painter.fillRect(x - 10, y - 25, 50, 10);
 			painter.fillRect(x - 10, y - 25, 10, 90);

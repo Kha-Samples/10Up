@@ -20,6 +20,7 @@ import kha.Configuration;
 import kha.Sprite;
 import kha.Tile;
 import kha.Tilemap;
+import levels.Intro;
 import levels.Level1;
 import levels.Level2;
 
@@ -81,10 +82,15 @@ class TenUp extends Game {
 	public function enterLevel(levelNumber: Int) : Void {
 		Configuration.setScreen( new LoadingScreen() );
 		switch (levelNumber) {
+		case 0:
+			level = new Intro();
+			Loader.the.loadRoom("start", initLevel.bind(0));
 		case 1:
-			Loader.the.loadRoom("level1", initLevel1);
+			level = new Level1();
+			Loader.the.loadRoom("level1", initLevel.bind(1));
 		case 2:
-			Loader.the.loadRoom("level1", initLevel2);
+			level = new Level2();
+			Loader.the.loadRoom("level1", initLevel.bind(2));
 		}
 	}
 	
@@ -101,21 +107,8 @@ class TenUp extends Game {
         //flash.Lib.current.stage.displayState = FULL_SCREEN;
 	}
 	
-	private function initLevel1(): Void {
-		initLevel(1);
-	}
-	
-	private function initLevel2(): Void {
-		initLevel(2);
-	}
-
 	private function initLevel(levelNumber: Int): Void {
-		switch (levelNumber) {
-		case 1:
-			level = new Level1();
-		case 2:
-			level = new Level2();
-		}
+		level.init();
 		font = Loader.the.loadFont("arial", new FontStyle(false, false, false), 34);
 		minis.push(Loader.the.getImage("agentmini"));
 		minis.push(Loader.the.getImage("professormini"));
@@ -125,32 +118,41 @@ class TenUp extends Game {
 		for (i in 0...352) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
-		var blob = Loader.the.getBlob("level" + levelNumber);
-		var levelWidth: Int = blob.readS32BE();
-		var levelHeight: Int = blob.readS32BE();
-		originalmap = new Array<Array<Int>>();
-		for (x in 0...levelWidth) {
-			originalmap.push(new Array<Int>());
-			for (y in 0...levelHeight) {
-				originalmap[x].push(blob.readS32BE());
+		if ( levelNumber == 0 ) {
+			Scene.the.clear();
+			Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
+			Configuration.setScreen(this);
+			currentGameTime = 0;
+			lastTime = Scheduler.time();
+			mode = MissionBriefing;
+		} else {
+			var blob = Loader.the.getBlob("level" + levelNumber);
+			var levelWidth: Int = blob.readS32BE();
+			var levelHeight: Int = blob.readS32BE();
+			originalmap = new Array<Array<Int>>();
+			for (x in 0...levelWidth) {
+				originalmap.push(new Array<Int>());
+				for (y in 0...levelHeight) {
+					originalmap[x].push(blob.readS32BE());
+				}
 			}
-		}
-		map = new Array<Array<Int>>();
-		for (x in 0...originalmap.length) {
-			map.push(new Array<Int>());
-			for (y in 0...originalmap[0].length) {
-				map[x].push(0);
+			map = new Array<Array<Int>>();
+			for (x in 0...originalmap.length) {
+				map.push(new Array<Int>());
+				for (y in 0...originalmap[0].length) {
+					map[x].push(0);
+				}
 			}
+			var spriteCount = blob.readS32BE();
+			var sprites = new Array<Int>();
+			for (i in 0...spriteCount) {
+				sprites.push(blob.readS32BE());
+				sprites.push(blob.readS32BE());
+				sprites.push(blob.readS32BE());
+			}
+			//music = Loader.the.getMusic("level1");
+			startGame(spriteCount, sprites);
 		}
-		var spriteCount = blob.readS32BE();
-		var sprites = new Array<Int>();
-		for (i in 0...spriteCount) {
-			sprites.push(blob.readS32BE());
-			sprites.push(blob.readS32BE());
-			sprites.push(blob.readS32BE());
-		}
-		//music = Loader.the.getMusic("level1");
-		startGame(spriteCount, sprites);
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
@@ -515,7 +517,7 @@ class TenUp extends Game {
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
 		
 		if (mode == StartScreen) {
-			enterLevel(1);
+			enterLevel(0);
 		}
 	}
 	
@@ -560,7 +562,7 @@ class TenUp extends Game {
 				mouseUpAction = null;
 			}
 		case StartScreen:
-			enterLevel(2);
+			enterLevel(0);
 		default:
 		}
 	}
@@ -591,7 +593,7 @@ class TenUp extends Game {
 				mouseUpAction = null;
 			}
 		case StartScreen:
-			enterLevel(2);
+			enterLevel(0);
 		default:
 		}
 	}

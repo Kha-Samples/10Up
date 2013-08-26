@@ -6,15 +6,15 @@ class Level1 extends Level {
 	public function new() {
 		super();
 		var timeline = new Timeline();
-		timeline.add(4, addSoldier);
-		timeline.add(6, addSoldier);
-		timeline.add(8, addSoldier);
 		timeline.add(10, addSoldier);
 		timeline.add(12, addSoldier);
 		timeline.add(14, addSoldier);
-		timeline.add(14.5, addSoldier);
 		timeline.add(16, addSoldier);
-		timeline.add(16.5, addSoldier);
+		timeline.add(18, addSoldier);
+		timeline.add(20, addSoldier);
+		timeline.add(22, addSoldier);
+		timeline.add(24, addSoldier);
+		timeline.add(26, addSoldier);
 		setTimeline(timeline);
 		enemies = new Array();
 	}

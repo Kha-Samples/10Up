@@ -19,6 +19,8 @@ import kha.Configuration;
 import kha.Sprite;
 import kha.Tile;
 import kha.Tilemap;
+import levels.Level1;
+import levels.Level2;
 
 enum Mode {
 	Loading;
@@ -59,6 +61,10 @@ class TenUp extends Game {
 	}
 	
 	public function pause(): Void {
+		if (mouseUpAction != null) {
+			mouseUpAction(currentGameTime);
+			mouseUpAction = null;
+		}
 		if (nextPlayer()) mode = Pause;
 	}
 	
@@ -67,9 +73,14 @@ class TenUp extends Game {
 		Loader.the.loadRoom("start", initStart);
 	}
 	
-	public function enterLevel( level : String ) : Void {
+	public function enterLevel(levelNumber: Int) : Void {
 		Configuration.setScreen( new LoadingScreen() );
-		Loader.the.loadRoom( level, initLevel );
+		switch (levelNumber) {
+		case 1:
+			Loader.the.loadRoom("level1", initLevel1);
+		case 2:
+			Loader.the.loadRoom("level1", initLevel2);
+		}
 	}
 	
 	public function initStart(): Void {
@@ -84,15 +95,28 @@ class TenUp extends Game {
 		Configuration.setScreen(this);
         //flash.Lib.current.stage.displayState = FULL_SCREEN;
 	}
+	
+	public function initLevel1(): Void {
+		initLevel(1);
+	}
+	
+	public function initLevel2(): Void {
+		initLevel(2);
+	}
 
-	public function initLevel(): Void {
-		level = new levels.Level1();
+	public function initLevel(levelNumber: Int): Void {
+		switch (levelNumber) {
+		case 1:
+			level = new Level1();
+		case 2:
+			level = new Level2();
+		}
 		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
 		tileColissions = new Array<Tile>();
 		for (i in 0...352) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
-		var blob = Loader.the.getBlob("level1");
+		var blob = Loader.the.getBlob("level" + levelNumber);
 		var levelWidth: Int = blob.readS32BE();
 		var levelHeight: Int = blob.readS32BE();
 		originalmap = new Array<Array<Int>>();
@@ -165,12 +189,15 @@ class TenUp extends Game {
 				Scene.the.addOther(sprite);
 			case 7:
 				sprite = new Gate(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.gates.push(cast sprite);
 				Scene.the.addOther(sprite);
 			case 8:
 				sprite = new Gatter(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.gatters.push(cast sprite);
 				Scene.the.addOther(sprite);
 			case 9:
 				sprite = new Computer(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.computers.push(cast sprite);
 				Scene.the.addOther(sprite);
 			case 10:
 				sprite = new Machinegun(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
@@ -180,6 +207,7 @@ class TenUp extends Game {
 				Scene.the.addEnemy(sprite);
 			case 12:
 				sprite = new Car(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.cars.push(cast sprite);
 				Scene.the.addOther(sprite);
 			default:
 				trace ("That should never happen! We are therefor going to ignore it.");
@@ -286,10 +314,10 @@ class TenUp extends Game {
 			//painter.drawString("Score: " + Std.string(Player.getInstance().getScore()), 20, 25);
 			//painter.drawString("Round: " + Std.string(Player.getInstance().getRound()), width - 100, 25);
 			
-			drawPlayerInfo(painter, 0, 20, 460, Color.fromBytes(255, 0, 0));
-			drawPlayerInfo(painter, 1, 80, 460, Color.fromBytes(0, 255, 0));
-			drawPlayerInfo(painter, 2, 140, 460, Color.fromBytes(0, 0, 255));
-			drawPlayerInfo(painter, 3, 200, 460, Color.fromBytes(255, 255, 0));
+			drawPlayerInfo(painter, 0, 20, 700, Color.fromBytes(255, 0, 0));
+			drawPlayerInfo(painter, 1, 80, 700, Color.fromBytes(0, 255, 0));
+			drawPlayerInfo(painter, 2, 140, 700, Color.fromBytes(0, 0, 255));
+			drawPlayerInfo(painter, 3, 200, 700, Color.fromBytes(255, 255, 0));
 			
 			if (mode == Pause) {
 				painter.setColor(Color.fromBytes(0, 0, 0));
@@ -312,7 +340,11 @@ class TenUp extends Game {
 		painter.setColor(Color.fromBytes(50, 50, 50));
 		painter.fillRect(x, y + 30, 40, 10);
 		painter.setColor(Color.fromBytes(150, 0, 0));
-		painter.fillRect(x, y + 20, 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth, 10);
+		var healthBar = 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth;
+		if (healthBar < 0) healthBar = 0;
+		painter.fillRect(x, y + 20, healthBar, 10);
+		painter.setColor(Color.ColorBlack);
+		painter.fillRect(x + healthBar, y + 20, 40 - healthBar, 10);
 		painter.setColor(Color.fromBytes(0, 255, 255));
 		painter.fillRect(x, y + 30, Player.getPlayer(index).timeLeft() * 4, 10);
 	}
@@ -404,6 +436,10 @@ class TenUp extends Game {
 			if (mode == Mode.Game) {
 				if (char == " ") {
 					mode = Pause;
+					if (mouseUpAction != null) {
+						mouseUpAction(currentGameTime);
+						mouseUpAction = null;
+					}
 					Player.current().right = false;
 					Player.current().left = false;
 					Player.current().up = false;
@@ -437,7 +473,7 @@ class TenUp extends Game {
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
 		
 		if (mode == StartScreen) {
-			enterLevel( "level1" );
+			enterLevel(2);
 		}
 	}
 	
@@ -464,6 +500,7 @@ class TenUp extends Game {
 	}
 	
 	private var mouseUpAction : Float->Void;
+	
 	override public function mouseUp(x: Int, y: Int): Void {
 		mouseX = x + Scene.the.screenOffsetX;
 		mouseY = y + Scene.the.screenOffsetY;
@@ -474,7 +511,7 @@ class TenUp extends Game {
 				mouseUpAction = null;
 			}
 		case StartScreen:
-			enterLevel( "level1" );
+			enterLevel(1);
 		default:
 		}
 	}

@@ -9,49 +9,59 @@
     {
       "id": "9c8c0db0-d7cc-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "blockcoin.png",
-      "name": "blockcoin",
-      "scale": 1.0,
+      "file": "window.png",
+      "name": "window",
+      "scale": 2.0,
       "circle": false
     },
     {
       "id": "a7a42c00-d7cc-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "bonusblock.png",
-      "name": "bonusblock",
-      "scale": 1.0,
+      "file": "glass.png",
+      "name": "glass",
+      "scale": 2.0,
       "circle": false
     },
     {
       "id": "12116430-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "coin.png",
-      "name": "coin",
-      "scale": 1.0,
+      "file": "gate.png",
+      "name": "gate",
+      "scale": 2.0,
       "circle": false
     },
     {
       "id": "2348bd70-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "fly.png",
-      "name": "fly",
-      "scale": 1.0,
-      "circle": false
+      "file": "gatter.png",
+      "name": "gatter",
+      "scale": 2.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
     },
     {
       "id": "2348bd71-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "gumba.png",
-      "name": "gumba",
-      "scale": 1.0,
-      "circle": false
+      "file": "machinegun.png",
+      "name": "machinegun",
+      "scale": 2.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
     },
     {
       "id": "2348bd72-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "jumpman.png",
-      "name": "jumpman",
-      "scale": 1.0,
+      "file": "agent.png",
+      "name": "agent",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -62,10 +72,15 @@
     {
       "id": "2348bd73-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "koopa.png",
-      "name": "koopa",
-      "scale": 1.0,
-      "circle": false
+      "file": "boss.png",
+      "name": "boss",
+      "scale": 2.0,
+      "circle": false,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      }
     },
     {
       "id": "2348bd74-d7ce-11e1-9b23-0800200c9a66",
@@ -116,6 +131,14 @@
       "circle": false
     },
     {
+      "id": "2e51b8c0-0e5a-11e3-8ffd-0800200c9a66",
+      "type": "blob",
+      "file": "level2",
+      "name": "level2",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
       "id": "15b1ea20-4032-11e2-a25f-0800200c9a66",
       "type": "blob",
       "file": "Arial12.kravur",
@@ -126,9 +149,9 @@
     {
       "id": "04bf9738-4fe2-4966-8088-70ff042801ed",
       "type": "image",
-      "file": "jumpman2.png",
-      "name": "jumpman2",
-      "scale": 1.0,
+      "file": "professor.png",
+      "name": "professor",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -139,9 +162,9 @@
     {
       "id": "14c3245b-82c0-4693-a131-e6f255c872de",
       "type": "image",
-      "file": "jumpman3.png",
-      "name": "jumpman3",
-      "scale": 1.0,
+      "file": "rowdy.png",
+      "name": "rowdy",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -152,9 +175,9 @@
     {
       "id": "f00b98f6-70a7-4217-a6d6-a54965b634c9",
       "type": "image",
-      "file": "jumpman4.png",
-      "name": "jumpman4",
-      "scale": 1.0,
+      "file": "mechanic.png",
+      "name": "mechanic",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -215,9 +238,9 @@
     {
       "id": "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
       "type": "image",
-      "file": "enemy.png",
-      "name": "enemy",
-      "scale": 1.0,
+      "file": "soldier.png",
+      "name": "soldier",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -231,6 +254,45 @@
       "file": "timecannon.png",
       "name": "timecannon",
       "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "8c22dfd0-0e5d-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "car.png",
+      "name": "car",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
+    },
+    {
+      "id": "9c7e09e0-0e5d-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "computer.png",
+      "name": "computer",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
+    },
+    {
+      "id": "2b620320-0e6b-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "blood.png",
+      "name": "blood",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
       "circle": false
     }
   ],
@@ -263,7 +325,11 @@
         "66f588d6-998a-49d5-a7d6-e2a9a747be51",
         "1a57efc0-0d8c-11e3-8ffd-0800200c9a66",
         "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
-        "45b099f1-445e-4417-bb25-554b1429c0aa"
+        "45b099f1-445e-4417-bb25-554b1429c0aa",
+        "2e51b8c0-0e5a-11e3-8ffd-0800200c9a66",
+        "8c22dfd0-0e5d-11e3-8ffd-0800200c9a66",
+        "9c7e09e0-0e5d-11e3-8ffd-0800200c9a66",
+        "2b620320-0e6b-11e3-8ffd-0800200c9a66"
       ]
     },
     {

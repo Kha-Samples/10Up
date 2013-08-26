@@ -7,6 +7,7 @@ import kha.math.Vector2;
 import kha.Music;
 import kha.Painter;
 import kha.Rectangle;
+import kha.Scene;
 import kha.Sound;
 import kha.Sprite;
 import projectiles.PistolProjectile;
@@ -39,19 +40,19 @@ class Player extends DestructibleSprite {
 	
 	var muzzlePoint : Vector2;
 	
-	public function new(x: Float, y: Float, image: String, maxHealth: Int = 50) {
-		super(maxHealth, Loader.the.getImage(image), 16 * 4, 16 * 4, 0);
+	public function new(x: Float, y: Float, image: String, width: Int, height: Int, maxHealth: Int = 50) {
+		super(maxHealth, Loader.the.getImage(image), width, height, 0);
 		this.x = x;
 		this.y = y;
 		standing = false;
-		walkLeft = new Animation([2, 3, 4, 3], 6);
-		walkRight = new Animation([7, 8, 9, 8], 6);
-		standLeft = Animation.create(5);
-		standRight = Animation.create(6);
-		jumpLeft = Animation.create(1);
-		jumpRight = Animation.create(10);
+		walkLeft = Animation.create(0);
+		walkRight = Animation.create(0);
+		standLeft = Animation.create(0);
+		standRight = Animation.create(0);
+		jumpLeft = Animation.create(0);
+		jumpRight = Animation.create(0);
 		setAnimation(jumpRight);
-		collider = new Rectangle(16, 32, 32, 32);
+		collider = new Rectangle(16, 0, 32, height);
 		score = 0;
 		round = 1;
 		up = false;
@@ -253,9 +254,11 @@ class Player extends DestructibleSprite {
 			sleep();
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
+			for (i in 0...30) Scene.the.addOther(new Blood(x + 20, y + 20));
 			// TODO: pain cry
 		} else if ( value > _health && _health <= 0 ) {
 			killed = timeLeft() > 0;
+			isLiftable = killed;
 		}
 		return super.set_health(value);
 	}

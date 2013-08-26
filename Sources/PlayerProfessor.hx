@@ -10,7 +10,7 @@ class PlayerProfessor extends Player {
 	var timecannon : TimeCannon;
 	
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman2");
+		super(x, y - 8, "professor", 20 * 2, 52 * 2);
 		Player.setPlayer(1, this);
 		
 		timecannon = new TimeCannon();
@@ -23,16 +23,16 @@ class PlayerProfessor extends Player {
 		var c = center;
 		timecannon.x = c.x - 0.5 * timecannon.width;
 		//graple.x = x + 10;
-		timecannon.y = c.y - 0.5 * timecannon.height + 5;
+		timecannon.y = c.y - 0.5 * timecannon.height - 7;
 		timecannon.rotation.angle = Math.atan2(crosshair.y, crosshair.x);
 		if (lookRight) {
-			timecannon.x += 10;
+			timecannon.x += 15;
 			if (timecannon.animation.indices != timecannon.rightAnim.indices) {
 				timecannon.animation.indices = timecannon.rightAnim.indices;
 				timecannon.rotation.center.x = timecannon.width - timecannon.rotation.center.x;
 			}
 		} else {
-			timecannon.x -= 10;
+			timecannon.x -= 15;
 			timecannon.rotation.angle = timecannon.rotation.angle + Math.PI;
 			if (timecannon.animation.indices != timecannon.leftAnim.indices) {
 				timecannon.animation.indices = timecannon.leftAnim.indices;
@@ -47,7 +47,6 @@ class PlayerProfessor extends Player {
 			timecannon.render(painter);
 		}
 	}
-	
 	
 	/**
 	  Time Cannon
@@ -66,6 +65,18 @@ class PlayerProfessor extends Player {
 			projectile.y = muzzlePoint.y + (lookRight ? 0.8 : -0.8) * (projectile.height * crosshair.y);
 			Scene.the.addProjectile( projectile );
 			isCrosshairVisible = false;
+		}
+	}
+	
+	/**
+	  Hacking
+	 */
+	override public function useSpecialAbilityB(gameTime: Float): Void {
+		if (Level.the.computers.length > 0) {
+			var computer = Level.the.computers[0];
+			if (computer.collisionRect().collision(collisionRect())) {
+				Level.the.gates[0].open();
+			}
 		}
 	}
 }

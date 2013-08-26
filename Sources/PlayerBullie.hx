@@ -1,11 +1,12 @@
 package;
+
 import kha.Scene;
 import kha.Sprite;
 import projectiles.FistOfDoom;
 
 class PlayerBullie extends Player {
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman3", 100);
+		super(x, y - 8, "rowdy", 25 * 2, 52 * 2, 100);
 		Player.setPlayer(2, this);
 		_health = 100;
 	}
@@ -74,7 +75,15 @@ class PlayerBullie extends Player {
 			}
 		}
 	}
-	override public function useSpecialAbilityB(gameTime : Float) : Void {
+	override public function useSpecialAbilityB(gameTime: Float): Void {
 		lifted = null;
+		if (Level.the.gatters.length > 0) {
+			var gatter = Level.the.gatters[0];
+			var rect = collisionRect();
+			rect.height += 10;
+			if (gatter.collisionRect().collision(rect)) {
+				gatter.fly();
+			}
+		}
 	}
 }

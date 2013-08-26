@@ -2,7 +2,7 @@ package;
 
 class PlayerBlondie extends Player {
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman4");
+		super(x, y - 8, "mechanic", 21 * 2, 52 * 2);
 		Player.setPlayer(3, this);
 		repairAmountPerSec = 50;
 	}
@@ -17,13 +17,24 @@ class PlayerBlondie extends Player {
 				repairing.health += amount;
 			}
 		}
+		
+		if (isDancing && Player.current() != this && lastDanceTime < TenUp.instance.currentGameTime) {
+			isDancing = false;
+			// TODO: stop dance animation
+		}
 	}
 	
 	/**
 	  Tanzen
 	**/
+	public var isDancing(default, null) : Bool = false;
+	var lastDanceTime : Float;
+	override public function prepareSpecialAbilityA(gameTime : Float) : Void {
+		isDancing = true;
+		// TODO: start dance animation
+	}
 	override public function useSpecialAbilityA(gameTime : Float) : Void {
-		
+		lastDanceTime = gameTime + 7;
 	}
 	
 	/**

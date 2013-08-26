@@ -32,6 +32,8 @@ class Level {
 		missionBriefingSprites = new Array();
 	}
 	
+	public function init() : Void { }
+	
 	public static var the(get, null): Level;
 	
 	private static function get_the(): Level {

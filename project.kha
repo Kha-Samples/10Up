@@ -9,17 +9,17 @@
     {
       "id": "9c8c0db0-d7cc-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "blockcoin.png",
-      "name": "blockcoin",
-      "scale": 1.0,
+      "file": "window.png",
+      "name": "window",
+      "scale": 2.0,
       "circle": false
     },
     {
       "id": "a7a42c00-d7cc-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "bonusblock.png",
-      "name": "bonusblock",
-      "scale": 1.0,
+      "file": "glass.png",
+      "name": "glass",
+      "scale": 2.0,
       "circle": false
     },
     {

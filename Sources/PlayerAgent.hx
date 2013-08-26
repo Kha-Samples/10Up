@@ -11,7 +11,7 @@ class PlayerAgent extends Player {
 	private var grapleVec: Vector2;
 	private var grapleLength: Float;
 	private var grapleBack = false;
-	private var maxGrapleLength: Float = 350;
+	private var maxGrapleLength: Float = 550;
 	private var pulling = false;
 	
 	public function new(x: Float, y: Float) {
@@ -73,8 +73,8 @@ class PlayerAgent extends Player {
 		
 		if (grapleVec != null) {
 			if (pulling) {
-				x += grapleVec.x * 5;
-				y += grapleVec.y * 5;
+				x += grapleVec.x * 10;
+				y += grapleVec.y * 10;
 				grapleLength -= grapleVec.length * 5;
 				if (grapleLength < 20 || Scene.the.collidesSprite(this)) {
 					x -= grapleVec.x * 5;
@@ -83,12 +83,12 @@ class PlayerAgent extends Player {
 					pulling = false;
 					grapleVec = null;
 					accy = 0.2;
-					speedy = -7;
+					speedy = -12;
 				}
 			}
 			else {
 				if (grapleBack) {
-					grapleLength -= 10;
+					grapleLength -= 20;
 					if (grapleLength < 0) {
 						grapleLength = 0;
 						grapleBack = false;
@@ -96,7 +96,7 @@ class PlayerAgent extends Player {
 					}
 				}
 				else {
-					grapleLength += 10;
+					grapleLength += 20;
 					if (grapleLength > maxGrapleLength) {
 						grapleLength -= (grapleLength - maxGrapleLength);
 						grapleBack = true;

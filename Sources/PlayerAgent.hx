@@ -75,10 +75,10 @@ class PlayerAgent extends Player {
 			if (pulling) {
 				x += grapleVec.x * 10;
 				y += grapleVec.y * 10;
-				grapleLength -= grapleVec.length * 5;
+				grapleLength -= grapleVec.length * 10;
 				if (grapleLength < 20 || Scene.the.collidesSprite(this)) {
-					x -= grapleVec.x * 5;
-					y -= grapleVec.y * 5;
+					x -= grapleVec.x * 10;
+					y -= grapleVec.y * 10;
 					grapleLength = 0;
 					pulling = false;
 					grapleVec = null;

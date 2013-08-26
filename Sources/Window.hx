@@ -19,7 +19,7 @@ class Window extends Sprite {
 	override public function hit(sprite: Sprite): Void {
 		if (visible) {
 			visible = false;
-			for (i in 0...30) Scene.the.addOther(new Glass(x + Random.getUpTo(16 * 2), y + Random.getUpTo(16 * 2)));
+			for (i in 0...100) Scene.the.addOther(new Glass(x + Random.getUpTo(16 * 2), y + Random.getUpTo(16 * 2)));
 		}
 	}
 	

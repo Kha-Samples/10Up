@@ -261,14 +261,15 @@ class TenUp extends Game {
 			var lastGameTime = currentGameTime;
 			currentTimeDiff = currentTime - lastTime;
 			currentGameTime += currentTimeDiff;
-			Player.current().elapse(currentGameTime - lastGameTime);
 			if (mode == Game) {
+				Player.current().elapse(currentGameTime - lastGameTime);
 				level.update(currentGameTime);
 			} else {
 				if (level.updateMissionBriefing(currentGameTime)) {
 					currentGameTime = 0;
-					mode = Game;
+					mode = Pause;
 				}
+				lastTime = currentTime;
 				return;
 			}
 		}
@@ -280,7 +281,7 @@ class TenUp extends Game {
 		}
 		else if (mode == Pause) {
 			var aimx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
-			var camspeed: Int = 5;
+			var camspeed: Int = 10;
 			if (Scene.the.camx > aimx) {
 				Scene.the.camx -= camspeed;
 				if (Scene.the.camx < aimx) Scene.the.camx = aimx; 
@@ -444,6 +445,9 @@ class TenUp extends Game {
 	}
 	
 	override public function keyDown(key : Key, char : String) : Void {
+		if ( mode == MissionBriefing ) {
+			return;
+		}
 		if (key == Key.CHAR) {
 			if (mode == Mode.Game) {
 				if (char == " ") {
@@ -482,6 +486,10 @@ class TenUp extends Game {
 	}
 	
 	override public function keyUp(key : Key, char : String) : Void {
+		if ( mode == MissionBriefing ) {
+			level.anyKey = true;
+			return;
+		}
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
 		
 		if (mode == StartScreen) {
@@ -497,6 +505,9 @@ class TenUp extends Game {
 	}
 	
 	override public function mouseDown(x: Int, y: Int): Void {
+		if ( mode == MissionBriefing ) {
+			return;
+		}
 		mouseX = x + Scene.the.screenOffsetX;
 		mouseY = y + Scene.the.screenOffsetY;
 		if (mode == Game) {
@@ -514,6 +525,10 @@ class TenUp extends Game {
 	private var mouseUpAction : Float->Void;
 	
 	override public function mouseUp(x: Int, y: Int): Void {
+		if ( mode == MissionBriefing ) {
+			level.anyKey = true;
+			return;
+		}
 		mouseX = x + Scene.the.screenOffsetX;
 		mouseY = y + Scene.the.screenOffsetY;
 		switch (mode) {

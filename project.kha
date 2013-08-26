@@ -204,7 +204,7 @@
       "type": "image",
       "file": "door.png",
       "name": "door",
-      "scale": 1.0,
+      "scale": 2.0,
       "circle": false,
       "background": {
         "red": 255,

@@ -7,6 +7,7 @@ import kha.math.Random;
 import kha.math.Vector2;
 import kha.Painter;
 import kha.Rectangle;
+import kha.Rotation;
 import kha.Sprite;
 import projectiles.PistolProjectile;
 
@@ -19,17 +20,17 @@ class Enemy extends DestructibleSprite {
 	private var distances: Array<Float>;
 	private var focus: Player = null;
 	private var nextShootTime: Float = 0;
-	
+	private var lookRight: Bool = true;
 	private var watchRect : Rectangle;
 	
 	public function new(x: Float, y: Float) {
-		super(50, Loader.the.getImage("soldier"), 22 * 2, 41 * 2, 0);
+		super(50, Loader.the.getImage("soldier"), Std.int(410 / 10) * 2, Std.int(455 / 7) * 2);
 		killed = false;
 		this.x = x;
 		this.y = y;
-		walkLeft = Animation.create(0);
-		walkRight = Animation.create(0);
-		standLeft = Animation.create(0);
+		walkLeft = Animation.createRange(30, 33, 8);
+		walkRight = Animation.createRange(20, 23, 8);
+		standLeft = Animation.create(10);
 		standRight = Animation.create(0);
 		setAnimation(walkRight);
 		speedx = 0;
@@ -51,6 +52,7 @@ class Enemy extends DestructibleSprite {
 		killed = true;
 		setAnimation(Animation.create(0));
 		speedx = 0;
+		rotation = new Rotation(new Vector2(width / 2, collider.height - 4), Math.PI * 1.5);
 	}
 	
 	public function isKilled(): Bool {
@@ -82,6 +84,21 @@ class Enemy extends DestructibleSprite {
 	public var patrolSpeed: Float = 5.0;
 	var watchCounter : Int = 0;
 	override public function update(): Void {
+		if (speedx < 0) {
+			setAnimation(walkLeft);
+			lookRight = false;
+		}
+		else if (speedx > 0) {
+			setAnimation(walkRight);
+			lookRight = true;
+		}
+		else if (lookRight) {
+			setAnimation(standRight);
+		}
+		else {
+			setAnimation(standLeft);
+		}
+		
 		super.update();
 		if (killed) {
 			return;
@@ -92,6 +109,7 @@ class Enemy extends DestructibleSprite {
 			var myXmax = myXmin + width;
 			watchRect.x = x;
 			watchRect.y = y;
+			if (!lookRight) watchRect.x = x - watchRect.width;
 			var minDistance = 99999999.0;
 			for (i in 0...Player.getPlayerCount()) {
 				var player = Player.getPlayer(i);

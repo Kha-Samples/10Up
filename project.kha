@@ -2,8 +2,8 @@
   "format": 1,
   "game": {
     "name": "TenUp",
-    "width": 600,
-    "height": 520
+    "width": 1024,
+    "height": 768
   },
   "assets": [
     {
@@ -70,9 +70,9 @@
     {
       "id": "2348bd74-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "sml_tiles.png",
-      "name": "sml_tiles",
-      "scale": 1.0,
+      "file": "outside.png",
+      "name": "outside",
+      "scale": 2.0,
       "circle": false
     },
     {
@@ -110,8 +110,8 @@
     {
       "id": "5c950390-d7ce-11e1-9b23-0800200c9a66",
       "type": "blob",
-      "file": "level.map",
-      "name": "level.map",
+      "file": "level1",
+      "name": "level1",
       "scale": 1.0,
       "circle": false
     },
@@ -204,7 +204,7 @@
       "type": "image",
       "file": "door.png",
       "name": "door",
-      "scale": 1.0,
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,

@@ -89,10 +89,10 @@ class TenUp extends Game {
 		level = new levels.Level1();
 		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
 		tileColissions = new Array<Tile>();
-		for (i in 0...140) {
+		for (i in 0...352) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
-		var blob = Loader.the.getBlob("level.map");
+		var blob = Loader.the.getBlob("level1");
 		var levelWidth: Int = blob.readS32BE();
 		var levelHeight: Int = blob.readS32BE();
 		originalmap = new Array<Array<Int>>();
@@ -124,7 +124,7 @@ class TenUp extends Game {
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 		Player.init();
-		var tilemap : Tilemap = new Tilemap("sml_tiles", 32, 32, map, tileColissions);
+		var tilemap : Tilemap = new Tilemap("outside", 32, 32, map, tileColissions);
 		Scene.the.setColissionMap(tilemap);
 		Scene.the.addBackgroundTilemap(tilemap, 1);
 		var TILE_WIDTH : Int = 32;
@@ -142,20 +142,44 @@ class TenUp extends Game {
 			var sprite : kha.Sprite;
 			switch (sprites[i * 3]) {
 			case 0:
-				sprite = new PlayerAgent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				sprite = new PlayerAgent(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
 				Scene.the.addHero(sprite);
 			case 1:
-				sprite = new PlayerProfessor(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				sprite = new PlayerProfessor(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
 				Scene.the.addHero(sprite);
 			case 2:
-				sprite = new PlayerBullie(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				sprite = new PlayerBullie(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
 				Scene.the.addHero(sprite);
 			case 3:
-				sprite = new PlayerBlondie(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				sprite = new PlayerBlondie(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
 				Scene.the.addHero(sprite);
 			case 4:
-				sprite = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				sprite = new Door(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
 				level.doors.push( cast sprite );
+				Scene.the.addOther(sprite);
+			case 5:
+				sprite = new Enemy(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				Scene.the.addEnemy(sprite);
+			case 6:
+				sprite = new Window(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				Scene.the.addOther(sprite);
+			case 7:
+				sprite = new Gate(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				Scene.the.addOther(sprite);
+			case 8:
+				sprite = new Gatter(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				Scene.the.addOther(sprite);
+			case 9:
+				sprite = new Computer(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				Scene.the.addOther(sprite);
+			case 10:
+				sprite = new Machinegun(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				Scene.the.addEnemy(sprite);
+			case 11:
+				sprite = new Boss(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				Scene.the.addEnemy(sprite);
+			case 12:
+				sprite = new Car(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
 				Scene.the.addOther(sprite);
 			default:
 				trace ("That should never happen! We are therefor going to ignore it.");
@@ -196,10 +220,7 @@ class TenUp extends Game {
 	
 	private static function isCollidable(tilenumber : Int) : Bool {
 		switch (tilenumber) {
-		case 1: return true;
-		case 6: return true;
-		case 7: return true;
-		case 8: return true;
+		case 64, 65, 66, 128, 320, 341, 342: return true;
 		default:
 			return false;
 		}

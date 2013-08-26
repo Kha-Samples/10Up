@@ -264,9 +264,16 @@ class TenUp extends Game {
 			if (mode == Game) {
 				Player.current().elapse(currentGameTime - lastGameTime);
 				level.update(currentGameTime);
+			} else {
+				if (level.updateMissionBriefing(currentGameTime)) {
+					currentGameTime = 0;
+					mode = Pause;
+				}
+				lastTime = currentTime;
+				return;
 			}
 		}
-		if (mode != Pause && mode != MissionBriefing) {
+		if (mode != Pause) {
 			super.update();
 		}
 		if (mode == Game) {
@@ -275,21 +282,6 @@ class TenUp extends Game {
 		else if (mode == Pause) {
 			var aimx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 			var camspeed: Int = 10;
-			if (Scene.the.camx > aimx) {
-				Scene.the.camx -= camspeed;
-				if (Scene.the.camx < aimx) Scene.the.camx = aimx; 
-			}
-			else if (Scene.the.camx < aimx) {
-				Scene.the.camx += camspeed;
-				if (Scene.the.camx > aimx) Scene.the.camx = aimx; 
-			}
-		} else if (mode == MissionBriefing) {
-			if (level.updateMissionBriefing(currentGameTime)) {
-				currentGameTime = 0;
-				mode = Pause;
-			}
-			var aimx = Std.int(level.doors[0].x);
-			var camspeed: Int = 5;
 			if (Scene.the.camx > aimx) {
 				Scene.the.camx -= camspeed;
 				if (Scene.the.camx < aimx) Scene.the.camx = aimx; 

@@ -94,6 +94,18 @@ class Level1 extends Level {
 					return true;
 			}
 		}
+		if (state >= 2) {
+			var aimx = Std.int(doors[0].x);
+			var camspeed: Int = 5;
+			if (Scene.the.camx > aimx) {
+				Scene.the.camx -= camspeed;
+				if (Scene.the.camx < aimx) Scene.the.camx = aimx; 
+			}
+			else if (Scene.the.camx < aimx) {
+				Scene.the.camx += camspeed;
+				if (Scene.the.camx > aimx) Scene.the.camx = aimx; 
+			}
+		}
 		return false;
 	}
 }

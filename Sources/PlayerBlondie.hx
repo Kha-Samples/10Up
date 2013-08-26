@@ -84,7 +84,8 @@ class PlayerBlondie extends Player {
 				repairing.health += amount;
 			}
 		} else if (isDancing) {
-			if (Player.current() != this && lastDanceTime > 0 && !(up || right || left) && lastDanceTime < TenUp.instance.currentGameTime) {
+			if ( (Player.current() != this && lastDanceTime < TenUp.instance.currentGameTime)
+			  || (lastDanceTime > 0 && (up || right || left)) ) {
 				isDancing = false;
 				if (lookRight) setAnimation(standRight);
 				else setAnimation(standLeft);

@@ -384,6 +384,58 @@
         "blue": 201
       },
       "circle": false
+    },
+    {
+      "id": "6a84a9a0-0e92-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "mechanicmini.png",
+      "name": "mechanicmini",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
+    },
+    {
+      "id": "6a84a9a1-0e92-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "agentmini.png",
+      "name": "agentmini",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
+    },
+    {
+      "id": "90467ec2-0e92-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "rowdymini.png",
+      "name": "rowdymini",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
+    },
+    {
+      "id": "90467ec3-0e92-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "professormini.png",
+      "name": "professormini",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
     }
   ],
   "rooms": [
@@ -432,7 +484,11 @@
         "332ea407-247d-4c1d-912d-acf3e97f29a9",
         "99664a9b-24ef-40c0-becd-cec8e925c8fa",
         "471e9970-0e7f-11e3-8ffd-0800200c9a66",
-        "85290710-0e83-11e3-8ffd-0800200c9a66"
+        "85290710-0e83-11e3-8ffd-0800200c9a66",
+        "6a84a9a0-0e92-11e3-8ffd-0800200c9a66",
+        "6a84a9a1-0e92-11e3-8ffd-0800200c9a66",
+        "90467ec2-0e92-11e3-8ffd-0800200c9a66",
+        "90467ec3-0e92-11e3-8ffd-0800200c9a66"
       ]
     },
     {

@@ -6,6 +6,7 @@ import kha.Font;
 import kha.FontStyle;
 import kha.Game;
 import kha.HighscoreList;
+import kha.Image;
 import kha.Key;
 import kha.Loader;
 import kha.LoadingScreen;
@@ -47,6 +48,7 @@ class TenUp extends Game {
 	public var currentGameTime(default, null) : Float;
 	public var currentTimeDiff(default, null) : Float;
 	var lastTime : Float;
+	private var minis: Array<Image>;
 	
 	public var mode(default, null) : Mode;
 	
@@ -56,6 +58,7 @@ class TenUp extends Game {
 		shiftPressed = false;
 		highscoreName = "";
 		mode = Mode.Loading;
+		minis = new Array<Image>();
 	}
 	
 	public static function getInstance(): TenUp {
@@ -114,6 +117,10 @@ class TenUp extends Game {
 			level = new Level2();
 		}
 		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
+		minis.push(Loader.the.getImage("agentmini"));
+		minis.push(Loader.the.getImage("professormini"));
+		minis.push(Loader.the.getImage("rowdymini"));
+		minis.push(Loader.the.getImage("mechanicmini"));
 		tileColissions = new Array<Tile>();
 		for (i in 0...352) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
@@ -347,20 +354,25 @@ class TenUp extends Game {
 	private function drawPlayerInfo(painter: Painter, index: Int, x: Float, y: Float, color: Color): Void {
 		if (Player.getPlayerIndex() == index) {
 			painter.setColor(Color.fromBytes(255, 255, 255));
-			painter.fillRect(x - 5, y - 5, 50, 50);
+			//painter.fillRect(x - 5, y - 5, 50, 50);
+			painter.fillRect(x - 10, y - 25, 50, 10);
+			painter.fillRect(x - 10, y - 25, 10, 90);
+			painter.fillRect(x + 40, y - 25, 10, 90);
+			painter.fillRect(x - 10, y - 25 + 80, 50, 10);
 		}
 		painter.setColor(color);
-		painter.fillRect(x, y, 40, 40);
+		//painter.fillRect(x, y, 40, 40);
+		painter.drawImage(minis[index], x, y - 20);
 		painter.setColor(Color.fromBytes(50, 50, 50));
-		painter.fillRect(x, y + 30, 40, 10);
+		painter.fillRect(x, y + 45, 40, 10);
 		painter.setColor(Color.fromBytes(150, 0, 0));
 		var healthBar = 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth;
 		if (healthBar < 0) healthBar = 0;
-		painter.fillRect(x, y + 20, healthBar, 10);
+		painter.fillRect(x, y + 35, healthBar, 10);
 		painter.setColor(Color.ColorBlack);
-		painter.fillRect(x + healthBar, y + 20, 40 - healthBar, 10);
+		painter.fillRect(x + healthBar, y + 35, 40 - healthBar, 10);
 		painter.setColor(Color.fromBytes(0, 255, 255));
-		painter.fillRect(x, y + 30, Player.getPlayer(index).timeLeft() * 4, 10);
+		painter.fillRect(x, y + 45, Player.getPlayer(index).timeLeft() * 4, 10);
 	}
 
 	override public function buttonDown(button : Button) : Void {

@@ -75,7 +75,15 @@ class PlayerBullie extends Player {
 			}
 		}
 	}
-	override public function useSpecialAbilityB(gameTime : Float) : Void {
+	override public function useSpecialAbilityB(gameTime: Float): Void {
 		lifted = null;
+		if (Level.the.gatters.length > 0) {
+			var gatter = Level.the.gatters[0];
+			var rect = collisionRect();
+			rect.height += 10;
+			if (gatter.collisionRect().collision(rect)) {
+				gatter.fly();
+			}
+		}
 	}
 }

@@ -469,7 +469,7 @@ class TenUp extends Game {
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
 		
 		if (mode == StartScreen) {
-			enterLevel(1);
+			enterLevel(2);
 		}
 	}
 	

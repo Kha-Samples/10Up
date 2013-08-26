@@ -223,9 +223,9 @@
     {
       "id": "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
       "type": "image",
-      "file": "enemy.png",
-      "name": "enemy",
-      "scale": 1.0,
+      "file": "soldier.png",
+      "name": "soldier",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,

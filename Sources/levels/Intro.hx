@@ -20,28 +20,28 @@ class Intro extends Level {
 			switch (state) {
 				case 1:
 					var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
-					logo.x = 100;
+					logo.x = 50;
 					logo.y = 0.5 * TenUp.instance.height - 0.5 * logo.height;
 					missionBriefingSprites.push( logo );
 					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing0") );
-					sprite.x = 100 + logo.width + 50;
+					sprite.x = logo.x + logo.width + 40;
 					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					var sprite = new kha.Sprite( Loader.the.getImage("introtext1") );
-					sprite.x = 100 + logo.width + 60;
+					sprite.x = logo.x + logo.width + 50;
 					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 				case 2:
 					missionBriefingSprites = new Array();
 					var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
-					logo.x = 100;
+					logo.x = 50;
 					logo.y = 0.5 * TenUp.instance.height - 0.5 * logo.height;
 					missionBriefingSprites.push( logo );
 					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing0") );
-					sprite.x = 100 + logo.width + 50;
+					sprite.x = logo.x + logo.width + 40;
 					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
@@ -49,7 +49,7 @@ class Intro extends Level {
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					var sprite = new kha.Sprite( Loader.the.getImage("introtext2") );
-					sprite.x = 100 + logo.width + 60;
+					sprite.x = logo.x + logo.width + 50;
 					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 					// TODO: play SOUND!!!

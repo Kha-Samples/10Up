@@ -247,7 +247,7 @@ class Player extends DestructibleSprite {
 			sleep();
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
-			for (i in 0...30) Scene.the.addOther(new Blood(x + 20, y + 20));
+			for (i in 0...(_health - value)) Scene.the.addOther(new Blood(x + 20, y + 20));
 			hitSound.play();
 		} else if ( value > _health && _health <= 0 ) {
 			killed = timeLeft() > 0;

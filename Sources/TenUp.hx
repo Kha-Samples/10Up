@@ -314,10 +314,10 @@ class TenUp extends Game {
 			//painter.drawString("Score: " + Std.string(Player.getInstance().getScore()), 20, 25);
 			//painter.drawString("Round: " + Std.string(Player.getInstance().getRound()), width - 100, 25);
 			
-			drawPlayerInfo(painter, 0, 20, 460, Color.fromBytes(255, 0, 0));
-			drawPlayerInfo(painter, 1, 80, 460, Color.fromBytes(0, 255, 0));
-			drawPlayerInfo(painter, 2, 140, 460, Color.fromBytes(0, 0, 255));
-			drawPlayerInfo(painter, 3, 200, 460, Color.fromBytes(255, 255, 0));
+			drawPlayerInfo(painter, 0, 20, 700, Color.fromBytes(255, 0, 0));
+			drawPlayerInfo(painter, 1, 80, 700, Color.fromBytes(0, 255, 0));
+			drawPlayerInfo(painter, 2, 140, 700, Color.fromBytes(0, 0, 255));
+			drawPlayerInfo(painter, 3, 200, 700, Color.fromBytes(255, 255, 0));
 			
 			if (mode == Pause) {
 				painter.setColor(Color.fromBytes(0, 0, 0));

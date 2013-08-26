@@ -17,13 +17,24 @@ class PlayerBlondie extends Player {
 				repairing.health += amount;
 			}
 		}
+		
+		if (isDancing && Player.current() != this && lastDanceTime < TenUp.instance.currentGameTime) {
+			isDancing = false;
+			// TODO: stop dance animation
+		}
 	}
 	
 	/**
 	  Tanzen
 	**/
+	public var isDancing(default, null) : Bool = false;
+	var lastDanceTime : Float;
+	override public function prepareSpecialAbilityA(gameTime : Float) : Void {
+		isDancing = true;
+		// TODO: start dance animation
+	}
 	override public function useSpecialAbilityA(gameTime : Float) : Void {
-		
+		lastDanceTime = gameTime + 7;
 	}
 	
 	/**

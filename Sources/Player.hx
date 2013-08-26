@@ -256,6 +256,7 @@ class Player extends DestructibleSprite {
 			// TODO: pain cry
 		} else if ( value > _health && _health <= 0 ) {
 			killed = timeLeft() > 0;
+			isLiftable = killed;
 		}
 		return super.set_health(value);
 	}

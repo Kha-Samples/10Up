@@ -61,6 +61,10 @@ class TenUp extends Game {
 	}
 	
 	public function pause(): Void {
+		if (mouseUpAction != null) {
+			mouseUpAction(currentGameTime);
+			mouseUpAction = null;
+		}
 		if (nextPlayer()) mode = Pause;
 	}
 	
@@ -428,6 +432,10 @@ class TenUp extends Game {
 			if (mode == Mode.Game) {
 				if (char == " ") {
 					mode = Pause;
+					if (mouseUpAction != null) {
+						mouseUpAction(currentGameTime);
+						mouseUpAction = null;
+					}
 					Player.current().right = false;
 					Player.current().left = false;
 					Player.current().up = false;

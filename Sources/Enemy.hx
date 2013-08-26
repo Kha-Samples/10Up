@@ -7,6 +7,7 @@ import kha.math.Random;
 import kha.math.Vector2;
 import kha.Painter;
 import kha.Rectangle;
+import kha.Rotation;
 import kha.Sprite;
 import projectiles.PistolProjectile;
 
@@ -51,6 +52,7 @@ class Enemy extends DestructibleSprite {
 		killed = true;
 		setAnimation(Animation.create(0));
 		speedx = 0;
+		rotation = new Rotation(new Vector2(width / 2, collider.height - 4), Math.PI * 1.5);
 	}
 	
 	public function isKilled(): Bool {

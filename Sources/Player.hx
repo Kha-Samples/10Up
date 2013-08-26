@@ -134,9 +134,6 @@ class Player extends DestructibleSprite {
 	
 	public override function update(): Void {
 		walking = false;
-		if (killed && y > 600) {
-			TenUp.getInstance().showHighscore();
-		}
 		if (lastupcount > 0) --lastupcount;
 		if (!killed) {
 			if (right) {
@@ -257,6 +254,8 @@ class Player extends DestructibleSprite {
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
 			// TODO: pain cry
+		} else if ( value > _health && _health <= 0 ) {
+			killed = timeLeft() > 0;
 		}
 		return super.set_health(value);
 	}

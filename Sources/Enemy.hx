@@ -119,14 +119,19 @@ class Enemy extends DestructibleSprite {
 			}
 			
 			if (focus != null) {
+				speedx = (focus.x - x) > 0 ? 3 : -3;
 				if ( minDistance > 100 ) {
-					speedx = (focus.x - x) > 0 ? 3 : -3;
 					if ( Std.is( focus, PlayerBlondie ) ) {
-						speedx *= 0.7;
+						speedx *= 0.5;
 					} else {
 						tryToShoot();
 					}
-				} else if (minDistance < 75) {
+				} else if ( minDistance > 50 ) {
+					if ( Std.is( focus, PlayerBlondie ) ) {
+						speedx *= 0.5;
+					}
+					tryToShoot();
+				} else if (minDistance < 25) {
 					speedx = (focus.x - x) > 0 ? -2 : -2;
 				} else {
 					if ( Std.is( focus, PlayerBlondie ) ) {

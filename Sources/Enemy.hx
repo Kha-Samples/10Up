@@ -109,6 +109,7 @@ class Enemy extends DestructibleSprite {
 			var myXmax = myXmin + width;
 			watchRect.x = x;
 			watchRect.y = y;
+			if (!lookRight) watchRect.x = x - watchRect.width;
 			var minDistance = 99999999.0;
 			for (i in 0...Player.getPlayerCount()) {
 				var player = Player.getPlayer(i);

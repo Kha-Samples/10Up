@@ -19,6 +19,8 @@ import kha.Configuration;
 import kha.Sprite;
 import kha.Tile;
 import kha.Tilemap;
+import levels.Level1;
+import levels.Level2;
 
 enum Mode {
 	Loading;
@@ -67,9 +69,14 @@ class TenUp extends Game {
 		Loader.the.loadRoom("start", initStart);
 	}
 	
-	public function enterLevel( level : String ) : Void {
+	public function enterLevel(levelNumber: Int) : Void {
 		Configuration.setScreen( new LoadingScreen() );
-		Loader.the.loadRoom( level, initLevel );
+		switch (levelNumber) {
+		case 1:
+			Loader.the.loadRoom("level1", initLevel1);
+		case 2:
+			Loader.the.loadRoom("level1", initLevel2);
+		}
 	}
 	
 	public function initStart(): Void {
@@ -84,15 +91,28 @@ class TenUp extends Game {
 		Configuration.setScreen(this);
         //flash.Lib.current.stage.displayState = FULL_SCREEN;
 	}
+	
+	public function initLevel1(): Void {
+		initLevel(1);
+	}
+	
+	public function initLevel2(): Void {
+		initLevel(2);
+	}
 
-	public function initLevel(): Void {
-		level = new levels.Level1();
+	public function initLevel(levelNumber: Int): Void {
+		switch (levelNumber) {
+		case 1:
+			level = new Level1();
+		case 2:
+			level = new Level2();
+		}
 		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
 		tileColissions = new Array<Tile>();
 		for (i in 0...352) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
-		var blob = Loader.the.getBlob("level1");
+		var blob = Loader.the.getBlob("level" + levelNumber);
 		var levelWidth: Int = blob.readS32BE();
 		var levelHeight: Int = blob.readS32BE();
 		originalmap = new Array<Array<Int>>();
@@ -437,7 +457,7 @@ class TenUp extends Game {
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
 		
 		if (mode == StartScreen) {
-			enterLevel( "level1" );
+			enterLevel(1);
 		}
 	}
 	
@@ -464,6 +484,7 @@ class TenUp extends Game {
 	}
 	
 	private var mouseUpAction : Float->Void;
+	
 	override public function mouseUp(x: Int, y: Int): Void {
 		mouseX = x + Scene.the.screenOffsetX;
 		mouseY = y + Scene.the.screenOffsetY;
@@ -474,7 +495,7 @@ class TenUp extends Game {
 				mouseUpAction = null;
 			}
 		case StartScreen:
-			enterLevel( "level1" );
+			enterLevel(1);
 		default:
 		}
 	}

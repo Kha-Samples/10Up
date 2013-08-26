@@ -1,11 +1,12 @@
 package;
+
 import kha.Scene;
 import kha.Sprite;
 import projectiles.FistOfDoom;
 
 class PlayerBullie extends Player {
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman3", 100);
+		super(x, y - 8, "rowdy", 25 * 2, 52 * 2, 100);
 		Player.setPlayer(2, this);
 		_health = 100;
 	}

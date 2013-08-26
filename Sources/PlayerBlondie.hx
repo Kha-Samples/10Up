@@ -5,6 +5,8 @@ import kha.Rectangle;
 
 class PlayerBlondie extends Player {
 	private var danceAnimation: Animation;
+	private var repairLeftAnimation: Animation;
+	private var repairRightAnimation: Animation;
 	
 	public function new(x: Float, y: Float) {
 		super(x, y - 8, "mechanic", Std.int(410 / 10) * 2, Std.int(455 / 7) * 2);
@@ -56,6 +58,9 @@ class PlayerBlondie extends Player {
 51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
 
 40, 40, 40, 40, 40, 40, 40, 40, 40, 40], 2);
+		
+		repairLeftAnimation = Animation.createRange(33, 35, 4);
+		repairRightAnimation = Animation.createRange(30, 32, 4);
 	}
 	
 	override public function update() {
@@ -103,6 +108,8 @@ class PlayerBlondie extends Player {
 					if ( rect.collision( checkSprite.collisionRect() ) ) {
 						repairing = checkSprite;
 						lastRepairTime = gameTime;
+						if (lookRight) setAnimation(repairRightAnimation);
+						else setAnimation(repairLeftAnimation);
 						return;
 					}
 				}
@@ -113,6 +120,8 @@ class PlayerBlondie extends Player {
 	override public function useSpecialAbilityB(gameTime : Float) : Void {
 		if (repairing != null) {
 			repairing.health += Math.round( repairAmountPerSec * (gameTime - lastRepairTime) );
+			if (lookRight) setAnimation(standRight);
+			else setAnimation(standLeft);
 			repairing = null;
 		}
 	}

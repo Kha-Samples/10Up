@@ -36,7 +36,7 @@ class Gate extends Sprite {
 	}
 	
 	public function isOpen(): Bool {
-		return opened;
+		return gateHeight < height / 2;
 	}
 	
 	override public function render(painter: Painter): Void {

@@ -3,6 +3,7 @@ package projectiles;
 import kha.Direction;
 import kha.Image;
 import kha.math.Vector2;
+import kha.Loader;
 import kha.Painter;
 import kha.Scene;
 import kha.Sprite;
@@ -16,6 +17,7 @@ class TimeProjectile extends Projectile {
 		speedy = 10 * dir.y;
 		accx = 0;
 		accy = 0;
+		Loader.the.getSound("timeshot").play();
 	}
 	
 	override public function render(painter:Painter):Void {

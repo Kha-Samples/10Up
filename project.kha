@@ -93,32 +93,32 @@
     {
       "id": "2348bd75-d7ce-11e1-9b23-0800200c9a66",
       "type": "sound",
-      "file": "coin",
-      "name": "coin",
+      "file": "carstart",
+      "name": "carstart",
       "scale": 1.0,
       "circle": false
     },
     {
       "id": "2348bd76-d7ce-11e1-9b23-0800200c9a66",
       "type": "sound",
-      "file": "die",
-      "name": "die",
+      "file": "hit",
+      "name": "hit",
       "scale": 1.0,
       "circle": false
     },
     {
       "id": "2348bd77-d7ce-11e1-9b23-0800200c9a66",
       "type": "sound",
-      "file": "jump",
-      "name": "jump",
+      "file": "machineshot",
+      "name": "machineshot",
       "scale": 1.0,
       "circle": false
     },
     {
       "id": "2348bd78-d7ce-11e1-9b23-0800200c9a66",
       "type": "sound",
-      "file": "stomp",
-      "name": "stomp",
+      "file": "shot",
+      "name": "shot",
       "scale": 1.0,
       "circle": false
     },
@@ -294,6 +294,14 @@
         "blue": 201
       },
       "circle": false
+    },
+    {
+      "id": "e2ced300-0e73-11e3-8ffd-0800200c9a66",
+      "type": "sound",
+      "file": "timeshot",
+      "name": "timeshot",
+      "scale": 1.0,
+      "circle": false
     }
   ],
   "rooms": [
@@ -329,7 +337,8 @@
         "2e51b8c0-0e5a-11e3-8ffd-0800200c9a66",
         "8c22dfd0-0e5d-11e3-8ffd-0800200c9a66",
         "9c7e09e0-0e5d-11e3-8ffd-0800200c9a66",
-        "2b620320-0e6b-11e3-8ffd-0800200c9a66"
+        "2b620320-0e6b-11e3-8ffd-0800200c9a66",
+        "e2ced300-0e73-11e3-8ffd-0800200c9a66"
       ]
     },
     {

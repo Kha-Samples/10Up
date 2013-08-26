@@ -2,6 +2,7 @@ package projectiles;
 
 import kha.Direction;
 import kha.Image;
+import kha.Loader;
 import kha.math.Vector2;
 import kha.Painter;
 import kha.Scene;
@@ -17,6 +18,7 @@ class PistolProjectile extends Projectile {
 		accx = 0;
 		accy = 0;
 		creatureDamage = 50;
+		Loader.the.getSound("shot").play();
 	}
 	
 	override public function render(painter:Painter): Void {

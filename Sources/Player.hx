@@ -29,11 +29,9 @@ class Player extends DestructibleSprite {
 	var standRight : Animation;
 	var jumpLeft : Animation;
 	var jumpRight : Animation;
-	var stompsound : Sound;
-	var jumpsound : Sound;
-	var diesound : Sound;
 	var score : Int;
 	var round : Int;
+	private var hitSound: Sound;
 	private var time: Float;
 	private static var currentPlayer: Player = null;
 	private static var jumpmans: Array<Player>;
@@ -62,11 +60,9 @@ class Player extends DestructibleSprite {
 		killed = false;
 		time = 0;
 		jumpcount = 0;
-		stompsound = Loader.the.getSound("stomp");
-		jumpsound = Loader.the.getSound("jump");
-		diesound = Loader.the.getSound("die");
 		crosshair = new Vector2(1, 0);
 		isRepairable = true;
+		hitSound = Loader.the.getSound("hit");
 	}
 	
 	public static function init(): Void {
@@ -158,7 +154,6 @@ class Player extends DestructibleSprite {
 				speedx = 0;
 			}
 			if (up && standing) {
-				jumpsound.play();
 				setAnimation(lookRight ? jumpRight : jumpLeft);
 				speedy = -8.2;
 			}
@@ -190,7 +185,6 @@ class Player extends DestructibleSprite {
 	
 	public function sleep() {
 		isLiftable = true;
-		diesound.play();
 		setAnimation(Animation.create(0));
 		speedy = 0;
 		speedx = 0;
@@ -208,7 +202,6 @@ class Player extends DestructibleSprite {
 		if (killed) return;
 		if (enemy.isKilled()) return;
 		if (enemy.collisionRect().y + enemy.collisionRect().height > collisionRect().y + collisionRect().height + 4) {
-			stompsound.play();
 			enemy.kill();
 			speedy = -8;
 			jumpcount = 10;
@@ -255,7 +248,7 @@ class Player extends DestructibleSprite {
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
 			for (i in 0...30) Scene.the.addOther(new Blood(x + 20, y + 20));
-			// TODO: pain cry
+			hitSound.play();
 		} else if ( value > _health && _health <= 0 ) {
 			killed = timeLeft() > 0;
 			isLiftable = killed;

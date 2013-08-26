@@ -436,6 +436,14 @@
         "blue": 201
       },
       "circle": false
+    },
+    {
+      "id": "d24a3ed1-21db-408a-92d7-2d8c9f9f8115",
+      "type": "image",
+      "file": "congratulations.png",
+      "name": "congratulations",
+      "scale": 1.0,
+      "circle": false
     }
   ],
   "rooms": [
@@ -488,7 +496,8 @@
         "6a84a9a0-0e92-11e3-8ffd-0800200c9a66",
         "6a84a9a1-0e92-11e3-8ffd-0800200c9a66",
         "90467ec2-0e92-11e3-8ffd-0800200c9a66",
-        "90467ec3-0e92-11e3-8ffd-0800200c9a66"
+        "90467ec3-0e92-11e3-8ffd-0800200c9a66",
+        "d24a3ed1-21db-408a-92d7-2d8c9f9f8115"
       ]
     },
     {

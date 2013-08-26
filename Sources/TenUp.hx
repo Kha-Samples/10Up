@@ -29,8 +29,8 @@ enum Mode {
 	MissionBriefing;
 	Game;
 	Pause;
-	Highscore;
-	EnterHighscore;
+	GameOver;
+	Congratulations;
 }
 
 class TenUp extends Game {
@@ -257,7 +257,7 @@ class TenUp extends Game {
 	
 	public function showHighscore() {
 		Scene.the.clear();
-		mode = Mode.EnterHighscore;
+		mode = Mode.Congratulations;
 		//music.stop();
 	}
 	
@@ -309,25 +309,10 @@ class TenUp extends Game {
 		//if (Player.getInstance() == null) return;
 		painter.setFont(font);
 		switch (mode) {
-		case Highscore:
-			painter.setColor(Color.fromBytes(255, 255, 255));
-			painter.fillRect(0, 0, width, height);
-			painter.setColor(Color.fromBytes(0, 0, 0));
-			var i : Int = 0;
-			while (i < 10 && i < getHighscores().getScores().length) {
-				var score : Score = getHighscores().getScores()[i];
-				painter.drawString(Std.string(i + 1) + ": " + score.getName(), 100, i * 30 + 100);
-				painter.drawString(" -           " + Std.string(score.getScore()), 200, i * 30 + 100);
-				++i;
-			}
-			//break;
-		case EnterHighscore:
-			painter.setColor(Color.fromBytes(255, 255, 255));
-			painter.fillRect(0, 0, width, height);
-			painter.setColor(Color.fromBytes(0, 0, 0));
-			painter.drawString("Enter your name", width / 2 - 100, 200);
-			painter.drawString(highscoreName, width / 2 - 50, 250);
-			//break;
+		case GameOver:
+		case Congratulations:
+			var congrat = Loader.the.getImage("congratulations");
+			painter.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
 		case Game, Pause:
 			super.render(painter);
 			painter.translate(0, 0);
@@ -488,22 +473,6 @@ class TenUp extends Game {
 					mode = Game;
 				}
 			}
-			else if (mode == Mode.EnterHighscore) {
-				if (highscoreName.length < 20) highscoreName += shiftPressed ? char.toUpperCase() : char.toLowerCase();
-			}
-		}
-		else {
-			if (highscoreName.length > 0) {
-				switch (key) {
-				case ENTER:
-					//getHighscores().addScore(highscoreName, Player.getInstance().getScore());
-					mode = Mode.Highscore;
-				case BACKSPACE:
-					highscoreName = highscoreName.substr(0, highscoreName.length - 1);
-				default:
-				}
-			}
-			if (key == SHIFT) shiftPressed = true;
 		}
 	}
 	

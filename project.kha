@@ -312,6 +312,19 @@
       "circle": false
     },
     {
+      "id": "471e9970-0e7f-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "pause.png",
+      "name": "pause",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
+    },
+    {
       "id": "1ac49a0e-fc57-4348-9bb5-7f1e2e812708",
       "type": "image",
       "file": "level1briefing2.png",
@@ -358,6 +371,19 @@
       "name": "level2briefing3",
       "scale": 1.0,
       "circle": false
+    },
+    {
+      "id": "85290710-0e83-11e3-8ffd-0800200c9a66",
+      "type": "image",
+      "file": "zzzzz.png",
+      "name": "zzzzz",
+      "scale": 2.0,
+      "background": {
+        "red": 255,
+        "green": 174,
+        "blue": 201
+      },
+      "circle": false
     }
   ],
   "rooms": [
@@ -403,7 +429,10 @@
         "99664a9b-24ef-40c0-becd-cec8e925c8fa",
         "8e1dddba-240e-4a8d-a8c4-89cdb66f0285",
         "e4f7ed88-7fc6-4249-860f-f81387d9ba50",
-        "332ea407-247d-4c1d-912d-acf3e97f29a9"
+        "332ea407-247d-4c1d-912d-acf3e97f29a9",
+        "99664a9b-24ef-40c0-becd-cec8e925c8fa",
+        "471e9970-0e7f-11e3-8ffd-0800200c9a66",
+        "85290710-0e83-11e3-8ffd-0800200c9a66"
       ]
     },
     {

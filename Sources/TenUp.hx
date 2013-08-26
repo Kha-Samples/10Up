@@ -41,6 +41,7 @@ class TenUp extends Game {
 	var highscoreName : String;
 	var shiftPressed : Bool;
 	private var font: Font;
+	private var pauseAnimIndex: Int = 0;
 	public var level(default, null): Level;
 	
 	public var currentGameTime(default, null) : Float;
@@ -330,9 +331,9 @@ class TenUp extends Game {
 			drawPlayerInfo(painter, 3, 200, 700, Color.fromBytes(255, 255, 0));
 			
 			if (mode == Pause) {
-				painter.setColor(Color.fromBytes(0, 0, 0));
-				painter.setFont(font);
-				painter.drawString("Pause", width / 2 - font.stringWidth("Pause") / 2, height / 2 - font.getHeight() / 2);
+				pauseAnimIndex += 1;
+				var pauseImage = Loader.the.getImage("pause");
+				painter.drawImage2(pauseImage, 0, (Std.int(pauseAnimIndex / 12) % 5) * (pauseImage.height / 5), pauseImage.width, pauseImage.height / 5, width / 2 - pauseImage.width / 2, height / 4 - pauseImage.height / 5 / 2, pauseImage.width, pauseImage.height / 5);
 			}
 		case MissionBriefing:
 			super.render(painter);
@@ -493,7 +494,7 @@ class TenUp extends Game {
 		if (key != null && key == Key.SHIFT) shiftPressed = false;
 		
 		if (mode == StartScreen) {
-			enterLevel(2);
+			enterLevel(1);
 		}
 	}
 	

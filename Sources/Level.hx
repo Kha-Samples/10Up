@@ -6,14 +6,18 @@ import kha.Sprite;
 class Level {
 	private static var instance: Level;
 	private var timeline: Timeline;
+	private var won: Bool = false;
 	
 	public var doors(default, null) : Array<Door>;
 	public var cars(default, null): Array<Car>;
 	public var computers(default, null): Array<Computer>;
 	public var gates(default, null): Array<Gate>;
 	public var gatters(default, null): Array<Gatter>;
+	public var bosses(default, null): Array<Boss>;
 	public var timeTravelSprites(default, null) : Array<TimeTravelSprite>;
 	public var destructibleSprites(default, null) : Array<DestructibleSprite>;
+	
+	public var nextLevelNum(default, null) = -1;
 	
 	public function new() {
 		doors = new Array();
@@ -21,6 +25,7 @@ class Level {
 		computers = new Array();
 		gates = new Array();
 		gatters = new Array();
+		bosses = new Array();
 		timeTravelSprites = new Array();
 		destructibleSprites = new Array();
 		instance = this;
@@ -41,10 +46,15 @@ class Level {
 	public function update(time: Float) {
 		timeline.update(time);
 		
-		if ( nextVictoryCheck <= time ) {
-			nextVictoryCheck = time + 1;
-			if ( checkVictory() ) {
+		if ( won ) {
+			if (victoryActions(time)) {
 				TenUp.getInstance().victory();
+			}
+		}
+		if ( nextVictoryCheck <= time ) {
+			nextVictoryCheck = time + 0.5;
+			if ( checkVictory() ) {
+				won = true;
 			} else {
 				var alive: Bool = false;
 				for (i in 0...Player.getPlayerCount()) {
@@ -79,5 +89,6 @@ class Level {
 		}
 	}
 	
-	private function checkVictory() : Bool { return false; }
+	public function checkVictory() : Bool { return false; }
+	private function victoryActions(time) : Bool { return true; }
 }

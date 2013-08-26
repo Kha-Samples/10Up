@@ -25,7 +25,7 @@ class Gate extends Sprite {
 	
 	override public function hit(sprite: Sprite): Void {
 		super.hit(sprite);
-		if (opened) {
+		if (isOpen()) {
 			return;
 		}
 		if (sprite.x < x + collisionRect().width / 2) sprite.x = x - sprite.collisionRect().width - 1;

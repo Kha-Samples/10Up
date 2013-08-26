@@ -134,6 +134,7 @@ class Player extends DestructibleSprite {
 		++round;
 	}
 	
+	private var baseSpeed = 4.0;
 	public override function update(): Void {
 		walking = false;
 		if (lastupcount > 0) --lastupcount;
@@ -143,7 +144,7 @@ class Player extends DestructibleSprite {
 					setAnimation(walkRight);
 					walking = true;
 				}
-				speedx = 3.0 * Math.round(Math.pow(1.1, getRound()));
+				speedx = baseSpeed * Math.round(Math.pow(1.1, getRound()));
 				lookRight = true;
 			}
 			else if (left) {
@@ -151,7 +152,7 @@ class Player extends DestructibleSprite {
 					setAnimation(walkLeft);
 					walking = true;
 				}
-				speedx = -3.0 * Math.round(Math.pow(1.1, getRound()));
+				speedx = -baseSpeed * Math.round(Math.pow(1.1, getRound()));
 				lookRight = false;
 			}
 			else {

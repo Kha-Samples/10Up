@@ -9,6 +9,7 @@ class PlayerBullie extends Player {
 		super(x, y - 8, "rowdy", 25 * 2, 52 * 2, 100);
 		Player.setPlayer(2, this);
 		_health = 100;
+		baseSpeed = 3.0;
 	}
 	
 	override public function hit(sprite: Sprite): Void {

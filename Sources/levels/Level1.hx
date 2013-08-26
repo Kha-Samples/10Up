@@ -7,6 +7,7 @@ import kha.Scene;
 class Level1 extends Level {
 	public function new() {
 		super();
+		nextLevelNum = 2;
 		var timeline = new Timeline();
 		timeline.add(10, addSoldier);
 		timeline.add(12, addSoldier);
@@ -27,7 +28,7 @@ class Level1 extends Level {
 		Scene.the.addEnemy(enemy);
 	}
 	
-	override private function checkVictory(): Bool {
+	override public function checkVictory(): Bool {
 		var door = doors[0];
 		if (door.health < 75) {
 			return false;

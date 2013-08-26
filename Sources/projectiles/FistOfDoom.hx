@@ -93,7 +93,7 @@ class FistOfDoom extends Projectile {
 			}
 			
 			creatureDamage = Math.round( ( (owner.lookRight ? owner.speedx : -owner.speedx) + dmgSpeed ) * 7.5 );
-			stuctureDamage = creatureDamage;
+			structureDamage = creatureDamage;
 			//trace ( 'relspeed: $dmgSpeed' );
 			//trace ( 'absspeed: ${( (owner.lookRight ? owner.speedx : -owner.speedx) + speedx )}' );
 			//trace ( '     dmg: $creatureDamage' );

@@ -172,7 +172,9 @@ class Player extends DestructibleSprite {
 		}
 		if (jumpcount > 0) --jumpcount;
 		super.update();
-		updateMuzzlePoint();
+		if (Player.currentPlayer == this) {
+			updateCrosshair();
+		}
 	}
 	
 	public function setUp() {
@@ -263,14 +265,13 @@ class Player extends DestructibleSprite {
 	var isCrosshairVisible : Bool = false;
 	var crosshair : Vector2;
 	
-	public function updateCrosshair( mouseX : Float, mouseY : Float ) {
+	public function updateCrosshair() {
 		if (Player.current() != null) {
 			var v = center;
-			v.x = mouseX - v.x;
-			v.y = mouseY - v.y;
+			v.x = TenUp.instance.mouseX - v.x;
+			v.y = TenUp.instance.mouseY - v.y;
 			//v.y += 0.1 * height;
-			if (Player.current().lookRight) {
-				v.x -= width;
+			if (lookRight) {
 				if (v.x < 0) {
 					v.x = 0;
 				}
@@ -291,8 +292,8 @@ class Player extends DestructibleSprite {
 	
 	private function updateMuzzlePoint(): Void {
 		muzzlePoint = center;
-		muzzlePoint.x += 0.5 * crosshair.x * width;
-		muzzlePoint.y += 0.5 * crosshair.y * height;
+		muzzlePoint.x += 0.6 * crosshair.x * width;
+		muzzlePoint.y += 0.6 * crosshair.y * height;
 	}
 	
 	override public function render(painter:Painter):Void {
@@ -307,8 +308,14 @@ class Player extends DestructibleSprite {
 			painter.drawLine( px - 10 * crosshair.y, py + 10 * crosshair.x, px - 2 * crosshair.y, py + 2 * crosshair.x );
 			painter.drawLine( px + 10 * crosshair.y, py - 10 * crosshair.x, px + 2 * crosshair.y, py - 2 * crosshair.x );
 			
-			//painter.drawLine( muzzlePoint.x, muzzlePoint.y, muzzlePoint.x + 50 * crosshair.x, muzzlePoint.y + 50 * crosshair.y); 
-			//painter.fillRect( muzzlePoint.x - 4, muzzlePoint.y - 4, 9, 9);
+			/*
+			var rect = collisionRect();
+			var c = center;
+			painter.drawRect( rect.x, rect.y, rect.width, rect.height );
+			painter.fillRect( c.x - 4, c.y - 4, 9, 9);
+			
+			painter.drawLine( muzzlePoint.x, muzzlePoint.y, muzzlePoint.x + 50 * crosshair.x, muzzlePoint.y + 50 * crosshair.y);
+			painter.fillRect( muzzlePoint.x - 4, muzzlePoint.y - 4, 9, 9);//*/
 		}
 	}
 }

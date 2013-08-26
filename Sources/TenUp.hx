@@ -420,13 +420,16 @@ class TenUp extends Game {
 		}
 	}
 	
+	public var mouseX(default, null) : Float;
+	public var mouseY(default, null) : Float;
 	override public function mouseMove(x:Int, y:Int) : Void {
-		if (mode == Game && Player.current() != null) {
-			Player.current().updateCrosshair( x + Scene.the.screenOffsetX, y + Scene.the.screenOffsetY );
-		}
+		mouseX = x + Scene.the.screenOffsetX;
+		mouseY = y + Scene.the.screenOffsetY;
 	}
 	
 	override public function mouseDown(x: Int, y: Int): Void {
+		mouseX = x + Scene.the.screenOffsetX;
+		mouseY = y + Scene.the.screenOffsetY;
 		if (mode == Game) {
 			if (shiftPressed) {
 				Player.current().prepareSpecialAbilityB(currentGameTime);
@@ -441,6 +444,8 @@ class TenUp extends Game {
 	
 	private var mouseUpAction : Float->Void;
 	override public function mouseUp(x: Int, y: Int): Void {
+		mouseX = x + Scene.the.screenOffsetX;
+		mouseY = y + Scene.the.screenOffsetY;
 		switch (mode) {
 		case Game:
 			if (mouseUpAction != null) {

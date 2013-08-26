@@ -20,7 +20,7 @@ class PlayerAgent extends Player {
 		graple = new GrapleHook();
 		grapleVec = null;
 		grapleLength = 0;
-		Scene.the.addHero(graple);
+		//Scene.the.addHero(graple);
 	}
 	
 	var lastFired : Float = 0;
@@ -59,9 +59,17 @@ class PlayerAgent extends Player {
 	
 	override public function update() {
 		super.update();
-		graple.x = x + 10;
-		graple.y = y + 5;
+		var c = center;
+		graple.x = c.x - 0.5 * graple.width;
+		//graple.x = x + 10;
+		graple.y = c.y - 0.5 * graple.height + 5;
 		graple.rotation.angle = Math.atan2(crosshair.y, crosshair.x);
+		if (lookRight) {
+			graple.setAnimation( graple.rightAnim );
+		} else {
+			graple.setAnimation( graple.leftAnim );
+			graple.rotation.angle = graple.rotation.angle + Math.PI;
+		}
 		
 		if (grapleVec != null) {
 			if (pulling) {
@@ -114,6 +122,7 @@ class PlayerAgent extends Player {
 	
 	override public function render(painter:Painter): Void {
 		super.render(painter);
+		graple.render(painter);
 		if (grapleVec != null) {
 			painter.setColor(Color.fromBytes(0, 0, 0));
 			painter.drawLine(x + 10, y + 5, hookX(), hookY());

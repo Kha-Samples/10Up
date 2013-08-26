@@ -349,6 +349,30 @@
       "circle": false
     },
     {
+      "id": "8e1dddba-240e-4a8d-a8c4-89cdb66f0285",
+      "type": "image",
+      "file": "level2briefing1.png",
+      "name": "level2briefing1",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "e4f7ed88-7fc6-4249-860f-f81387d9ba50",
+      "type": "image",
+      "file": "level2briefing2.png",
+      "name": "level2briefing2",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "332ea407-247d-4c1d-912d-acf3e97f29a9",
+      "type": "image",
+      "file": "level2briefing3.png",
+      "name": "level2briefing3",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
       "id": "85290710-0e83-11e3-8ffd-0800200c9a66",
       "type": "image",
       "file": "zzzzz.png",
@@ -402,6 +426,10 @@
         "9d9f6b13-d0aa-421c-a751-4853319e225d",
         "e2ced300-0e73-11e3-8ffd-0800200c9a66",
         "2b620320-0e6b-11e3-8ffd-0800200c9a66",
+        "99664a9b-24ef-40c0-becd-cec8e925c8fa",
+        "8e1dddba-240e-4a8d-a8c4-89cdb66f0285",
+        "e4f7ed88-7fc6-4249-860f-f81387d9ba50",
+        "332ea407-247d-4c1d-912d-acf3e97f29a9",
         "99664a9b-24ef-40c0-becd-cec8e925c8fa",
         "471e9970-0e7f-11e3-8ffd-0800200c9a66",
         "85290710-0e83-11e3-8ffd-0800200c9a66"

@@ -25,6 +25,7 @@ import levels.Level2;
 enum Mode {
 	Loading;
 	StartScreen;
+	MissionBriefing;
 	Game;
 	Pause;
 	Highscore;
@@ -227,7 +228,7 @@ class TenUp extends Game {
 		Configuration.setScreen(this);
 		currentGameTime = 0;
 		lastTime = Scheduler.time();
-		mode = Pause;
+		mode = MissionBriefing;
 	}
 	
 	public function victory() : Void {
@@ -256,12 +257,20 @@ class TenUp extends Game {
 	
 	public override function update() {
 		var currentTime = Scheduler.time();
-		if (mode == Game) {
+		if (mode == Game || mode == MissionBriefing) {
 			var lastGameTime = currentGameTime;
 			currentTimeDiff = currentTime - lastTime;
 			currentGameTime += currentTimeDiff;
 			Player.current().elapse(currentGameTime - lastGameTime);
-			level.update(currentGameTime);
+			if (mode == Game) {
+				level.update(currentGameTime);
+			} else {
+				if (level.updateMissionBriefing(currentGameTime)) {
+					currentGameTime = 0;
+					mode = Game;
+				}
+				return;
+			}
 		}
 		if (mode != Pause) {
 			super.update();
@@ -324,6 +333,9 @@ class TenUp extends Game {
 				painter.setFont(font);
 				painter.drawString("Pause", width / 2 - font.stringWidth("Pause") / 2, height / 2 - font.getHeight() / 2);
 			}
+		case MissionBriefing:
+			super.render(painter);
+			Level.the.renderMissionBriefing( painter );
 		case Loading, StartScreen:
 			super.render(painter);
 		}

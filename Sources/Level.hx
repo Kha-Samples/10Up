@@ -1,5 +1,8 @@
 package;
 
+import kha.Painter;
+import kha.Sprite;
+
 class Level {
 	private static var instance: Level;
 	private var timeline: Timeline;
@@ -21,6 +24,7 @@ class Level {
 		timeTravelSprites = new Array();
 		destructibleSprites = new Array();
 		instance = this;
+		missionBriefingSprites = new Array();
 	}
 	
 	public static var the(get, null): Level;
@@ -53,6 +57,24 @@ class Level {
 					TenUp.getInstance().defeat();
 				}
 			} 
+		}
+	}
+	
+	@:noCompletion var _anyKey: Bool = true;
+	public var anyKey(get, set) : Bool;
+	@:noCompletion private function set_anyKey( value : Bool ) : Bool {
+		return _anyKey = value;
+	}
+	@:noCompletion private function get_anyKey() : Bool {
+		var r = _anyKey;
+		_anyKey = false;
+		return r;
+	}
+	public function updateMissionBriefing(time: Float) : Bool { return true; }
+	private var missionBriefingSprites : Array<Sprite>;
+	public function renderMissionBriefing(painter: Painter) : Void {
+		for ( sprite in missionBriefingSprites ) {
+			sprite.render(painter);
 		}
 	}
 	

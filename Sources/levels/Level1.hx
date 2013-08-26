@@ -1,5 +1,7 @@
 package levels;
 
+import kha.gui.TextItem;
+import kha.Loader;
 import kha.Scene;
 
 class Level1 extends Level {
@@ -51,5 +53,22 @@ class Level1 extends Level {
 		}
 		
 		return true;
+	}
+	
+	var state = 0;
+	override public function updateMissionBriefing(time:Float): Bool {
+		if (anyKey) {
+			state++;
+			switch (state) {
+				case 1:
+					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing1") );
+					sprite.x = 0.5 * (TenUp.instance.width - sprite.width);
+					sprite.y = 0.5 * (TenUp.instance.height - sprite.height);
+					missionBriefingSprites.push( sprite );
+				default:
+					return true;
+			}
+		}
+		return false;
 	}
 }

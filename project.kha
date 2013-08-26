@@ -310,6 +310,30 @@
       "name": "level1briefing1",
       "scale": 1.0,
       "circle": false
+    },
+    {
+      "id": "1ac49a0e-fc57-4348-9bb5-7f1e2e812708",
+      "type": "image",
+      "file": "level1briefing2.png",
+      "name": "level1briefing2",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "e232d127-d068-4b6c-80e1-987b7a6a936c",
+      "type": "image",
+      "file": "level1briefing3.png",
+      "name": "level1briefing3",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "9d9f6b13-d0aa-421c-a751-4853319e225d",
+      "type": "image",
+      "file": "level1briefing0.png",
+      "name": "level1briefing0",
+      "scale": 1.0,
+      "circle": false
     }
   ],
   "rooms": [
@@ -346,10 +370,13 @@
         "8c22dfd0-0e5d-11e3-8ffd-0800200c9a66",
         "9c7e09e0-0e5d-11e3-8ffd-0800200c9a66",
         "2b620320-0e6b-11e3-8ffd-0800200c9a66",
+        "99664a9b-24ef-40c0-becd-cec8e925c8fa",
+        "1ac49a0e-fc57-4348-9bb5-7f1e2e812708",
+        "e232d127-d068-4b6c-80e1-987b7a6a936c",
+        "9d9f6b13-d0aa-421c-a751-4853319e225d",
         "e2ced300-0e73-11e3-8ffd-0800200c9a66",
         "2b620320-0e6b-11e3-8ffd-0800200c9a66",
-        "99664a9b-24ef-40c0-becd-cec8e925c8fa"
-      ]
+        "99664a9b-24ef-40c0-becd-cec8e925c8fa"      ]
     },
     {
       "id": "4f6ef48a-79d3-4e3f-a5e2-1490ba1d7190",

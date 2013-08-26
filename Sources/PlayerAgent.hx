@@ -1,8 +1,10 @@
 package;
 
+import kha.Animation;
 import kha.Color;
 import kha.math.Vector2;
 import kha.Painter;
+import kha.Rectangle;
 import kha.Scene;
 import projectiles.PistolProjectile;
 
@@ -15,12 +17,24 @@ class PlayerAgent extends Player {
 	private var pulling = false;
 	
 	public function new(x: Float, y: Float) {
-		super(x, y - 2, "agent", 19 * 2, 49 * 2);
+		super(x, y - 2, "agent", Std.int(410 / 10) * 2, Std.int(455 / 7) * 2);
 		Player.setPlayer(0, this);
 		graple = new GrapleHook();
 		grapleVec = null;
 		grapleLength = 0;
 		//Scene.the.addHero(graple);
+		
+		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
+		walkLeft = Animation.createRange(11, 18, 4);
+		walkRight = Animation.createRange(1, 8, 4);
+		standLeft = Animation.create(10);
+		standRight = Animation.create(0);
+		jumpLeft = Animation.create(31);
+		jumpRight = Animation.create(30);
+	}
+	
+	override public function zzzzzXDif(): Float {
+		return 20;
 	}
 	
 	var lastFired : Float = 0;

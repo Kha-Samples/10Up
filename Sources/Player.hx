@@ -134,6 +134,7 @@ class Player extends DestructibleSprite {
 		++round;
 	}
 	
+	private var baseSpeed = 4.0;
 	public override function update(): Void {
 		walking = false;
 		if (lastupcount > 0) --lastupcount;
@@ -143,7 +144,7 @@ class Player extends DestructibleSprite {
 					setAnimation(walkRight);
 					walking = true;
 				}
-				speedx = 3.0 * Math.round(Math.pow(1.1, getRound()));
+				speedx = baseSpeed * Math.round(Math.pow(1.1, getRound()));
 				lookRight = true;
 			}
 			else if (left) {
@@ -151,7 +152,7 @@ class Player extends DestructibleSprite {
 					setAnimation(walkLeft);
 					walking = true;
 				}
-				speedx = -3.0 * Math.round(Math.pow(1.1, getRound()));
+				speedx = -baseSpeed * Math.round(Math.pow(1.1, getRound()));
 				lookRight = false;
 			}
 			else {
@@ -191,8 +192,8 @@ class Player extends DestructibleSprite {
 	public function sleep() {
 		isLiftable = true;
 		setAnimation(Animation.create(0));
-		rotation = new Rotation(new Vector2(width / 2, height - 4), Math.PI * 1.5);
-		collider = new Rectangle(0, 80, 10, collider.height + 80);
+		rotation = new Rotation(new Vector2(width / 2, collider.height - 4), Math.PI * 1.5);
+		//collider = new Rectangle(0, 80, 10, collider.height + 80);
 		
 		speedy = 0;
 		speedx = 0;
@@ -200,6 +201,10 @@ class Player extends DestructibleSprite {
 		if (this == currentPlayer) {
 			TenUp.getInstance().pause();
 		}
+	}
+	
+	public function zzzzzXDif(): Float {
+		return 60;
 	}
 	
 	public function isSleeping(): Bool {
@@ -303,7 +308,7 @@ class Player extends DestructibleSprite {
 		if (isSleeping()) {
 			painter.drawImage2(image, 0, 0, width, height, x, y, width, height, rotation);
 			++zzzzzIndex;
-			painter.drawImage2(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x - 60, y, zzzzz.width / 3, zzzzz.height);
+			painter.drawImage2(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x - zzzzzXDif(), y, zzzzz.width / 3, zzzzz.height);
 		}
 		else {
 			super.render(painter);

@@ -67,7 +67,7 @@ class TenUp extends Game {
 			mouseUpAction(currentGameTime);
 			mouseUpAction = null;
 		}
-		if (nextPlayer()) mode = Pause;
+		if (nextPlayer() && !level.checkVictory()) mode = Pause;
 	}
 	
 	public override function init(): Void {
@@ -98,15 +98,15 @@ class TenUp extends Game {
         //flash.Lib.current.stage.displayState = FULL_SCREEN;
 	}
 	
-	public function initLevel1(): Void {
+	private function initLevel1(): Void {
 		initLevel(1);
 	}
 	
-	public function initLevel2(): Void {
+	private function initLevel2(): Void {
 		initLevel(2);
 	}
 
-	public function initLevel(levelNumber: Int): Void {
+	private function initLevel(levelNumber: Int): Void {
 		switch (levelNumber) {
 		case 1:
 			level = new Level1();
@@ -149,6 +149,7 @@ class TenUp extends Game {
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
+		Scene.the.camx = Std.int(width / 2);
 		Player.init();
 		var tilemap : Tilemap = new Tilemap("outside", 32, 32, map, tileColissions);
 		Scene.the.setColissionMap(tilemap);
@@ -206,6 +207,7 @@ class TenUp extends Game {
 				Scene.the.addEnemy(sprite);
 			case 11:
 				sprite = new Boss(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
+				level.bosses.push(cast sprite);
 				Scene.the.addEnemy(sprite);
 			case 12:
 				sprite = new Car(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
@@ -233,8 +235,12 @@ class TenUp extends Game {
 	}
 	
 	public function victory() : Void {
-		// TODO: Win!
-		showHighscore();
+		if (level.nextLevelNum < 0) {
+			// TODO: Win!
+			showHighscore();
+		} else {
+			enterLevel( level.nextLevelNum );
+		}
 	}
 	
 	public function defeat() : Void {
@@ -264,6 +270,8 @@ class TenUp extends Game {
 			currentGameTime += currentTimeDiff;
 			if (mode == Game) {
 				Player.current().elapse(currentGameTime - lastGameTime);
+				super.update();
+				Scene.the.camx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 				level.update(currentGameTime);
 			} else {
 				if (level.updateMissionBriefing(currentGameTime)) {
@@ -273,14 +281,9 @@ class TenUp extends Game {
 				lastTime = currentTime;
 				return;
 			}
-		}
-		if (mode != Pause) {
+		} else if (mode != Pause) {
 			super.update();
-		}
-		if (mode == Game) {
-			Scene.the.camx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
-		}
-		else if (mode == Pause) {
+		} else {
 			var aimx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 			var camspeed: Int = 10;
 			if (Scene.the.camx > aimx) {

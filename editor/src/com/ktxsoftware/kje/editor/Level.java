@@ -20,8 +20,8 @@ import javax.swing.JPanel;
 public class Level extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
-	public static final int TILE_WIDTH = 32;
-	public static final int TILE_HEIGHT = 32;
+	public static final int TILE_WIDTH = 16;
+	public static final int TILE_HEIGHT = 16;
 	
 	private static Level instance;
 	

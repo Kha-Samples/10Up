@@ -9,6 +9,7 @@ import kha.HighscoreList;
 import kha.Key;
 import kha.Loader;
 import kha.LoadingScreen;
+import kha.math.Random;
 import kha.Music;
 import kha.Painter;
 import kha.Scene;
@@ -72,6 +73,7 @@ class TenUp extends Game {
 	}
 	
 	public function initStart(): Void {
+		Random.init( Math.round( Scheduler.time() * 1000 ) );
 		var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
 		logo.x = 0.5 * width - 0.5 * logo.width;
 		logo.y = 0.5 * height - 0.5 * logo.height;

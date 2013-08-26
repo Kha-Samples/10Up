@@ -56,6 +56,12 @@ class Door extends DestructibleSprite {
 			if (value < 75) {
 				setAnimation(crackedAnim);
 			}
+		} else if ( value > _health ) {
+			if (value < 75) {
+				setAnimation(crackedAnim);
+			} else {
+				setAnimation(closedAnim);
+			}
 		}
 		return super.set_health(value);
 	}

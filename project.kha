@@ -205,12 +205,12 @@
       "file": "door.png",
       "name": "door",
       "scale": 1.0,
-      "circle": false,
       "background": {
         "red": 255,
         "green": 174,
         "blue": 201
-      }
+      },
+      "circle": false
     },
     {
       "id": "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
@@ -223,6 +223,14 @@
         "green": 174,
         "blue": 201
       },
+      "circle": false
+    },
+    {
+      "id": "45b099f1-445e-4417-bb25-554b1429c0aa",
+      "type": "image",
+      "file": "timecannon.png",
+      "name": "timecannon",
+      "scale": 1.0,
       "circle": false
     }
   ],
@@ -254,7 +262,8 @@
         "2a7ceaee-cc08-4ad2-80d5-7839b6f45f1a",
         "66f588d6-998a-49d5-a7d6-e2a9a747be51",
         "1a57efc0-0d8c-11e3-8ffd-0800200c9a66",
-        "6f40f5e0-0da5-11e3-8ffd-0800200c9a66"
+        "6f40f5e0-0da5-11e3-8ffd-0800200c9a66",
+        "45b099f1-445e-4417-bb25-554b1429c0aa"
       ]
     },
     {

@@ -22,6 +22,9 @@ class DestructibleSprite extends TimeTravelSprite {
 		Overwrite to hanlde health loss or destruction/dying.
 	**/
 	@:noCompletion private function set_health(value: Int) : Int {
+		if (value > maxHealth) {
+			value = maxHealth;
+		}
 		return _health = value;
 	}
 	@:noCompletion private inline function get_health() : Int {

@@ -24,7 +24,7 @@ class Level1 extends Level {
 	
 	override private function checkVictory(): Bool {
 		var door = doors[0];
-		if (door.health <= 0) {
+		if (door.health < 75) {
 			return false;
 		}
 		

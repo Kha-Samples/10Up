@@ -2,7 +2,7 @@ package;
 
 class PlayerBlondie extends Player {
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman4");
+		super(x, y - 8, "mechanic", 21 * 2, 52 * 2);
 		Player.setPlayer(3, this);
 		repairAmountPerSec = 50;
 	}

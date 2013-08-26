@@ -49,9 +49,9 @@
     {
       "id": "2348bd72-d7ce-11e1-9b23-0800200c9a66",
       "type": "image",
-      "file": "jumpman.png",
-      "name": "jumpman",
-      "scale": 1.0,
+      "file": "agent.png",
+      "name": "agent",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -126,9 +126,9 @@
     {
       "id": "04bf9738-4fe2-4966-8088-70ff042801ed",
       "type": "image",
-      "file": "jumpman2.png",
-      "name": "jumpman2",
-      "scale": 1.0,
+      "file": "professor.png",
+      "name": "professor",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -139,9 +139,9 @@
     {
       "id": "14c3245b-82c0-4693-a131-e6f255c872de",
       "type": "image",
-      "file": "jumpman3.png",
-      "name": "jumpman3",
-      "scale": 1.0,
+      "file": "rowdy.png",
+      "name": "rowdy",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,
@@ -152,9 +152,9 @@
     {
       "id": "f00b98f6-70a7-4217-a6d6-a54965b634c9",
       "type": "image",
-      "file": "jumpman4.png",
-      "name": "jumpman4",
-      "scale": 1.0,
+      "file": "mechanic.png",
+      "name": "mechanic",
+      "scale": 2.0,
       "background": {
         "red": 255,
         "green": 174,

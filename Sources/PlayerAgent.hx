@@ -15,7 +15,7 @@ class PlayerAgent extends Player {
 	private var pulling = false;
 	
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman");
+		super(x, y - 2, "agent", 19 * 2, 49 * 2);
 		Player.setPlayer(0, this);
 		graple = new GrapleHook();
 		grapleVec = null;

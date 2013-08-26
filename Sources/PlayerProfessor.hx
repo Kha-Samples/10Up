@@ -10,7 +10,7 @@ class PlayerProfessor extends Player {
 	var timecannon : TimeCannon;
 	
 	public function new(x: Float, y: Float) {
-		super(x, y, "jumpman2");
+		super(x, y - 8, "professor", 20 * 2, 52 * 2);
 		Player.setPlayer(1, this);
 		
 		timecannon = new TimeCannon();

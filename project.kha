@@ -438,6 +438,22 @@
       "circle": false
     },
     {
+      "id": "7ab4fd01-1f5b-4fb2-8642-90c0ffa6e7da",
+      "type": "image",
+      "file": "introtext1.png",
+      "name": "introtext1",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "72d71532-1893-4b5b-a750-a5d3475f4eb3",
+      "type": "image",
+      "file": "introtext2.png",
+      "name": "introtext2",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
       "id": "d24a3ed1-21db-408a-92d7-2d8c9f9f8115",
       "type": "image",
       "file": "congratulations.png",
@@ -505,7 +521,11 @@
       "name": "start",
       "neighbours": [],
       "assets": [
-        "c659517f-66d8-4dcb-958a-cf727ccb6113"
+        "c659517f-66d8-4dcb-958a-cf727ccb6113",
+        "7ab4fd01-1f5b-4fb2-8642-90c0ffa6e7da",
+        "72d71532-1893-4b5b-a750-a5d3475f4eb3",
+        "9d9f6b13-d0aa-421c-a751-4853319e225d",
+        "15b1ea20-4032-11e2-a25f-0800200c9a66"
       ]
     }
   ]

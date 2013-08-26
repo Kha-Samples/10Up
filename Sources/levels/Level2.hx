@@ -4,20 +4,29 @@ import kha.Loader;
 import kha.Scene;
 
 class Level2 extends Level {
-	private var won: Bool = false;
 	
 	public function new() {
 		super();
 		var timeline = new Timeline();
 		setTimeline(timeline);
 	}
-
-	public function win(): Void {
-		won = true;
-	}
 	
-	override private function checkVictory(): Bool {
-		return won;
+	override public function checkVictory(): Bool {
+		if ( cars[0].speedx > 0 && gates[0].isOpen() ) {
+			Scene.the.camx =  Std.int(cars[0].x);
+			return true;
+		}
+		
+		return false;
+	}
+	override private function victoryActions(time): Bool {
+		Scene.the.camx = Std.int(cars[0].x + 0.5 *  cars[0].width);
+		
+		if ( cars[0].collisionRect().collision( bosses[0].collisionRect() ) ) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	var state = 0;

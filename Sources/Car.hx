@@ -15,6 +15,7 @@ class Car extends DestructibleSprite {
 		this.y = y;
 		health = 0;
 		isRepairable = true;
+		isLiftable = true;
 		startSound = Loader.the.getSound("carstart");
 	}
 	

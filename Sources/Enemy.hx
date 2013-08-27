@@ -8,6 +8,7 @@ import kha.math.Vector2;
 import kha.Painter;
 import kha.Rectangle;
 import kha.Rotation;
+import kha.Sound;
 import kha.Sprite;
 import projectiles.PistolProjectile;
 
@@ -22,6 +23,7 @@ class Enemy extends DestructibleSprite {
 	private var nextShootTime: Float = 0;
 	private var lookRight: Bool = true;
 	private var watchRect : Rectangle;
+	private var hitSound: Sound;
 	
 	public function new(x: Float, y: Float) {
 		super(50, Loader.the.getImage("soldier"), Std.int(410 / 10) * 2, Std.int(455 / 7) * 2);
@@ -34,21 +36,26 @@ class Enemy extends DestructibleSprite {
 		standRight = Animation.create(0);
 		setAnimation(walkRight);
 		speedx = 0;
+		hitSound = Loader.the.getSound("hit");
 		distances = new Array<Float>();
 		watchRect = new Rectangle(x, y - 75, 300, 150);
 	}
 	
 	override private function set_health(value:Int):Int {
 		if ( value <= 0 ) {
+			if ( value < _health ) {
+				for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+			}
 			kill();
 		} else if ( value < _health ) {
-			trace ( 'new health: $value' );
-			// TODO: pain cry
+			for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+			hitSound.play();
 		}
 		return super.set_health(value);
 	}
 
 	public function kill() {
+		hitSound.play();
 		killed = true;
 		setAnimation(Animation.create(0));
 		speedx = 0;

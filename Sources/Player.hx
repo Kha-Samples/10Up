@@ -265,10 +265,13 @@ class Player extends DestructibleSprite {
 	
 	override private function set_health(value:Int):Int {
 		if ( value <= 0 ) {
+			if ( value < _health ) {
+				for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+			}
 			sleep();
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
-			for (i in 0...(_health - value)) Scene.the.addOther(new Blood(x + 20, y + 20));
+			for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
 			hitSound.play();
 		} else if ( value > _health && _health <= 0 ) {
 			killed = timeLeft() > 0;

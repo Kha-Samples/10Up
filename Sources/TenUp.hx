@@ -246,20 +246,25 @@ class TenUp extends Game {
 	
 	public function victory() : Void {
 		if (level.nextLevelNum < 0) {
-			mode = Mode.Congratulations;
+			showCongratulations();
 		} else {
 			enterLevel( level.nextLevelNum );
 		}
 	}
 	
 	public function defeat() : Void {
-		Scene.the.clear();
-		mode = Mode.GameOver;
+		showGameOver();
 	}
 	
-	public function showHighscore() {
+	public function showCongratulations() {
 		Scene.the.clear();
 		mode = Mode.Congratulations;
+		//music.stop();
+	}
+	
+	public function showGameOver() {
+		Scene.the.clear();
+		mode = Mode.GameOver;
 		//music.stop();
 	}
 	

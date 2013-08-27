@@ -174,8 +174,8 @@ class Enemy extends DestructibleSprite {
 	
 	override public function render(painter: Painter): Void {
 		super.render(painter);
-		painter.setColor( kha.Color.ColorBlack );
+		/*painter.setColor( kha.Color.ColorBlack );
 		if (focus != null)
-		painter.drawRect( focus.x - focus.collider.x, focus.y - focus.collider.y, focus.width, focus.height );
+			painter.drawRect( focus.x - focus.collider.x, focus.y - focus.collider.y, focus.width, focus.height );//*/
 	}
 }

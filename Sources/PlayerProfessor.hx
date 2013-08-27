@@ -3,6 +3,7 @@ package;
 import kha.Animation;
 import kha.Color;
 import kha.Loader;
+import kha.math.Vector2;
 import kha.Painter;
 import kha.Rectangle;
 import kha.Scene;
@@ -82,9 +83,9 @@ class PlayerProfessor extends Player {
 		if ( timeCannonNextFireTime  <= gameTime ) {
 			timeCannonNextFireTime = gameTime + 25;
 			
-			var projectile = new TimeProjectile( crosshair, 10, 10, this.z );
-			projectile.x = muzzlePoint.x + (lookRight ? 0.8 : -0.8) * (projectile.width * crosshair.x);
-			projectile.y = muzzlePoint.y + (lookRight ? 0.8 : -0.8) * (projectile.height * crosshair.y);
+			var projectile = new TimeProjectile( crosshair, this.z );
+			projectile.x = muzzlePoint.x + (0.8 * projectile.width * crosshair.x);
+			projectile.y = muzzlePoint.y + (0.8 * projectile.height * crosshair.y);
 			Scene.the.addProjectile( projectile );
 			isCrosshairVisible = false;
 		}

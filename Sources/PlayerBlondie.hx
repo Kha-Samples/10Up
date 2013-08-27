@@ -83,17 +83,32 @@ class PlayerBlondie extends Player {
 				lastRepairTime = TenUp.instance.currentGameTime;
 				repairing.health += amount;
 			}
-		} else if (isDancing) {
-			if ( (Player.current() != this && lastDanceTime < TenUp.instance.currentGameTime)
-			  || (lastDanceTime > 0 && (up || right || left)) ) {
-				isDancing = false;
-				if (lookRight) setAnimation(standRight);
-				else setAnimation(standLeft);
-				super.update();
-			} else {
-				animation.next();
+		} 
+		if (isDancing) {
+			if ( (lastDanceTime > 0 && (up || right || left)) || (repairing != null) ) {
+				lastDanceTime = Math.max(TenUp.instance.currentGameTime - lastDanceTime, -2);
+				if (repairing != null) {
+					super.update();
+				}
 			}
-		} else {
+			if ( lastDanceTime < 0 ) {
+				lastDanceTime += TenUp.instance.currentTimeDiff;
+				if ( lastDanceTime >= 0 ) {
+					isDancing = false;
+				}
+			} else if ( Player.current() != this && lastDanceTime < TenUp.instance.currentGameTime ) {
+				isDancing = false;
+			}
+			if (repairing == null) {
+				if ( isDancing ) {
+					animation.next();
+				} else {
+					if (lookRight) setAnimation(standRight);
+					else setAnimation(standLeft);
+					super.update();
+				}
+			}
+		} else if ( repairing == null ) {
 			super.update();
 		}
 	}

@@ -27,9 +27,15 @@ class Projectile extends Sprite {
 		Scene.the.removeProjectile( this );
 	}
 	
+	public function canShootSleepers(): Bool {
+		return false;
+	}
+	
 	override public function hit(sprite:Sprite): Void {
 		if ( sprite.collides && this.collides ) {
-			if (Std.is(sprite, Player) && cast(sprite, Player).isSleeping()) return;
+			if (!canShootSleepers()) {
+				if (Std.is(sprite, Player) && cast(sprite, Player).isSleeping()) return;
+			}
 			if ( Std.is( sprite, DestructibleSprite ) ) {
 				var destructible : DestructibleSprite = cast sprite;
 				if (destructible.isStucture) {

@@ -1,5 +1,6 @@
 package projectiles;
 
+import kha.Animation;
 import kha.Direction;
 import kha.Image;
 import kha.math.Vector2;
@@ -9,19 +10,20 @@ import kha.Scene;
 import kha.Sprite;
 
 class TimeProjectile extends Projectile {
-	public function new(dir: Vector2, width:Int=0, height:Int=0, z:Int=1) {
-		super(null, width, height, z);
+	public function new(dir: Vector2, z:Int=9) {
+		super( Loader.the.getImage( "TimeProjectile" ), 20, 20, z);
+		
+		setAnimation( new Animation( [0, 1, 2, 2, 1, 0], 30 ) );
 		
 		isTimeWeapon = true;
-		speedx = 10 * dir.x;
-		speedy = 10 * dir.y;
+		speedx = 5 * dir.x;
+		speedy = 5 * dir.y;
 		accx = 0;
 		accy = 0;
 		Loader.the.getSound("timeshot").play();
 	}
 	
-	override public function render(painter:Painter):Void {
-		painter.setColor( kha.Color.fromBytes(0, 255, 0) );
-		painter.fillRect( x, y, width, height );
+	override public function canShootSleepers(): Bool {
+		return true;
 	}
 }

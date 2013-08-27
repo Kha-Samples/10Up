@@ -460,6 +460,22 @@
       "name": "congratulations",
       "scale": 1.0,
       "circle": false
+    },
+    {
+      "id": "9448ccfd-de51-4192-9d1d-4cc79b87f9fe",
+      "type": "image",
+      "file": "gameover.png",
+      "name": "gameover",
+      "scale": 1.0,
+      "circle": false
+    },
+    {
+      "id": "a9d959ff-1797-4a1c-8bb3-697db3c5e69a",
+      "type": "image",
+      "file": "TimeProjectile.png",
+      "name": "TimeProjectile",
+      "scale": 1.0,
+      "circle": false
     }
   ],
   "rooms": [
@@ -513,7 +529,9 @@
         "6a84a9a1-0e92-11e3-8ffd-0800200c9a66",
         "90467ec2-0e92-11e3-8ffd-0800200c9a66",
         "90467ec3-0e92-11e3-8ffd-0800200c9a66",
-        "d24a3ed1-21db-408a-92d7-2d8c9f9f8115"
+        "d24a3ed1-21db-408a-92d7-2d8c9f9f8115",
+        "9448ccfd-de51-4192-9d1d-4cc79b87f9fe",
+        "a9d959ff-1797-4a1c-8bb3-697db3c5e69a"
       ]
     },
     {

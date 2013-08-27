@@ -110,6 +110,7 @@ class TenUp extends Game {
 	private function initLevel(levelNumber: Int): Void {
 		level.init();
 		font = Loader.the.loadFont("arial", new FontStyle(false, false, false), 34);
+		minis = new Array();
 		minis.push(Loader.the.getImage("agentmini"));
 		minis.push(Loader.the.getImage("professormini"));
 		minis.push(Loader.the.getImage("rowdymini"));
@@ -245,21 +246,25 @@ class TenUp extends Game {
 	
 	public function victory() : Void {
 		if (level.nextLevelNum < 0) {
-			// TODO: Win!
-			showHighscore();
+			showCongratulations();
 		} else {
 			enterLevel( level.nextLevelNum );
 		}
 	}
 	
 	public function defeat() : Void {
-		// TODO: loose.
-		showHighscore();
+		showGameOver();
 	}
 	
-	public function showHighscore() {
+	public function showCongratulations() {
 		Scene.the.clear();
 		mode = Mode.Congratulations;
+		//music.stop();
+	}
+	
+	public function showGameOver() {
+		Scene.the.clear();
+		mode = Mode.GameOver;
 		//music.stop();
 	}
 	
@@ -312,6 +317,8 @@ class TenUp extends Game {
 		painter.setFont(font);
 		switch (mode) {
 		case GameOver:
+			var congrat = Loader.the.getImage("gameover");
+			painter.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
 		case Congratulations:
 			var congrat = Loader.the.getImage("congratulations");
 			painter.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);

@@ -1,15 +1,29 @@
 package;
 
+import kha.Animation;
+import kha.Rectangle;
 import kha.Scene;
 import kha.Sprite;
 import projectiles.FistOfDoom;
 
 class PlayerBullie extends Player {
 	public function new(x: Float, y: Float) {
-		super(x, y - 8, "rowdy", 25 * 2, 52 * 2, 100);
+		super(x, y - 8, "rowdy", Std.int(410 / 10) * 2, Std.int(455 / 7) * 2, 100);
 		Player.setPlayer(2, this);
 		_health = 100;
 		baseSpeed = 3.0;
+		
+		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
+		walkLeft = Animation.createRange(11, 18, 4);
+		walkRight = Animation.createRange(1, 8, 4);
+		standLeft = Animation.create(10);
+		standRight = Animation.create(0);
+		jumpLeft = Animation.create(11);
+		jumpRight = Animation.create(1);
+	}
+	
+	override public function zzzzzXDif(): Float {
+		return 20;
 	}
 	
 	override public function hit(sprite: Sprite): Void {

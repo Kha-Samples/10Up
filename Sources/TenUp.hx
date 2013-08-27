@@ -246,16 +246,15 @@ class TenUp extends Game {
 	
 	public function victory() : Void {
 		if (level.nextLevelNum < 0) {
-			// TODO: Win!
-			showHighscore();
+			mode = Mode.Congratulations;
 		} else {
 			enterLevel( level.nextLevelNum );
 		}
 	}
 	
 	public function defeat() : Void {
-		// TODO: loose.
-		showHighscore();
+		Scene.the.clear();
+		mode = Mode.GameOver;
 	}
 	
 	public function showHighscore() {
@@ -313,6 +312,8 @@ class TenUp extends Game {
 		painter.setFont(font);
 		switch (mode) {
 		case GameOver:
+			var congrat = Loader.the.getImage("gameover");
+			painter.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
 		case Congratulations:
 			var congrat = Loader.the.getImage("congratulations");
 			painter.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);

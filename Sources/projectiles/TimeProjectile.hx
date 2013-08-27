@@ -20,6 +20,10 @@ class TimeProjectile extends Projectile {
 		Loader.the.getSound("timeshot").play();
 	}
 	
+	override public function canShootSleepers(): Bool {
+		return true;
+	}
+	
 	override public function render(painter:Painter):Void {
 		painter.setColor( kha.Color.fromBytes(0, 255, 0) );
 		painter.fillRect( x, y, width, height );

@@ -27,10 +27,6 @@ class PlayerProfessor extends Player {
 		timecannon = new TimeCannon();
 	}
 	
-	override public function zzzzzXDif(): Float {
-		return 20;
-	}
-	
 	override public function leftButton(): String {
 		return "Shoot";
 	}

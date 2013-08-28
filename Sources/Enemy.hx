@@ -38,17 +38,21 @@ class Enemy extends DestructibleSprite {
 		speedx = 0;
 		hitSound = Loader.the.getSound("hit");
 		distances = new Array<Float>();
+		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
 		watchRect = new Rectangle(x, y - 75, 300, 150);
 	}
 	
 	override private function set_health(value:Int):Int {
 		if ( value <= 0 ) {
 			if ( value < _health ) {
-				for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+				hitSound.play();
+				for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
 			}
-			kill();
+			if (!killed) {
+				kill();
+			}
 		} else if ( value < _health ) {
-			for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+			for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
 			hitSound.play();
 		}
 		return super.set_health(value);
@@ -60,6 +64,9 @@ class Enemy extends DestructibleSprite {
 		setAnimation(Animation.create(0));
 		speedx = 0;
 		rotation = new Rotation(new Vector2(width / 2, collider.height - 4), Math.PI * 1.5);
+		y += collider.height - collider.width;
+		x += collider.width - collider.height;
+		collider = new Rectangle(-collider.y,collider.x + collider.width,collider.height,collider.width);
 	}
 	
 	public function isKilled(): Bool {
@@ -184,5 +191,13 @@ class Enemy extends DestructibleSprite {
 		/*painter.setColor( kha.Color.ColorBlack );
 		if (focus != null)
 			painter.drawRect( focus.x - focus.collider.x, focus.y - focus.collider.y, focus.width, focus.height );//*/
+			
+		/*painter.setColor( kha.Color.fromBytes(255,0,0) );
+		var rect = collisionRect();
+		painter.drawRect( rect.x, rect.y, rect.width, rect.height );
+		painter.setColor( kha.Color.ColorBlack );
+		painter.drawRect( x - collider.x, y - collider.y, width, height );
+		painter.setColor( kha.Color.fromBytes(0,255,0) );
+		painter.fillRect( x - 2, y - 2, 5, 5 );//*/
 	}
 }

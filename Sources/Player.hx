@@ -54,7 +54,7 @@ class Player extends DestructibleSprite {
 		jumpLeft = Animation.create(0);
 		jumpRight = Animation.create(0);
 		setAnimation(jumpRight);
-		collider = new Rectangle(16, 0, 32, height);
+		collider = null;
 		score = 0;
 		round = 1;
 		up = false;
@@ -193,7 +193,9 @@ class Player extends DestructibleSprite {
 		isLiftable = true;
 		setAnimation(Animation.create(0));
 		rotation = new Rotation(new Vector2(width / 2, collider.height - 4), Math.PI * 1.5);
-		//collider = new Rectangle(0, 80, 10, collider.height + 80);
+		y += collider.height - collider.width;
+		x += collider.width - collider.height;
+		collider = new Rectangle(-collider.y,collider.x + collider.width,collider.height,collider.width);
 		
 		speedy = 0;
 		speedx = 0;
@@ -201,6 +203,17 @@ class Player extends DestructibleSprite {
 		if (this == currentPlayer) {
 			TenUp.getInstance().pause();
 		}
+	}
+	
+	public function unsleep() {
+			isLiftable = false;
+			rotation = null;
+			collider = new Rectangle(collider.x - collider.height, -collider.y, collider.width, collider.height);
+			y -= collider.height - collider.width;
+			x -= collider.width - collider.height;
+			if (lookRight) setAnimation(standRight);
+			else setAnimation(standLeft);
+			killed = false;
 	}
 	
 	public function leftButton(): String {
@@ -212,7 +225,7 @@ class Player extends DestructibleSprite {
 	}
 	
 	public function zzzzzXDif(): Float {
-		return 60;
+		return 20;
 	}
 	
 	public function isSleeping(): Bool {
@@ -222,14 +235,7 @@ class Player extends DestructibleSprite {
 	public function hitEnemy(enemy : Enemy) {
 		if (killed) return;
 		if (enemy.isKilled()) return;
-		if (enemy.collisionRect().y + enemy.collisionRect().height > collisionRect().y + collisionRect().height + 4) {
-			enemy.kill();
-			speedy = -8;
-			jumpcount = 10;
-			standing = false;
-			score += 100;
-		}
-		else sleep();
+		sleep();
 	}
 	
 	override private function saveCustomFieldsForTimeLeap(storage: Map<String, Dynamic>): Void {
@@ -266,16 +272,21 @@ class Player extends DestructibleSprite {
 	override private function set_health(value:Int):Int {
 		if ( value <= 0 ) {
 			if ( value < _health ) {
-				for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+				hitSound.play();
+				for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
 			}
-			sleep();
+			if (!killed) {
+				sleep();
+			}
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
-			for (i in 0...Math.ceil(0.5 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+			for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
 			hitSound.play();
 		} else if ( value > _health && _health <= 0 ) {
-			killed = timeLeft() > 0;
-			isLiftable = killed;
+			var newKilled = timeLeft() > 0;
+			if (killed && !newKilled) {
+				unsleep();
+			}
 		}
 		return super.set_health(value);
 	}
@@ -317,9 +328,10 @@ class Player extends DestructibleSprite {
 	
 	override public function render(painter:Painter):Void {
 		if (isSleeping()) {
-			painter.drawImage2(image, 0, 0, width, height, x, y, width, height, rotation);
+			//painter.drawImage2(image, 0, 0, width, height, x, y, width, height, rotation);
+			painter.drawImage2(image, 0, 0, width, height, x-collider.x, y-collider.y, width, height, rotation);
 			++zzzzzIndex;
-			painter.drawImage2(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x - zzzzzXDif(), y, zzzzz.width / 3, zzzzz.height);
+			painter.drawImage2(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x + zzzzzXDif(), y - 15 - collider.height, zzzzz.width / 3, zzzzz.height);
 		}
 		else {
 			super.render(painter);
@@ -342,5 +354,12 @@ class Player extends DestructibleSprite {
 				painter.fillRect( muzzlePoint.x - 4, muzzlePoint.y - 4, 9, 9);//*/
 			}
 		}
+		/*painter.setColor( kha.Color.fromBytes(255,0,0) );
+		var rect = collisionRect();
+		painter.drawRect( rect.x, rect.y, rect.width, rect.height );
+		painter.setColor( kha.Color.ColorBlack );
+		painter.drawRect( x - collider.x, y - collider.y, width, height );
+		painter.setColor( kha.Color.fromBytes(0,255,0) );
+		painter.fillRect( x - 2, y - 2, 5, 5 );*/
 	}
 }

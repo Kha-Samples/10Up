@@ -6,6 +6,7 @@ import kha.Image;
 import kha.math.Vector2;
 import kha.Painter;
 import kha.Rectangle;
+import kha.Rotation;
 import kha.Scene;
 import kha.Sprite;
 
@@ -16,6 +17,7 @@ class TimedSpriteInfo {
 	
 	var animation : Animation;
 	var collider : Rectangle;
+	var rotation : Rotation;
 	
 	var x : Float;
 	var y : Float;
@@ -46,6 +48,10 @@ class TimedSpriteInfo {
 			collider = new Rectangle( source.collider.x, source.collider.y, source.collider.width, source.collider.height );
 		}
 		
+		if ( source.rotation != null ) {
+			rotation = new Rotation( source.rotation.center, source.rotation.angle );
+		}
+		
 		x = source.x;
 		y = source.y;
 		width = source.width;
@@ -66,6 +72,7 @@ class TimedSpriteInfo {
 		dest.animation = animation;
 		
 		dest.collider = collider;
+		dest.rotation = rotation;
 		
 		dest.x = x;
 		dest.y = y;

@@ -41,10 +41,6 @@ class PlayerAgent extends Player {
 		return "Grapple";
 	}
 	
-	override public function zzzzzXDif(): Float {
-		return 20;
-	}
-	
 	var lastFired : Float = 0;
 	
 	override public function prepareSpecialAbilityA(gameTime:Float) : Void {

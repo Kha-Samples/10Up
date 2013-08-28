@@ -22,8 +22,4 @@ class TimeProjectile extends Projectile {
 		accy = 0;
 		Loader.the.getSound("timeshot").play();
 	}
-	
-	override public function canShootSleepers(): Bool {
-		return true;
-	}
 }

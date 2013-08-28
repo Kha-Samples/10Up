@@ -13,7 +13,7 @@ class PlayerBullie extends Player {
 		_health = 100;
 		baseSpeed = 3.0;
 		
-		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
+		collider = new Rectangle(15, 25, 41 * 2 - 30, (65 - 1) * 2 - 25);
 		walkLeft = Animation.createRange(11, 18, 4);
 		walkRight = Animation.createRange(1, 8, 4);
 		standLeft = Animation.create(10);
@@ -23,7 +23,7 @@ class PlayerBullie extends Player {
 	}
 	
 	override public function zzzzzXDif(): Float {
-		return 20;
+		return 10;
 	}
 	
 	override public function hit(sprite: Sprite): Void {

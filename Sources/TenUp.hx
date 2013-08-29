@@ -464,6 +464,7 @@ class TenUp extends Game {
 		if ( mode == MissionBriefing ) {
 			return;
 		}
+		if (key != null && key == Key.SHIFT) shiftPressed = true;
 		if (key == Key.CHAR) {
 			if (mode == Mode.Game) {
 				if (char == " ") {

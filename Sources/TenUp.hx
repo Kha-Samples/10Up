@@ -121,7 +121,6 @@ class TenUp extends Game {
 		}
 		if ( levelNumber == 0 ) {
 			Scene.the.clear();
-			Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 			Configuration.setScreen(this);
 			currentGameTime = 0;
 			lastTime = Scheduler.time();
@@ -158,7 +157,6 @@ class TenUp extends Game {
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
 		Scene.the.clear();
-		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 		Player.init();
 		var tilemap : Tilemap = new Tilemap("outside", 32, 32, map, tileColissions);
 		Scene.the.setColissionMap(tilemap);
@@ -314,7 +312,6 @@ class TenUp extends Game {
 	
 	public override function render(painter : Painter) {
 		//if (Player.getInstance() == null) return;
-		painter.setFont(font);
 		switch (mode) {
 		case GameOver:
 			var congrat = Loader.the.getImage("gameover");
@@ -352,10 +349,13 @@ class TenUp extends Game {
 		if (Player.getPlayerIndex() == index) {
 			painter.setColor(Color.fromBytes(255, 255, 255));
 			
-			painter.drawString("Left Mouse", 600, y);
-			painter.drawString(Player.current().leftButton(), 620, y + 50);
-			painter.drawString("Right Mouse", 800, y);
-			painter.drawString(Player.current().rightButton(), 820, y + 50);
+			painter.setFont(font);
+			//painter.fillRect(0, y - 30, 1024, 5);
+			painter.drawString("Left Mouse", 600, y - 25);
+			//painter.fillRect(0, y + 20, 1024, 5);
+			painter.drawString(Player.current().leftButton(), 620, y + 25);
+			painter.drawString("Right Mouse", 800, y - 25);
+			painter.drawString(Player.current().rightButton(), 820, y + 25);
 			
 			//painter.fillRect(x - 5, y - 5, 50, 50);
 			painter.fillRect(x - 10, y - 25, 50, 10);
@@ -461,11 +461,24 @@ class TenUp extends Game {
 	}
 	
 	override public function keyDown(key : Key, char : String) : Void {
+		if (key == Key.SHIFT) shiftPressed = true;
+		
 		if ( mode == MissionBriefing ) {
 			return;
 		}
-		if (key != null && key == Key.SHIFT) shiftPressed = true;
+		
 		if (key == Key.CHAR) {
+			switch (char) {
+				case 'a', 'A':
+					buttonDown(Button.LEFT);
+				case 'd', 'D':
+					buttonDown(Button.RIGHT);
+				case 'w', 'W':
+					buttonDown(Button.UP);
+				case 's', 'S':
+					buttonDown(Button.DOWN);
+			}
+			
 			if (mode == Mode.Game) {
 				if (char == " ") {
 					mode = Pause;
@@ -487,14 +500,27 @@ class TenUp extends Game {
 	}
 	
 	override public function keyUp(key : Key, char : String) : Void {
+		//if (key != null && key == Key.SHIFT) shiftPressed = false;
+		if (key == Key.SHIFT) shiftPressed = false;
+		
 		if ( mode == MissionBriefing ) {
 			level.anyKey = true;
 			return;
 		}
-		if (key != null && key == Key.SHIFT) shiftPressed = false;
 		
 		if (mode == StartScreen) {
 			enterLevel(0);
+		} else {
+			switch (char) {
+				case 'a', 'A':
+					buttonUp(Button.LEFT);
+				case 'd', 'D':
+					buttonUp(Button.RIGHT);
+				case 'w', 'W':
+					buttonUp(Button.UP);
+				case 's', 'S':
+					buttonUp(Button.DOWN);
+			}
 		}
 	}
 	
@@ -512,13 +538,15 @@ class TenUp extends Game {
 		mouseX = x + Scene.the.screenOffsetX;
 		mouseY = y + Scene.the.screenOffsetY;
 		if (mode == Game) {
-			if (shiftPressed) {
-				Player.current().prepareSpecialAbilityB(currentGameTime);
-				mouseUpAction = Player.current().useSpecialAbilityB;
-			}
-			else {
-				Player.current().prepareSpecialAbilityA(currentGameTime);
-				mouseUpAction = Player.current().useSpecialAbilityA;
+			if (mouseUpAction == null) {
+				if (shiftPressed) {
+					Player.current().prepareSpecialAbilityB(currentGameTime);
+					mouseUpAction = Player.current().useSpecialAbilityB;
+				}
+				else {
+					Player.current().prepareSpecialAbilityA(currentGameTime);
+					mouseUpAction = Player.current().useSpecialAbilityA;
+				}
 			}
 		}
 	}
@@ -551,8 +579,10 @@ class TenUp extends Game {
 		mouseX = x + Scene.the.screenOffsetX;
 		mouseY = y + Scene.the.screenOffsetY;
 		if (mode == Game) {
-			Player.current().prepareSpecialAbilityB(currentGameTime);
-			mouseUpAction = Player.current().useSpecialAbilityB;
+			if (mouseUpAction == null) {
+				Player.current().prepareSpecialAbilityB(currentGameTime);
+				mouseUpAction = Player.current().useSpecialAbilityB;
+			}
 		}
 	}
 	

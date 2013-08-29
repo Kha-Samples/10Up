@@ -109,7 +109,7 @@ class FistOfDoom extends Projectile {
 		} else {
 			painter.drawImage2(image, 0, 0, width, height, (owner.x - owner.collider.x) + owner.width - relx, (owner.y - owner.collider.y) + rely, -width, height, rotation);
 		}
-		var rect = collisionRect();
+		/*var rect = collisionRect();
 		painter.setColor( kha.Color.fromBytes( 255, 0, 0) );
 		painter.drawRect( rect.x, rect.y, rect.width, rect.height );//*/
 	}

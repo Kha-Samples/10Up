@@ -11,6 +11,7 @@ import projectiles.PistolProjectile;
 class PlayerAgent extends Player {
 	private var graple: GrapleHook;
 	private var grapleVec: Vector2;
+	private var grapleHit: Vector2;
 	private var grapleLength: Float;
 	private var grapleBack = false;
 	private var maxGrapleLength: Float = 550;
@@ -73,6 +74,7 @@ class PlayerAgent extends Player {
 		grapleVec = new Vector2(crosshair.x, crosshair.y);
 		grapleBack = false;
 		grapleLength = 0;
+		grapleHit = null;
 	}
 	
 	override public function update() {
@@ -93,13 +95,17 @@ class PlayerAgent extends Player {
 			if (pulling) {
 				x += grapleVec.x * 10;
 				y += grapleVec.y * 10;
-				grapleLength -= grapleVec.length * 10;
-				if (grapleLength < 20 || Scene.the.collidesSprite(this)) {
+				grapleVec = grapleHit.sub(center);
+				grapleLength = grapleVec.length;
+				grapleVec.length = 1.0;
+				if (grapleLength < 30 || Scene.the.collidesSprite(this)) {
 					x -= grapleVec.x * 10;
 					y -= grapleVec.y * 10;
 					grapleLength = 0;
-					pulling = false;
 					grapleVec = null;
+					grapleHit = null;
+					pulling = false;
+					grapleHit = null;
 					accy = 0.2;
 					speedy = -12;
 				}
@@ -111,6 +117,7 @@ class PlayerAgent extends Player {
 						grapleLength = 0;
 						grapleBack = false;
 						grapleVec = null;
+						grapleHit = null;
 					}
 				}
 				else {
@@ -119,7 +126,9 @@ class PlayerAgent extends Player {
 						grapleLength -= (grapleLength - maxGrapleLength);
 						grapleBack = true;
 					}
-					if (Scene.the.collidesPoint(new Vector2(hookX(), hookY()))) {
+					var hitCheck = new Vector2(hookX(), hookY());
+					if (Scene.the.collidesPoint(hitCheck)) {
+						grapleHit = hitCheck;
 						grapleBack = false;
 						pulling = true;
 						accy = 0;
@@ -131,11 +140,17 @@ class PlayerAgent extends Player {
 	}
 	
 	private function hookX(): Float {
-		return x + 10 + grapleVec.x * grapleLength;
+		if (grapleHit != null) {
+			return grapleHit.x;
+		}
+		return muzzlePoint.x + grapleVec.x * grapleLength;
 	}
 	
 	private function hookY(): Float {
-		return y + 5 + grapleVec.y * grapleLength;
+		if (grapleHit != null) {
+			return grapleHit.y;
+		}
+		return muzzlePoint.y + grapleVec.y * grapleLength;
 	}
 	
 	override public function render(painter:Painter): Void {
@@ -143,7 +158,8 @@ class PlayerAgent extends Player {
 		graple.render(painter);
 		if (grapleVec != null) {
 			painter.setColor(Color.fromBytes(0, 0, 0));
-			painter.drawLine(x + 10, y + 5, hookX(), hookY());
+			var c = center;
+			painter.drawLine(c.x + 10*grapleVec.x, c.y - 10*grapleVec.y, hookX(), hookY(), 2.0);
 		}
 	}
 }

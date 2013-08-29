@@ -46,13 +46,13 @@ class Enemy extends DestructibleSprite {
 		if ( value <= 0 ) {
 			if ( value < _health ) {
 				hitSound.play();
-				for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+				for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addProjectile(new Blood(x + 20, y + 20));
 			}
 			if (!killed) {
 				kill();
 			}
 		} else if ( value < _health ) {
-			for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+			for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addProjectile(new Blood(x + 20, y + 20));
 			hitSound.play();
 		}
 		return super.set_health(value);

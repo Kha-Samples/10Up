@@ -273,14 +273,14 @@ class Player extends DestructibleSprite {
 		if ( value <= 0 ) {
 			if ( value < _health ) {
 				hitSound.play();
-				for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+				for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addProjectile(new Blood(x + 20, y + 20));
 			}
 			if (!killed) {
 				sleep();
 			}
 		} else if ( value < _health ) {
 			trace ( 'new health: $value' );
-			for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addOther(new Blood(x + 20, y + 20));
+			for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addProjectile(new Blood(x + 20, y + 20));
 			hitSound.play();
 		} else if ( value > _health && _health <= 0 ) {
 			var newKilled = timeLeft() > 0;
@@ -340,10 +340,10 @@ class Player extends DestructibleSprite {
 				
 				var px = muzzlePoint.x + 50 * crosshair.x;
 				var py = muzzlePoint.y + 50 * crosshair.y;
-				painter.drawLine( px - 10 * crosshair.x, py - 10 * crosshair.y, px - 2 * crosshair.x, py - 2 * crosshair.y );
-				painter.drawLine( px + 10 * crosshair.x, py + 10 * crosshair.y, px + 2 * crosshair.x, py + 2 * crosshair.y );
-				painter.drawLine( px - 10 * crosshair.y, py + 10 * crosshair.x, px - 2 * crosshair.y, py + 2 * crosshair.x );
-				painter.drawLine( px + 10 * crosshair.y, py - 10 * crosshair.x, px + 2 * crosshair.y, py - 2 * crosshair.x );
+				painter.drawLine( px - 10 * crosshair.x, py - 10 * crosshair.y, px - 2 * crosshair.x, py - 2 * crosshair.y, 2 );
+				painter.drawLine( px + 10 * crosshair.x, py + 10 * crosshair.y, px + 2 * crosshair.x, py + 2 * crosshair.y, 2 );
+				painter.drawLine( px - 10 * crosshair.y, py + 10 * crosshair.x, px - 2 * crosshair.y, py + 2 * crosshair.x, 2 );
+				painter.drawLine( px + 10 * crosshair.y, py - 10 * crosshair.x, px + 2 * crosshair.y, py - 2 * crosshair.x, 2 );
 				
 				/*var rect = collisionRect();
 				var c = center;

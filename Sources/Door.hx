@@ -51,7 +51,6 @@ class Door extends DestructibleSprite {
 		if ( value <= 0 ) {
 			setAnimation(destroyedAnim);
 		} else if ( value < _health ) {
-			trace ( 'new health: $value' );
 			// TODO: pain cry
 			if (value < 75) {
 				setAnimation(crackedAnim);

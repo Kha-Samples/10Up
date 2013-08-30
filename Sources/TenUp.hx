@@ -281,11 +281,10 @@ class TenUp extends Game {
 		
 		var currentTime = Scheduler.time();
 		if (mode == Game || mode == MissionBriefing) {
-			var lastGameTime = currentGameTime;
 			currentTimeDiff = currentTime - lastTime;
 			currentGameTime += currentTimeDiff;
 			if (mode == Game) {
-				Player.current().elapse(currentGameTime - lastGameTime);
+				Player.current().elapse( currentTimeDiff );
 				super.update();
 				Scene.the.camx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 				level.update(currentGameTime);

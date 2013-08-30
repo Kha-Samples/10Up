@@ -59,7 +59,7 @@ class FistOfDoom extends Projectile {
 	override public function hit(sprite: Sprite): Void {
 		if (sprite != owner && collides) {
 			if (!Lambda.has(hasHit, sprite)) {
-				trace ( 'fist dmg: $creatureDamage' );
+				//trace ( 'fist dmg: $creatureDamage' );
 				super.hit(sprite);
 				hasHit.push(sprite);
 			}

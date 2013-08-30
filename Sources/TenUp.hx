@@ -275,10 +275,6 @@ class TenUp extends Game {
 	}
 	
 	public override function update() {
-		if (mode == Pause) {
-			pauseAnimIndex += 1;
-		}
-		
 		var currentTime = Scheduler.time();
 		if (mode == Game || mode == MissionBriefing) {
 			currentTimeDiff = currentTime - lastTime;
@@ -299,6 +295,8 @@ class TenUp extends Game {
 		} else if (mode != Pause) {
 			super.update();
 		} else {
+			pauseAnimIndex += 1;
+			
 			var aimx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 			var camspeed: Int = 10;
 			if (Scene.the.camx > aimx) {

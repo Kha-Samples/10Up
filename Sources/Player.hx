@@ -137,11 +137,10 @@ class Player extends DestructibleSprite {
 	private var baseSpeed = 4.0;
 	public override function update(): Void {
 		walking = false;
-		if (isSleeping()) {
-			++zzzzzIndex;
-		}
 		if (lastupcount > 0) --lastupcount;
-		if (!killed) {
+		if (killed) {
+			++zzzzzIndex;
+		} else {
 			if (right) {
 				if (standing) {
 					setAnimation(walkRight);

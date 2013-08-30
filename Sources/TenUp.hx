@@ -275,6 +275,10 @@ class TenUp extends Game {
 	}
 	
 	public override function update() {
+		if (mode == Pause) {
+			pauseAnimIndex += 1;
+		}
+		
 		var currentTime = Scheduler.time();
 		if (mode == Game || mode == MissionBriefing) {
 			var lastGameTime = currentGameTime;
@@ -332,7 +336,6 @@ class TenUp extends Game {
 			drawPlayerInfo(painter, 3, 200, 700, Color.fromBytes(255, 255, 0));
 			
 			if (mode == Pause) {
-				pauseAnimIndex += 1;
 				var pauseImage = Loader.the.getImage("pause");
 				painter.drawImage2(pauseImage, 0, (Std.int(pauseAnimIndex / 12) % 5) * (pauseImage.height / 5), pauseImage.width, pauseImage.height / 5, width / 2 - pauseImage.width / 2, height / 4 - pauseImage.height / 5 / 2, pauseImage.width, pauseImage.height / 5);
 			}

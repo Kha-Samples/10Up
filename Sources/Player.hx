@@ -137,6 +137,9 @@ class Player extends DestructibleSprite {
 	private var baseSpeed = 4.0;
 	public override function update(): Void {
 		walking = false;
+		if (isSleeping()) {
+			++zzzzzIndex;
+		}
 		if (lastupcount > 0) --lastupcount;
 		if (!killed) {
 			if (right) {
@@ -330,7 +333,6 @@ class Player extends DestructibleSprite {
 		if (isSleeping()) {
 			//painter.drawImage2(image, 0, 0, width, height, x, y, width, height, rotation);
 			painter.drawImage2(image, 0, 0, width, height, x-collider.x, y-collider.y, width, height, rotation);
-			++zzzzzIndex;
 			painter.drawImage2(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x + zzzzzXDif(), y - 15 - collider.height, zzzzz.width / 3, zzzzz.height);
 		}
 		else {

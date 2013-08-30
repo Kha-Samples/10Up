@@ -208,14 +208,14 @@ class Player extends DestructibleSprite {
 	}
 	
 	public function unsleep() {
-			isLiftable = false;
-			rotation = null;
-			collider = new Rectangle(collider.x - collider.height, -collider.y, collider.width, collider.height);
-			y -= collider.height - collider.width;
-			x -= collider.width - collider.height;
-			if (lookRight) setAnimation(standRight);
-			else setAnimation(standLeft);
-			killed = false;
+		isLiftable = false;
+		rotation = null;
+		collider = new Rectangle(collider.y - collider.height, -collider.x, collider.height, collider.width);
+		y -= collider.height - collider.width;
+		x -= collider.width - collider.height;
+		if (lookRight) setAnimation(standRight);
+		else setAnimation(standLeft);
+		killed = false;
 	}
 	
 	public function leftButton(): String {
@@ -288,8 +288,8 @@ class Player extends DestructibleSprite {
 					hitSound.play();
 				}
 		} else if ( value > _health && _health <= 0 ) {
-			var newKilled = timeLeft() > 0;
-			if (killed && !newKilled) {
+			var resurected = timeLeft() > 0;
+			if (killed && resurected) {
 				unsleep();
 			}
 		}

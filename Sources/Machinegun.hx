@@ -8,7 +8,7 @@ class Machinegun extends Sprite {
 	private var sound: Sound;
 	
 	public function new(x: Float, y: Float) {
-		super(Loader.the.getImage("machinegun"), 42 * 2, 42 * 2);
+		super(Loader.the.getImage("machinegun"), 42 * 2, 41 * 2);
 		this.x = x;
 		this.y = y;
 		sound = Loader.the.getSound("machineshot");

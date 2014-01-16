@@ -1,5 +1,6 @@
 package projectiles;
 
+import haxe.EnumFlags.EnumFlags;
 import kha.Direction;
 import kha.Image;
 import kha.math.Vector2;
@@ -14,7 +15,7 @@ enum PiercingMode {
 }
 
 class Projectile extends Sprite {
-	var isPiercing : haxe.EnumFlags<PiercingMode> = 0;
+	var isPiercing : EnumFlags<PiercingMode> = EnumFlags.ofInt(0);
 	public var isTimeWeapon(default, null) : Bool = false;
 	public var structureDamage(default, null) : Int = 0;
 	public var creatureDamage(default, null) : Int = 0;

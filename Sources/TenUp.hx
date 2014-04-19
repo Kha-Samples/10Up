@@ -372,7 +372,7 @@ class TenUp extends Game {
 		var healthBar = 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth;
 		if (healthBar < 0) healthBar = 0;
 		painter.fillRect(x, y + 35, healthBar, 10);
-		painter.setColor(Color.ColorBlack);
+		painter.setColor(Color.Black);
 		painter.fillRect(x + healthBar, y + 35, 40 - healthBar, 10);
 		painter.setColor(Color.fromBytes(0, 255, 255));
 		painter.fillRect(x, y + 45, Player.getPlayer(index).timeLeft() * 4, 10);

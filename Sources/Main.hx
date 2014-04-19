@@ -4,6 +4,7 @@ import kha.Starter;
 
 class Main {
 	public static function main() {
-		new Starter().start(new TenUp());
+		var starter = new Starter();
+		starter.start(new TenUp());
 	}
 }

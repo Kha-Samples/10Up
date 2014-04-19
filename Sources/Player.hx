@@ -1,6 +1,7 @@
 package;
 
 import kha.Animation;
+import kha.Color;
 import kha.Direction;
 import kha.Image;
 import kha.Loader;
@@ -331,8 +332,9 @@ class Player extends DestructibleSprite {
 		muzzlePoint.y += 0.6 * crosshair.y * height;
 	}
 	
-	override public function render(painter:Painter):Void {
+	override public function render(painter: Painter): Void {
 		if (isSleeping()) {
+			painter.setColor(Color.White);
 			//painter.drawImage2(image, 0, 0, width, height, x, y, width, height, rotation);
 			painter.drawImage2(image, 0, 0, width, height, x-collider.x, y-collider.y, width, height, rotation);
 			painter.drawImage2(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x + zzzzzXDif(), y - 15 - collider.height, zzzzz.width / 3, zzzzz.height);

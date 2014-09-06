@@ -15,7 +15,9 @@ class Glass extends Sprite {
 		super(Loader.the.getImage("glass"), 6 * 2, 4 * 2);
 		this.x = x;
 		this.y = y;
-		rotation = new Rotation(new Vector2(6, 4), Random.getUpTo(6));
+		angle = Random.getUpTo(6);
+		originX = 6;
+		originY = 4;
 		left = Random.getUpTo(1) == 0 ? 1 : -1;
 		speedy = -2 - Random.getUpTo(5);
 		speedx = -10 + Random.getUpTo(20);
@@ -23,7 +25,7 @@ class Glass extends Sprite {
 
 	override public function update(): Void {
 		super.update();
-		rotation.angle += 0.1 * left;
+		angle += 0.1 * left;
 	}
 	
 	override public function hitFrom(dir: Direction): Void {

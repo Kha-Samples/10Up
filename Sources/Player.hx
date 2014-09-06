@@ -3,11 +3,12 @@ package;
 import kha.Animation;
 import kha.Color;
 import kha.Direction;
+import kha.graphics2.Graphics;
 import kha.Image;
 import kha.Loader;
+import kha.math.Matrix3;
 import kha.math.Vector2;
 import kha.Music;
-import kha.Painter;
 import kha.Rectangle;
 import kha.Rotation;
 import kha.Scene;
@@ -195,7 +196,9 @@ class Player extends DestructibleSprite {
 	public function sleep() {
 		isLiftable = true;
 		setAnimation(Animation.create(0));
-		rotation = new Rotation(new Vector2(width / 2, collider.height - 4), Math.PI * 1.5);
+		angle = Math.PI * 1.5;
+		originX = width / 2;
+		originY = collider.height - 4;
 		y += collider.height - collider.width;
 		x += collider.width - collider.height;
 		collider = new Rectangle(-collider.y,collider.x + collider.width,collider.height,collider.width);
@@ -210,7 +213,7 @@ class Player extends DestructibleSprite {
 	
 	public function unsleep() {
 		isLiftable = false;
-		rotation = null;
+		angle = 0;
 		collider = new Rectangle(collider.y - collider.height, -collider.x, collider.height, collider.width);
 		y -= collider.height - collider.width;
 		x -= collider.width - collider.height;
@@ -332,24 +335,26 @@ class Player extends DestructibleSprite {
 		muzzlePoint.y += 0.6 * crosshair.y * height;
 	}
 	
-	override public function render(painter: Painter): Void {
+	override public function render(g: Graphics): Void {
 		if (isSleeping()) {
-			painter.setColor(Color.White);
+			g.color = Color.White;
 			//painter.drawImage2(image, 0, 0, width, height, x, y, width, height, rotation);
-			painter.drawImage2(image, 0, 0, width, height, x-collider.x, y-collider.y, width, height, rotation);
-			painter.drawImage2(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x + zzzzzXDif(), y - 15 - collider.height, zzzzz.width / 3, zzzzz.height);
+			g.pushTransformation(g.transformation * Matrix3.translation(x + originX, y + originY) * Matrix3.rotation(angle) * Matrix3.translation(-x - originX, -y - originY));
+			g.drawScaledSubImage(image, 0, 0, width, height, x-collider.x, y-collider.y, width, height);
+			g.popTransformation();
+			g.drawScaledSubImage(zzzzz, (Std.int(zzzzzIndex / 8) % 3) * zzzzz.width / 3, 0, zzzzz.width / 3, zzzzz.height, x + zzzzzXDif(), y - 15 - collider.height, zzzzz.width / 3, zzzzz.height);
 		}
 		else {
-			super.render(painter);
-			if ( isCrosshairVisible ) {
-				painter.setColor( kha.Color.fromBytes( 255, 0, 0, 150 ) );
+			super.render(g);
+			if (isCrosshairVisible) {
+				g.color = kha.Color.fromBytes(255, 0, 0, 150);
 				
 				var px = muzzlePoint.x + 50 * crosshair.x;
 				var py = muzzlePoint.y + 50 * crosshair.y;
-				painter.drawLine( px - 10 * crosshair.x, py - 10 * crosshair.y, px - 2 * crosshair.x, py - 2 * crosshair.y, 2 );
-				painter.drawLine( px + 10 * crosshair.x, py + 10 * crosshair.y, px + 2 * crosshair.x, py + 2 * crosshair.y, 2 );
-				painter.drawLine( px - 10 * crosshair.y, py + 10 * crosshair.x, px - 2 * crosshair.y, py + 2 * crosshair.x, 2 );
-				painter.drawLine( px + 10 * crosshair.y, py - 10 * crosshair.x, px + 2 * crosshair.y, py - 2 * crosshair.x, 2 );
+				g.drawLine( px - 10 * crosshair.x, py - 10 * crosshair.y, px - 2 * crosshair.x, py - 2 * crosshair.y, 2 );
+				g.drawLine( px + 10 * crosshair.x, py + 10 * crosshair.y, px + 2 * crosshair.x, py + 2 * crosshair.y, 2 );
+				g.drawLine( px - 10 * crosshair.y, py + 10 * crosshair.x, px - 2 * crosshair.y, py + 2 * crosshair.x, 2 );
+				g.drawLine( px + 10 * crosshair.y, py - 10 * crosshair.x, px + 2 * crosshair.y, py - 2 * crosshair.x, 2 );
 				
 				/*var rect = collisionRect();
 				var c = center;

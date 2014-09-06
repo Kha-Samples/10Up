@@ -4,15 +4,18 @@ import kha.Button;
 import kha.Color;
 import kha.Font;
 import kha.FontStyle;
+import kha.Framebuffer;
 import kha.Game;
+import kha.graphics2.Graphics;
 import kha.HighscoreList;
 import kha.Image;
 import kha.Key;
 import kha.Loader;
 import kha.LoadingScreen;
+import kha.math.Matrix3;
 import kha.math.Random;
 import kha.Music;
-import kha.Painter;
+import kha.Scaler;
 import kha.Scene;
 import kha.Scheduler;
 import kha.Score;
@@ -36,6 +39,7 @@ enum Mode {
 
 class TenUp extends Game {
 	public static var instance(default, null): TenUp;
+	private var backbuffer: Image;
 	//var music : Music;
 	var tileColissions : Array<Tile>;
 	var map : Array<Array<Int>>;
@@ -75,6 +79,7 @@ class TenUp extends Game {
 	}
 	
 	public override function init(): Void {
+		backbuffer = Image.createRenderTarget(1024, 768);
 		Configuration.setScreen(new LoadingScreen());
 		Loader.the.loadRoom("start", initStart);
 	}
@@ -311,71 +316,77 @@ class TenUp extends Game {
 		lastTime = currentTime;
 	}
 	
-	public override function render(painter : Painter) {
+	public override function render(frame: Framebuffer) {
 		//if (Player.getInstance() == null) return;
+		var g = backbuffer.g2;
+		g.begin();
 		switch (mode) {
 		case GameOver:
 			var congrat = Loader.the.getImage("gameover");
-			painter.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
+			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
 		case Congratulations:
 			var congrat = Loader.the.getImage("congratulations");
-			painter.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
+			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
 		case Game, Pause:
-			super.render(painter);
-			painter.translate(0, 0);
+			scene.render(g);
+			g.transformation = Matrix3.identity();
 			//painter.setColor(Color.fromBytes(0, 0, 0));
 			//painter.drawString("Score: " + Std.string(Player.getInstance().getScore()), 20, 25);
 			//painter.drawString("Round: " + Std.string(Player.getInstance().getRound()), width - 100, 25);
 			
-			drawPlayerInfo(painter, 0, 20, 700, Color.fromBytes(255, 0, 0));
-			drawPlayerInfo(painter, 1, 80, 700, Color.fromBytes(0, 255, 0));
-			drawPlayerInfo(painter, 2, 140, 700, Color.fromBytes(0, 0, 255));
-			drawPlayerInfo(painter, 3, 200, 700, Color.fromBytes(255, 255, 0));
+			drawPlayerInfo(g, 0, 20, 700, Color.fromBytes(255, 0, 0));
+			drawPlayerInfo(g, 1, 80, 700, Color.fromBytes(0, 255, 0));
+			drawPlayerInfo(g, 2, 140, 700, Color.fromBytes(0, 0, 255));
+			drawPlayerInfo(g, 3, 200, 700, Color.fromBytes(255, 255, 0));
 			
 			if (mode == Pause) {
 				var pauseImage = Loader.the.getImage("pause");
-				painter.drawImage2(pauseImage, 0, (Std.int(pauseAnimIndex / 12) % 5) * (pauseImage.height / 5), pauseImage.width, pauseImage.height / 5, width / 2 - pauseImage.width / 2, height / 4 - pauseImage.height / 5 / 2, pauseImage.width, pauseImage.height / 5);
+				g.drawScaledSubImage(pauseImage, 0, (Std.int(pauseAnimIndex / 12) % 5) * (pauseImage.height / 5), pauseImage.width, pauseImage.height / 5, width / 2 - pauseImage.width / 2, height / 4 - pauseImage.height / 5 / 2, pauseImage.width, pauseImage.height / 5);
 			}
 		case MissionBriefing:
-			super.render(painter);
-			Level.the.renderMissionBriefing( painter );
+			scene.render(g);
+			Level.the.renderMissionBriefing(g);
 		case Loading, StartScreen:
-			super.render(painter);
+			scene.render(g);
 		}
+		g.end();
+		
+		frame.g2.begin();
+		Scaler.scale(backbuffer, frame, kha.Sys.screenRotation);
+		frame.g2.end();
 	}
 	
 	@:access(Player) 
-	private function drawPlayerInfo(painter: Painter, index: Int, x: Float, y: Float, color: Color): Void {
+	private function drawPlayerInfo(g: Graphics, index: Int, x: Float, y: Float, color: Color): Void {
 		if (Player.getPlayerIndex() == index) {
-			painter.setColor(Color.fromBytes(255, 255, 255));
+			g.color = Color.White;
 			
-			painter.setFont(font);
+			g.font = font;
 			//painter.fillRect(0, y - 30, 1024, 5);
-			painter.drawString("Left Mouse", 600, y - 25);
+			g.drawString("Left Mouse", 600, y - 25);
 			//painter.fillRect(0, y + 20, 1024, 5);
-			painter.drawString(Player.current().leftButton(), 620, y + 25);
-			painter.drawString("Right Mouse", 800, y - 25);
-			painter.drawString(Player.current().rightButton(), 820, y + 25);
+			g.drawString(Player.current().leftButton(), 620, y + 25);
+			g.drawString("Right Mouse", 800, y - 25);
+			g.drawString(Player.current().rightButton(), 820, y + 25);
 			
 			//painter.fillRect(x - 5, y - 5, 50, 50);
-			painter.fillRect(x - 10, y - 25, 50, 10);
-			painter.fillRect(x - 10, y - 25, 10, 90);
-			painter.fillRect(x + 40, y - 25, 10, 90);
-			painter.fillRect(x - 10, y - 25 + 80, 50, 10);
+			g.fillRect(x - 10, y - 25, 50, 10);
+			g.fillRect(x - 10, y - 25, 10, 90);
+			g.fillRect(x + 40, y - 25, 10, 90);
+			g.fillRect(x - 10, y - 25 + 80, 50, 10);
 		}
-		painter.setColor(color);
-		//painter.fillRect(x, y, 40, 40);
-		painter.drawImage(minis[index], x, y - 20);
-		painter.setColor(Color.fromBytes(50, 50, 50));
-		painter.fillRect(x, y + 45, 40, 10);
-		painter.setColor(Color.fromBytes(150, 0, 0));
+		g.color = Color.White;
+		g.drawImage(minis[index], x, y - 20);
+		g.color = Color.fromBytes(50, 50, 50);
+		g.fillRect(x, y + 45, 40, 10);
+		g.color = Color.fromBytes(150, 0, 0);
 		var healthBar = 40 * Player.getPlayer(index).health / Player.getPlayer(index).maxHealth;
 		if (healthBar < 0) healthBar = 0;
-		painter.fillRect(x, y + 35, healthBar, 10);
-		painter.setColor(Color.Black);
-		painter.fillRect(x + healthBar, y + 35, 40 - healthBar, 10);
-		painter.setColor(Color.fromBytes(0, 255, 255));
-		painter.fillRect(x, y + 45, Player.getPlayer(index).timeLeft() * 4, 10);
+		g.fillRect(x, y + 35, healthBar, 10);
+		g.color = Color.Black;
+		g.fillRect(x + healthBar, y + 35, 40 - healthBar, 10);
+		g.color = Color.fromBytes(0, 255, 255);
+		g.fillRect(x, y + 45, Player.getPlayer(index).timeLeft() * 4, 10);
 	}
 
 	override public function buttonDown(button : Button) : Void {

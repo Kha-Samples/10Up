@@ -21,13 +21,12 @@ class Gatter extends Sprite {
 		collides = false;
 		speedx = -5;
 		speedy = -5;
-		rotation = new Rotation(new Vector2(32, 6), 0);
+		originX = 32;
+		originY = 6;
 	}
 	
 	override public function update(): Void {
 		super.update();
-		if (rotation != null) {
-			rotation.angle -= 0.1;
-		}
+		angle -= 0.1;
 	}
 }

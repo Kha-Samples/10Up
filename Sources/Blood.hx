@@ -15,14 +15,16 @@ class Blood extends Sprite {
 		this.x = x;
 		this.y = y;
 		collides = false;
-		rotation = new Rotation(new Vector2(4, 4), Random.getUpTo(6));
+		angle = Random.getUpTo(6);
+		originX = 4;
+		originY = 4;
 		speedy = -2 - Random.getUpTo(3);
 		speedx = -10 + Random.getUpTo(10);
 	}
 	
 	override public function update(): Void {
 		super.update();
-		rotation.angle += 0.1;
+		angle += 0.1;
 		--count;
 		if (count < 0) Scene.the.removeOther(this);
 	}

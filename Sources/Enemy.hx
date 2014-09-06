@@ -1,11 +1,11 @@
 package;
 
 import kha.Animation;
+import kha.graphics2.Graphics;
 import kha.Image;
 import kha.Loader;
 import kha.math.Random;
 import kha.math.Vector2;
-import kha.Painter;
 import kha.Rectangle;
 import kha.Rotation;
 import kha.Sound;
@@ -63,7 +63,9 @@ class Enemy extends DestructibleSprite {
 		killed = true;
 		setAnimation(Animation.create(0));
 		speedx = 0;
-		rotation = new Rotation(new Vector2(width / 2, collider.height - 4), Math.PI * 1.5);
+		angle = Math.PI * 1.5;
+		originX = width / 2;
+		originY = collider.height - 4;
 		y += collider.height - collider.width;
 		x += collider.width - collider.height;
 		collider = new Rectangle(-collider.y,collider.x + collider.width,collider.height,collider.width);
@@ -186,8 +188,8 @@ class Enemy extends DestructibleSprite {
 		}
 	}
 	
-	override public function render(painter: Painter): Void {
-		super.render(painter);
+	override public function render(g: Graphics): Void {
+		super.render(g);
 		/*painter.setColor( kha.Color.ColorBlack );
 		if (focus != null)
 			painter.drawRect( focus.x - focus.collider.x, focus.y - focus.collider.y, focus.width, focus.height );//*/

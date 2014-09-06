@@ -2,9 +2,9 @@ package;
 
 import kha.Animation;
 import kha.Color;
+import kha.graphics2.Graphics;
 import kha.Loader;
 import kha.math.Vector2;
-import kha.Painter;
 import kha.Rectangle;
 import kha.Scene;
 import projectiles.TimeProjectile;
@@ -43,27 +43,28 @@ class PlayerProfessor extends Player {
 		timecannon.x = c.x - 0.5 * timecannon.width;
 		//graple.x = x + 10;
 		timecannon.y = c.y - 0.5 * timecannon.height - 7;
-		timecannon.rotation.angle = Math.atan2(crosshair.y, crosshair.x);
+		timecannon.angle = Math.atan2(crosshair.y, crosshair.x);
 		if (lookRight) {
 			timecannon.x += 15;
 			if (timecannon.animation.indices != timecannon.rightAnim.indices) {
 				timecannon.animation.indices = timecannon.rightAnim.indices;
-				timecannon.rotation.center.x = timecannon.width - timecannon.rotation.center.x;
+				timecannon.originX = timecannon.width - timecannon.originX;
 			}
-		} else {
+		}
+		else {
 			timecannon.x -= 15;
-			timecannon.rotation.angle = timecannon.rotation.angle + Math.PI;
+			timecannon.angle = timecannon.angle + Math.PI;
 			if (timecannon.animation.indices != timecannon.leftAnim.indices) {
 				timecannon.animation.indices = timecannon.leftAnim.indices;
-				timecannon.rotation.center.x = timecannon.width - timecannon.rotation.center.x;
+				timecannon.originX = timecannon.width - timecannon.originX;
 			}
 		}
 	}
 	
-	override public function render(painter:Painter): Void {
-		super.render(painter);
+	override public function render(g: Graphics): Void {
+		super.render(g);
 		if (isCrosshairVisible || timeCannonNextFireTime > TenUp.instance.currentGameTime + 23.5) {
-			timecannon.render(painter);
+			timecannon.render(g);
 		}
 	}
 	

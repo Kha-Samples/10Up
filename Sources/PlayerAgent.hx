@@ -2,8 +2,8 @@ package;
 
 import kha.Animation;
 import kha.Color;
+import kha.graphics2.Graphics;
 import kha.math.Vector2;
-import kha.Painter;
 import kha.Rectangle;
 import kha.Scene;
 import projectiles.PistolProjectile;
@@ -83,12 +83,12 @@ class PlayerAgent extends Player {
 		graple.x = c.x - 0.5 * graple.width;
 		//graple.x = x + 10;
 		graple.y = c.y - 0.5 * graple.height + 5;
-		graple.rotation.angle = Math.atan2(crosshair.y, crosshair.x);
+		graple.angle = Math.atan2(crosshair.y, crosshair.x);
 		if (lookRight) {
 			graple.setAnimation( graple.rightAnim );
 		} else {
 			graple.setAnimation( graple.leftAnim );
-			graple.rotation.angle = graple.rotation.angle + Math.PI;
+			graple.angle = graple.angle + Math.PI;
 		}
 		
 		if (grapleVec != null) {
@@ -153,13 +153,13 @@ class PlayerAgent extends Player {
 		return muzzlePoint.y + grapleVec.y * grapleLength;
 	}
 	
-	override public function render(painter:Painter): Void {
-		super.render(painter);
-		graple.render(painter);
+	override public function render(g: Graphics): Void {
+		super.render(g);
+		graple.render(g);
 		if (grapleVec != null) {
-			painter.setColor(Color.fromBytes(0, 0, 0));
+			g.color = Color.Black;
 			var c = center;
-			painter.drawLine(c.x + 10*grapleVec.x, c.y - 10*grapleVec.y, hookX(), hookY(), 2.0);
+			g.drawLine(c.x + 10 * grapleVec.x, c.y - 10 * grapleVec.y, hookX(), hookY(), 2.0);
 		}
 	}
 }

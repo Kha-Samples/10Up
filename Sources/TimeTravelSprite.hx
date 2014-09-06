@@ -2,9 +2,9 @@ package ;
 
 import kha.Animation;
 import kha.Direction;
+import kha.graphics2.Graphics;
 import kha.Image;
 import kha.math.Vector2;
-import kha.Painter;
 import kha.Rectangle;
 import kha.Rotation;
 import kha.Scene;
@@ -48,9 +48,9 @@ class TimedSpriteInfo {
 			collider = new Rectangle( source.collider.x, source.collider.y, source.collider.width, source.collider.height );
 		}
 		
-		if ( source.rotation != null ) {
-			rotation = new Rotation( source.rotation.center, source.rotation.angle );
-		}
+		//if ( source.rotation != null ) {
+			rotation = new Rotation(new Vector2(source.originX, source.originY), source.angle);
+		//}
 		
 		x = source.x;
 		y = source.y;
@@ -72,7 +72,9 @@ class TimedSpriteInfo {
 		dest.animation = animation;
 		
 		dest.collider = collider;
-		dest.rotation = rotation;
+		dest.angle = rotation.angle;
+		dest.originX = rotation.center.x;
+		dest.originY = rotation.center.y;
 		
 		dest.x = x;
 		dest.y = y;
@@ -143,8 +145,8 @@ class TimeTravelSprite extends Sprite {
 		}
 	}
 	
-	override public function render(painter:Painter): Void {
-		super.render(painter);
+	override public function render(graphics: Graphics): Void {
+		super.render(graphics);
 		if ( isTimeLeaping ) {
 			var x = x - collider.x;
 			var y = y - collider.y;
@@ -152,8 +154,8 @@ class TimeTravelSprite extends Sprite {
 			var g = 0.5 + 0.5*Math.random();
 			var b = 0.5 + 0.5*Math.random();
 			var a = 0.2 + 0.5*Math.random();
-			painter.setColor( kha.Color.fromFloats(r, g, b, a) );
-			painter.fillRect(x, y, width, height);
+			graphics.color = kha.Color.fromFloats(r, g, b, a);
+			graphics.fillRect(x, y, width, height);
 		}
 	}
 	

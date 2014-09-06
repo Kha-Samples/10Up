@@ -5,7 +5,6 @@ import kha.Direction;
 import kha.Image;
 import kha.math.Vector2;
 import kha.Loader;
-import kha.Painter;
 import kha.Scene;
 import kha.Sprite;
 

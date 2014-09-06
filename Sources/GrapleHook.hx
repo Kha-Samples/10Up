@@ -12,8 +12,10 @@ class GrapleHook extends Sprite {
 	
 	public function new() {
 		super(Loader.the.getImage("graplehook"), 22, 13, 4);
-		rightAnim = Animation.create( 0 );
-		leftAnim = Animation.create( 1 );
-		rotation = new Rotation(new Vector2(22 / 2, 13 / 2), -0.5);
+		rightAnim = Animation.create(0);
+		leftAnim = Animation.create(1);
+		angle = -0.5;
+		originX = 22 / 2;
+		originY = 13 / 2;
 	}
 }

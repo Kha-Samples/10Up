@@ -1,7 +1,7 @@
 package;
 
+import kha.graphics2.Graphics;
 import kha.Loader;
-import kha.Painter;
 import kha.Sprite;
 
 class Gate extends Sprite {
@@ -39,9 +39,9 @@ class Gate extends Sprite {
 		return gateHeight < height / 2;
 	}
 	
-	override public function render(painter: Painter): Void {
+	override public function render(g: Graphics): Void {
 		if (image != null) {
-			painter.drawImage2(image, 0, height - gateHeight, width, gateHeight, x, y, width, gateHeight);
+			g.drawScaledSubImage(image, 0, height - gateHeight, width, gateHeight, x, y, width, gateHeight);
 		}
 	}
 }

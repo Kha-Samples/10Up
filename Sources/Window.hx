@@ -1,8 +1,8 @@
 package;
 
+import kha.graphics2.Graphics;
 import kha.Loader;
 import kha.math.Random;
-import kha.Painter;
 import kha.Scene;
 import kha.Sprite;
 
@@ -23,7 +23,7 @@ class Window extends Sprite {
 		}
 	}
 	
-	override public function render(painter: Painter): Void {
-		if (visible) super.render(painter);
+	override public function render(g: Graphics): Void {
+		if (visible) super.render(g);
 	}
 }

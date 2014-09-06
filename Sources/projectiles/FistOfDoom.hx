@@ -1,12 +1,13 @@
 package projectiles;
 
+import kha.Color;
+import kha.graphics2.Graphics;
 import kha.Image;
 import kha.Loader;
-import kha.Painter;
+import kha.math.Matrix3;
 import kha.Rectangle;
 import kha.Scene;
 import kha.Sprite;
-
 
 class FistOfDoom extends Projectile {
 	var owner: PlayerBullie;
@@ -103,12 +104,15 @@ class FistOfDoom extends Projectile {
 		super.update();
 	}
 	
-	override public function render(painter: Painter): Void {
+	override public function render(g: Graphics): Void {
+		g.pushTransformation(g.transformation * Matrix3.translation(x + originX, y + originY) * Matrix3.rotation(angle) * Matrix3.translation( -x - originX, -y - originY));
+		g.color = Color.White;
 		if (owner.lookRight) {
-			painter.drawImage2(image, 0, 0, width, height, (owner.x - owner.collider.x) + relx, (owner.y - owner.collider.y) + rely, width, height, rotation);
+			g.drawScaledSubImage(image, 0, 0, width, height, (owner.x - owner.collider.x) + relx, (owner.y - owner.collider.y) + rely, width, height);
 		} else {
-			painter.drawImage2(image, 0, 0, width, height, (owner.x - owner.collider.x) + owner.width - relx, (owner.y - owner.collider.y) + rely, -width, height, rotation);
+			g.drawScaledSubImage(image, 0, 0, width, height, (owner.x - owner.collider.x) + owner.width - relx, (owner.y - owner.collider.y) + rely, -width, height);
 		}
+		g.popTransformation();
 		/*var rect = collisionRect();
 		painter.setColor( kha.Color.fromBytes( 255, 0, 0) );
 		painter.drawRect( rect.x, rect.y, rect.width, rect.height );//*/

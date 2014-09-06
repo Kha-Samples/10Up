@@ -1,6 +1,6 @@
 package;
 
-import kha.Painter;
+import kha.graphics2.Graphics;
 import kha.Sprite;
 
 class Level {
@@ -82,12 +82,15 @@ class Level {
 		_anyKey = false;
 		return r;
 	}
+	
 	public function updateMissionBriefing(time: Float) : Bool { return true; }
+	
 	private var missionBriefingSprites : Array<Sprite>;
-	public function renderMissionBriefing(painter: Painter) : Void {
-		painter.translate(0, 0);
-		for ( sprite in missionBriefingSprites ) {
-			sprite.render(painter);
+
+	public function renderMissionBriefing(g: Graphics) : Void {
+		//**g.translate(0, 0);
+		for (sprite in missionBriefingSprites) {
+			sprite.render(g);
 		}
 	}
 	

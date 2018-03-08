@@ -1,18 +1,18 @@
 package;
 
-import kha.Direction;
-import kha.Loader;
+import kha.Assets;
+import kha2d.Direction;
 import kha.math.Random;
 import kha.math.Vector2;
 import kha.Rotation;
-import kha.Scene;
-import kha.Sprite;
+import kha2d.Scene;
+import kha2d.Sprite;
 
 class Glass extends Sprite {
 	private var left: Int;
 	
 	public function new(x: Float, y: Float) {
-		super(Loader.the.getImage("glass"), 6 * 2, 4 * 2);
+		super(Assets.images.glass, 6 * 2, 4 * 2);
 		this.x = x;
 		this.y = y;
 		angle = Random.getUpTo(6);

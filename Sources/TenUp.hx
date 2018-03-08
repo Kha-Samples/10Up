@@ -1,28 +1,24 @@
 package;
 
-import kha.Button;
+import kha.Assets;
 import kha.Color;
 import kha.Font;
 import kha.FontStyle;
 import kha.Framebuffer;
-import kha.Game;
 import kha.graphics2.Graphics;
-import kha.HighscoreList;
 import kha.Image;
-import kha.Key;
-import kha.Loader;
-import kha.LoadingScreen;
-import kha.math.Matrix3;
+import kha.input.Keyboard;
+import kha.input.KeyCode;
+import kha.input.Mouse;
+import kha.math.FastMatrix3;
 import kha.math.Random;
-import kha.Music;
 import kha.Scaler;
-import kha.Scene;
 import kha.Scheduler;
-import kha.Score;
-import kha.Configuration;
-import kha.Sprite;
-import kha.Tile;
-import kha.Tilemap;
+import kha.System;
+import kha2d.Scene;
+import kha2d.Sprite;
+import kha2d.Tile;
+import kha2d.Tilemap;
 import levels.Intro;
 import levels.Level1;
 import levels.Level2;
@@ -37,7 +33,10 @@ enum Mode {
 	Congratulations;
 }
 
-class TenUp extends Game {
+class TenUp {
+	public static inline var width = 1024;
+	public static inline var height = 768;
+	var scene: Scene;
 	public static var instance(default, null): TenUp;
 	private var backbuffer: Image;
 	//var music : Music;
@@ -47,6 +46,7 @@ class TenUp extends Game {
 	var highscoreName : String;
 	var shiftPressed : Bool;
 	private var font: Font;
+	private var fontSize: Int;
 	private var pauseAnimIndex: Int = 0;
 	public var level(default, null): Level;
 	
@@ -58,12 +58,12 @@ class TenUp extends Game {
 	public var mode(default, null) : Mode;
 	
 	public function new() {
-		super("10Up", false);
 		instance = this;
 		shiftPressed = false;
 		highscoreName = "";
 		mode = Mode.Loading;
 		minis = new Array<Image>();
+		System.init({width: 1024, height: 768, title: "10 Up"}, init);
 	}
 	
 	public static function getInstance(): TenUp {
@@ -78,67 +78,69 @@ class TenUp extends Game {
 		if (nextPlayer() && !level.checkVictory()) mode = Pause;
 	}
 	
-	public override function init(): Void {
+	function init(): Void {
 		backbuffer = Image.createRenderTarget(1024, 768);
-		Configuration.setScreen(new LoadingScreen());
-		Loader.the.loadRoom("start", initStart);
+		Assets.loadEverything(initStart);
 	}
 	
 	public function enterLevel(levelNumber: Int) : Void {
-		Configuration.setScreen( new LoadingScreen() );
 		switch (levelNumber) {
 		case 0:
 			level = new Intro();
-			Loader.the.loadRoom("start", initLevel.bind(0));
+			initLevel(0);
 		case 1:
 			level = new Level1();
-			Loader.the.loadRoom("level1", initLevel.bind(1));
+			initLevel(1);
 		case 2:
 			level = new Level2();
-			Loader.the.loadRoom("level1", initLevel.bind(2));
+			initLevel(2);
 		}
 	}
 	
 	public function initStart(): Void {
 		Random.init( Math.round( Scheduler.time() * 1000 ) );
-		var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
+		var logo = new Sprite( Assets.images._10up_logo );
 		logo.x = 0.5 * width - 0.5 * logo.width;
 		logo.y = 0.5 * height - 0.5 * logo.height;
+		scene = Scene.the;
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(0, 0, 0));
 		Scene.the.addHero( logo );
 		mode = StartScreen;
-		Configuration.setScreen(this);
-        //flash.Lib.current.stage.displayState = FULL_SCREEN;
+        System.notifyOnRender(render);
+		Scheduler.addTimeTask(update, 0, 1 / 60);
+		Keyboard.get().notify(buttonDown, buttonUp, null);
+		Mouse.get().notify(mouseDown, mouseUp, mouseMove, null);
 	}
 	
 	private function initLevel(levelNumber: Int): Void {
 		level.init();
-		font = Loader.the.loadFont("arial", new FontStyle(false, false, false), 34);
+		font = Assets.fonts.arial;
+		fontSize = 34;
 		minis = new Array();
-		minis.push(Loader.the.getImage("agentmini"));
-		minis.push(Loader.the.getImage("professormini"));
-		minis.push(Loader.the.getImage("rowdymini"));
-		minis.push(Loader.the.getImage("mechanicmini"));
+		minis.push(Assets.images.agentmini);
+		minis.push(Assets.images.professormini);
+		minis.push(Assets.images.rowdymini);
+		minis.push(Assets.images.mechanicmini);
 		tileColissions = new Array<Tile>();
 		for (i in 0...352) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
 		if ( levelNumber == 0 ) {
 			Scene.the.clear();
-			Configuration.setScreen(this);
 			currentGameTime = 0;
 			lastTime = Scheduler.time();
 			mode = MissionBriefing;
 		} else {
-			var blob = Loader.the.getBlob("level" + levelNumber);
-			var levelWidth: Int = blob.readS32BE();
-			var levelHeight: Int = blob.readS32BE();
+			var blob = Assets.blobs.get("level" + levelNumber);
+			var fileIndex = 0;
+			var levelWidth: Int = blob.readS32BE(fileIndex); fileIndex += 4;
+			var levelHeight: Int = blob.readS32BE(fileIndex); fileIndex += 4;
 			originalmap = new Array<Array<Int>>();
 			for (x in 0...levelWidth) {
 				originalmap.push(new Array<Int>());
 				for (y in 0...levelHeight) {
-					originalmap[x].push(blob.readS32BE());
+					originalmap[x].push(blob.readS32BE(fileIndex)); fileIndex += 4;
 				}
 			}
 			map = new Array<Array<Int>>();
@@ -148,12 +150,12 @@ class TenUp extends Game {
 					map[x].push(0);
 				}
 			}
-			var spriteCount = blob.readS32BE();
+			var spriteCount = blob.readS32BE(fileIndex); fileIndex += 4;
 			var sprites = new Array<Int>();
 			for (i in 0...spriteCount) {
-				sprites.push(blob.readS32BE());
-				sprites.push(blob.readS32BE());
-				sprites.push(blob.readS32BE());
+				sprites.push(blob.readS32BE(fileIndex)); fileIndex += 4;
+				sprites.push(blob.readS32BE(fileIndex)); fileIndex += 4;
+				sprites.push(blob.readS32BE(fileIndex)); fileIndex += 4;
 			}
 			//music = Loader.the.getMusic("level1");
 			startGame(spriteCount, sprites);
@@ -163,7 +165,7 @@ class TenUp extends Game {
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
 		Scene.the.clear();
 		Player.init();
-		var tilemap : Tilemap = new Tilemap("outside", 32, 32, map, tileColissions);
+		var tilemap : Tilemap = new Tilemap(Assets.images.outside, 32, 32, map, tileColissions);
 		Scene.the.setColissionMap(tilemap);
 		Scene.the.addBackgroundTilemap(tilemap, 1);
 		var TILE_WIDTH : Int = 32;
@@ -178,7 +180,7 @@ class TenUp extends Game {
 		}
 		
 		for (i in 0...spriteCount) {
-			var sprite : kha.Sprite;
+			var sprite : kha2d.Sprite;
 			switch (sprites[i * 3]) {
 			case 0:
 				sprite = new PlayerAgent(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2);
@@ -240,7 +242,6 @@ class TenUp extends Game {
 		//music.play();
 		Player.getPlayer(0).setCurrent();
 		//Player.getInstance().reset();
-		Configuration.setScreen(this);
 		currentGameTime = 0;
 		lastTime = Scheduler.time();
 		mode = MissionBriefing;
@@ -279,17 +280,18 @@ class TenUp extends Game {
 		}
 	}
 	
-	public override function update() {
+	function update() {
 		var currentTime = Scheduler.time();
 		if (mode == Game || mode == MissionBriefing) {
 			currentTimeDiff = currentTime - lastTime;
 			currentGameTime += currentTimeDiff;
 			if (mode == Game) {
 				Player.current().elapse( currentTimeDiff );
-				super.update();
+				scene.update();
 				Scene.the.camx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
 				level.update(currentGameTime);
-			} else {
+			}
+			else {
 				if (level.updateMissionBriefing(currentGameTime)) {
 					currentGameTime = 0;
 					mode = Pause;
@@ -297,9 +299,11 @@ class TenUp extends Game {
 				lastTime = currentTime;
 				return;
 			}
-		} else if (mode != Pause) {
-			super.update();
-		} else {
+		}
+		else if (mode != Pause) {
+			scene.update();
+		}
+		else {
 			pauseAnimIndex += 1;
 			
 			var aimx = Std.int(Player.current().x) + Std.int(Player.current().width / 2);
@@ -316,20 +320,20 @@ class TenUp extends Game {
 		lastTime = currentTime;
 	}
 	
-	public override function render(frame: Framebuffer) {
+	function render(frame: Framebuffer) {
 		//if (Player.getInstance() == null) return;
 		var g = backbuffer.g2;
 		g.begin();
 		switch (mode) {
 		case GameOver:
-			var congrat = Loader.the.getImage("gameover");
+			var congrat = Assets.images.gameover;
 			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
 		case Congratulations:
-			var congrat = Loader.the.getImage("congratulations");
+			var congrat = Assets.images.congratulations;
 			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
 		case Game, Pause:
 			scene.render(g);
-			g.transformation = Matrix3.identity();
+			g.transformation = FastMatrix3.identity();
 			//painter.setColor(Color.fromBytes(0, 0, 0));
 			//painter.drawString("Score: " + Std.string(Player.getInstance().getScore()), 20, 25);
 			//painter.drawString("Round: " + Std.string(Player.getInstance().getRound()), width - 100, 25);
@@ -340,7 +344,7 @@ class TenUp extends Game {
 			drawPlayerInfo(g, 3, 200, 700, Color.fromBytes(255, 255, 0));
 			
 			if (mode == Pause) {
-				var pauseImage = Loader.the.getImage("pause");
+				var pauseImage = Assets.images.pause;
 				g.drawScaledSubImage(pauseImage, 0, (Std.int(pauseAnimIndex / 12) % 5) * (pauseImage.height / 5), pauseImage.width, pauseImage.height / 5, width / 2 - pauseImage.width / 2, height / 4 - pauseImage.height / 5 / 2, pauseImage.width, pauseImage.height / 5);
 			}
 		case MissionBriefing:
@@ -352,7 +356,7 @@ class TenUp extends Game {
 		g.end();
 		
 		frame.g2.begin();
-		Scaler.scale(backbuffer, frame, kha.Sys.screenRotation);
+		Scaler.scale(backbuffer, frame, System.screenRotation);
 		frame.g2.end();
 	}
 	
@@ -389,27 +393,27 @@ class TenUp extends Game {
 		g.fillRect(x, y + 45, Player.getPlayer(index).timeLeft() * 4, 10);
 	}
 
-	override public function buttonDown(button : Button) : Void {
+	function buttonDown(button : KeyCode) : Void {
 		switch (mode) {
 		case Game:
 			switch (button) {
-			case UP:
+			case Up:
 				Player.current().setUp();
-			case LEFT:
+			case Left:
 				Player.current().left = true;
-			case RIGHT:
+			case Right:
 				Player.current().right = true;
-			case BUTTON_1:
+			case Control:
 				Player.current().prepareSpecialAbilityA(currentGameTime);
-			case BUTTON_2:
+			case Shift:
 				Player.current().prepareSpecialAbilityB(currentGameTime);
 			default:
 			}
 		case Pause:
 			switch (button) {
-				case LEFT:
+				case Left:
 					prevPlayer();
-				case RIGHT:
+				case Right:
 					nextPlayer();
 				default:
 			}
@@ -417,19 +421,19 @@ class TenUp extends Game {
 		}
 	}
 	
-	override public function buttonUp(button : Button) : Void {
+	function buttonUp(button : KeyCode) : Void {
 		switch (mode) {
 		case Game:
 			switch (button) {
-			case UP:
+			case Up:
 				Player.current().up = false;
-			case LEFT:
+			case Left:
 				Player.current().left = false;
-			case RIGHT:
+			case Right:
 				Player.current().right = false;
-			case BUTTON_1:
+			case Control:
 				Player.current().useSpecialAbilityA(currentGameTime);
-			case BUTTON_2:
+			case Shift:
 				Player.current().useSpecialAbilityB(currentGameTime);
 			default:
 			}
@@ -471,8 +475,8 @@ class TenUp extends Game {
 		return false;
 	}
 	
-	override public function keyDown(key : Key, char : String) : Void {
-		if (key == Key.SHIFT) shiftPressed = true;
+	function keyDown(key : KeyCode) : Void {
+		/*if (key == Key.SHIFT) shiftPressed = true;
 		
 		if ( mode == MissionBriefing ) {
 			return;
@@ -507,12 +511,12 @@ class TenUp extends Game {
 					mode = Game;
 				}
 			}
-		}
+		}*/
 	}
 	
-	override public function keyUp(key : Key, char : String) : Void {
+	function keyUp(key : KeyCode) : Void {
 		//if (key != null && key == Key.SHIFT) shiftPressed = false;
-		if (key == Key.SHIFT) shiftPressed = false;
+		/*if (key == Key.SHIFT) shiftPressed = false;
 		
 		if ( mode == MissionBriefing ) {
 			level.anyKey = true;
@@ -532,17 +536,23 @@ class TenUp extends Game {
 				case 's', 'S':
 					buttonUp(Button.DOWN);
 			}
-		}
+		}*/
 	}
 	
 	public var mouseX(default, null) : Float;
 	public var mouseY(default, null) : Float;
-	override public function mouseMove(x:Int, y:Int) : Void {
+	
+	function mouseMove(x: Int, y: Int, mx: Int, my: Int) : Void {
 		mouseX = x + Scene.the.screenOffsetX;
 		mouseY = y + Scene.the.screenOffsetY;
 	}
 	
-	override public function mouseDown(x: Int, y: Int): Void {
+	function mouseDown(button: Int, x: Int, y: Int): Void {
+		if (button == 1) {
+			rightMouseDown(x, y);
+			return;
+		}
+
 		if ( mode == MissionBriefing ) {
 			return;
 		}
@@ -564,7 +574,12 @@ class TenUp extends Game {
 	
 	private var mouseUpAction : Float->Void;
 	
-	override public function mouseUp(x: Int, y: Int): Void {
+	function mouseUp(button: Int, x: Int, y: Int): Void {
+		if (button == 1) {
+			rightMouseUp(x, y);
+			return;
+		}
+
 		if ( mode == MissionBriefing ) {
 			level.anyKey = true;
 			return;
@@ -583,7 +598,7 @@ class TenUp extends Game {
 		}
 	}
 	
-	override public function rightMouseDown(x: Int, y: Int): Void {
+	function rightMouseDown(x: Int, y: Int): Void {
 		if ( mode == MissionBriefing ) {
 			return;
 		}
@@ -597,7 +612,7 @@ class TenUp extends Game {
 		}
 	}
 	
-	override public function rightMouseUp(x: Int, y: Int): Void {
+	function rightMouseUp(x: Int, y: Int): Void {
 		if ( mode == MissionBriefing ) {
 			level.anyKey = true;
 			return;

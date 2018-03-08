@@ -1,8 +1,7 @@
 package levels;
 
-import kha.gui.TextItem;
-import kha.Loader;
-import kha.Scene;
+import kha.Assets;
+import kha2d.Scene;
 
 class Level1 extends Level {
 	public function new() {
@@ -62,33 +61,33 @@ class Level1 extends Level {
 			state++;
 			switch (state) {
 				case 1:
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing0") );
-					sprite.x = 0.5 * (TenUp.instance.width - sprite.width);
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing0 );
+					sprite.x = 0.5 * (TenUp.width - sprite.width);
 					sprite.y = 40;
 					missionBriefingSprites.push( sprite );
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing1") );
-					sprite.x = 0.5 * (TenUp.instance.width - sprite.width);
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing1 );
+					sprite.x = 0.5 * (TenUp.width - sprite.width);
 					sprite.y = 50;
 					missionBriefingSprites.push( sprite );
 				case 2:
 					missionBriefingSprites = new Array();
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing0") );
-					sprite.x = 0.5 * (TenUp.instance.width - sprite.width);
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing0 );
+					sprite.x = 0.5 * (TenUp.width - sprite.width);
 					sprite.y = 40;
 					missionBriefingSprites.push( sprite );
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing2") );
-					sprite.x = 0.5 * (TenUp.instance.width - sprite.width);
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing2 );
+					sprite.x = 0.5 * (TenUp.width - sprite.width);
 					sprite.y = 50;
 					missionBriefingSprites.push( sprite );
 					// TODO: play SOUND!!!
 				case 3:
 					missionBriefingSprites = new Array();
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing0") );
-					sprite.x = 0.5 * (TenUp.instance.width - sprite.width);
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing0 );
+					sprite.x = 0.5 * (TenUp.width - sprite.width);
 					sprite.y = 40;
 					missionBriefingSprites.push( sprite );
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing3") );
-					sprite.x = 0.5 * (TenUp.instance.width - sprite.width);
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing3 );
+					sprite.x = 0.5 * (TenUp.width - sprite.width);
 					sprite.y = 50;
 					missionBriefingSprites.push( sprite );
 				default:

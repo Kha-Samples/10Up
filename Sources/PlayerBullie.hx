@@ -1,9 +1,9 @@
 package;
 
-import kha.Animation;
-import kha.Rectangle;
-import kha.Scene;
-import kha.Sprite;
+import kha2d.Animation;
+import kha2d.Rectangle;
+import kha2d.Scene;
+import kha2d.Sprite;
 import projectiles.FistOfDoom;
 
 class PlayerBullie extends Player {

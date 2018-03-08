@@ -1,7 +1,7 @@
 package;
 
-import kha.Animation;
-import kha.Rectangle;
+import kha2d.Animation;
+import kha2d.Rectangle;
 
 class PlayerBlondie extends Player {
 	private var danceAnimation: Animation;

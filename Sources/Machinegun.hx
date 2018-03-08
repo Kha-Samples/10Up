@@ -1,17 +1,18 @@
 package;
 
-import kha.Loader;
+import kha.audio1.Audio;
+import kha.Assets;
 import kha.Sound;
-import kha.Sprite;
+import kha2d.Sprite;
 
 class Machinegun extends Sprite {
 	private var sound: Sound;
 	
 	public function new(x: Float, y: Float) {
-		super(Loader.the.getImage("machinegun"), 42 * 2, 41 * 2);
+		super(Assets.images.machinegun, 42 * 2, 41 * 2);
 		this.x = x;
 		this.y = y;
-		sound = Loader.the.getSound("machineshot");
+		sound = Assets.sounds.machineshot;
 	}
 	
 	override public function update(): Void {
@@ -33,7 +34,7 @@ class Machinegun extends Sprite {
 		}
 		if (player != null) {
 			player.health -= 1;
-			sound.play();
+			Audio.play(sound);
 		}
 	}
 }

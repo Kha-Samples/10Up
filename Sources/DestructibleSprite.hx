@@ -1,7 +1,7 @@
-package ;
+package;
 
 import kha.Image;
-import kha.Sprite;
+import kha2d.Sprite;
 import projectiles.Projectile;
 
 

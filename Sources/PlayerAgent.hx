@@ -1,11 +1,11 @@
 package;
 
-import kha.Animation;
+import kha2d.Animation;
 import kha.Color;
 import kha.graphics2.Graphics;
 import kha.math.Vector2;
-import kha.Rectangle;
-import kha.Scene;
+import kha2d.Rectangle;
+import kha2d.Scene;
 import projectiles.PistolProjectile;
 
 class PlayerAgent extends Player {

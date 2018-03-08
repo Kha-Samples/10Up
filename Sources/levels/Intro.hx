@@ -1,9 +1,8 @@
 package levels;
 
-import kha.gui.TextItem;
-import kha.Loader;
-import kha.Scene;
-import kha.Sprite;
+import kha.Assets;
+import kha2d.Scene;
+import kha2d.Sprite;
 
 class Intro extends Level {
 	public function new() {
@@ -19,38 +18,38 @@ class Intro extends Level {
 			state++;
 			switch (state) {
 				case 1:
-					var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
+					var logo = new Sprite( Assets.images._10up_logo );
 					logo.x = 50;
-					logo.y = 0.5 * TenUp.instance.height - 0.5 * logo.height;
+					logo.y = 0.5 * TenUp.height - 0.5 * logo.height;
 					missionBriefingSprites.push( logo );
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing0") );
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing0 );
 					sprite.x = logo.x + logo.width + 40;
-					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
+					sprite.y = 0.5 * TenUp.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
-					var sprite = new kha.Sprite( Loader.the.getImage("introtext1") );
+					var sprite = new kha2d.Sprite( Assets.images.introtext1 );
 					sprite.x = logo.x + logo.width + 50;
-					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
+					sprite.y = 0.5 * TenUp.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 				case 2:
 					missionBriefingSprites = new Array();
-					var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
+					var logo = new Sprite( Assets.images._10up_logo );
 					logo.x = 50;
-					logo.y = 0.5 * TenUp.instance.height - 0.5 * logo.height;
+					logo.y = 0.5 * TenUp.height - 0.5 * logo.height;
 					missionBriefingSprites.push( logo );
-					var sprite = new kha.Sprite( Loader.the.getImage("level1briefing0") );
+					var sprite = new kha2d.Sprite( Assets.images.level1briefing0 );
 					sprite.x = logo.x + logo.width + 40;
-					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
+					sprite.y = 0.5 * TenUp.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
 					missionBriefingSprites.push( sprite );
-					var sprite = new kha.Sprite( Loader.the.getImage("introtext2") );
+					var sprite = new kha2d.Sprite( Assets.images.introtext2 );
 					sprite.x = logo.x + logo.width + 50;
-					sprite.y = 0.5 * TenUp.instance.height - 0.5 * sprite.height;
+					sprite.y = 0.5 * TenUp.height - 0.5 * sprite.height;
 					missionBriefingSprites.push( sprite );
 					// TODO: play SOUND!!!
 				default:

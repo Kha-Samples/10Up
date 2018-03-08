@@ -1,14 +1,14 @@
 package ;
 
-import kha.Animation;
-import kha.Direction;
+import kha2d.Animation;
+import kha2d.Direction;
 import kha.graphics2.Graphics;
 import kha.Image;
 import kha.math.Vector2;
-import kha.Rectangle;
+import kha2d.Rectangle;
 import kha.Rotation;
-import kha.Scene;
-import kha.Sprite;
+import kha2d.Scene;
+import kha2d.Sprite;
 
 @:access(kha.Animation) 
 @:access(kha.Sprite)
@@ -36,16 +36,16 @@ class TimedSpriteInfo {
 	public function new( time : Float, source : TimeTravelSprite ) {
 		this.time = time;
 		
-		if ( source.animation != null ) {
+		if ( @:privateAccess source.animation != null ) {
 			animation = new Animation( [], 0 );
-			animation.count = source.animation.count;
-			animation.index = source.animation.index;
-			animation.indices = source.animation.indices;
-			animation.speeddiv = source.animation.speeddiv;
+			@:privateAccess animation.count = source.animation.count;
+			@:privateAccess animation.index = source.animation.index;
+			@:privateAccess animation.indices = source.animation.indices;
+			@:privateAccess animation.speeddiv = source.animation.speeddiv;
 		}
 		
-		if ( source.collider != null ) {
-			collider = new Rectangle( source.collider.x, source.collider.y, source.collider.width, source.collider.height );
+		if ( @:privateAccess source.collider != null ) {
+			collider = new Rectangle( @:privateAccess source.collider.x, @:privateAccess source.collider.y, @:privateAccess source.collider.width, @:privateAccess source.collider.height );
 		}
 		
 		//if ( source.rotation != null ) {
@@ -65,13 +65,13 @@ class TimedSpriteInfo {
 		z = source.z;
 		
 		customFields = new Map<String,Dynamic>();
-		source.saveCustomFieldsForTimeLeap( customFields );
+		@:privateAccess source.saveCustomFieldsForTimeLeap( customFields );
 	}
 	
 	public function apply(dest : TimeTravelSprite) : Void {
-		dest.animation = animation;
+		@:privateAccess dest.animation = animation;
 		
-		dest.collider = collider;
+		@:privateAccess dest.collider = collider;
 		dest.angle = rotation.angle;
 		dest.originX = rotation.center.x;
 		dest.originY = rotation.center.y;
@@ -88,7 +88,7 @@ class TimedSpriteInfo {
 		dest.collides = collides;
 		dest.z = z;
 		
-		dest.restoreCustomFieldsFromTimeLeap( customFields );
+		@:privateAccess dest.restoreCustomFieldsFromTimeLeap( customFields );
 	}
 }
 

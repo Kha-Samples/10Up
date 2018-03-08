@@ -1,13 +1,11 @@
 package;
 
-import kha.Loader;
-import kha.math.Vector2;
-import kha.Rotation;
-import kha.Sprite;
+import kha.Assets;
+import kha2d.Sprite;
 
 class Gatter extends Sprite {
 	public function new(x: Float, y: Float) {
-		super(Loader.the.getImage("gatter"), 32 * 2, 6 * 2);
+		super(Assets.images.gatter, 32 * 2, 6 * 2);
 		this.x = x;
 		this.y = y;
 		accy = 0;

@@ -1,12 +1,11 @@
 package;
 
-import kha.Animation;
+import kha2d.Animation;
 import kha.Color;
 import kha.graphics2.Graphics;
-import kha.Loader;
 import kha.math.Vector2;
-import kha.Rectangle;
-import kha.Scene;
+import kha2d.Rectangle;
+import kha2d.Scene;
 import projectiles.TimeProjectile;
 
 class PlayerProfessor extends Player {
@@ -46,16 +45,16 @@ class PlayerProfessor extends Player {
 		timecannon.angle = Math.atan2(crosshair.y, crosshair.x);
 		if (lookRight) {
 			timecannon.x += 15;
-			if (timecannon.animation.indices != timecannon.rightAnim.indices) {
-				timecannon.animation.indices = timecannon.rightAnim.indices;
+			if (@:privateAccess timecannon.animation.indices != @:privateAccess timecannon.rightAnim.indices) {
+				@:privateAccess timecannon.animation.indices = @:privateAccess timecannon.rightAnim.indices;
 				timecannon.originX = timecannon.width - timecannon.originX;
 			}
 		}
 		else {
 			timecannon.x -= 15;
 			timecannon.angle = timecannon.angle + Math.PI;
-			if (timecannon.animation.indices != timecannon.leftAnim.indices) {
-				timecannon.animation.indices = timecannon.leftAnim.indices;
+			if (@:privateAccess timecannon.animation.indices != @:privateAccess timecannon.leftAnim.indices) {
+				@:privateAccess timecannon.animation.indices = @:privateAccess timecannon.leftAnim.indices;
 				timecannon.originX = timecannon.width - timecannon.originX;
 			}
 		}

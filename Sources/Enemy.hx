@@ -1,15 +1,16 @@
 package;
 
-import kha.Animation;
+import kha.Assets;
+import kha.audio1.Audio;
+import kha2d.Animation;
 import kha.graphics2.Graphics;
 import kha.Image;
-import kha.Loader;
 import kha.math.Random;
 import kha.math.Vector2;
-import kha.Rectangle;
+import kha2d.Rectangle;
 import kha.Rotation;
 import kha.Sound;
-import kha.Sprite;
+import kha2d.Sprite;
 import projectiles.PistolProjectile;
 
 class Enemy extends DestructibleSprite {
@@ -26,7 +27,7 @@ class Enemy extends DestructibleSprite {
 	private var hitSound: Sound;
 	
 	public function new(x: Float, y: Float) {
-		super(50, Loader.the.getImage("soldier"), Std.int(410 / 10) * 2, Std.int(455 / 7) * 2);
+		super(50, Assets.images.soldier, Std.int(410 / 10) * 2, Std.int(455 / 7) * 2);
 		killed = false;
 		this.x = x;
 		this.y = y;
@@ -36,7 +37,7 @@ class Enemy extends DestructibleSprite {
 		standRight = Animation.create(0);
 		setAnimation(walkRight);
 		speedx = 0;
-		hitSound = Loader.the.getSound("hit");
+		hitSound = Assets.sounds.hit;
 		distances = new Array<Float>();
 		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
 		watchRect = new Rectangle(x, y - 75, 300, 150);
@@ -45,21 +46,21 @@ class Enemy extends DestructibleSprite {
 	override private function set_health(value:Int):Int {
 		if ( value <= 0 ) {
 			if ( value < _health ) {
-				hitSound.play();
-				for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addProjectile(new Blood(x + 20, y + 20));
+				Audio.play(hitSound);
+				for (i in 0...Math.ceil(0.3 * (_health - value))) kha2d.Scene.the.addProjectile(new Blood(x + 20, y + 20));
 			}
 			if (!killed) {
 				kill();
 			}
 		} else if ( value < _health ) {
-			for (i in 0...Math.ceil(0.3 * (_health - value))) kha.Scene.the.addProjectile(new Blood(x + 20, y + 20));
-			hitSound.play();
+			for (i in 0...Math.ceil(0.3 * (_health - value))) kha2d.Scene.the.addProjectile(new Blood(x + 20, y + 20));
+			Audio.play(hitSound);
 		}
 		return super.set_health(value);
 	}
 
 	public function kill() {
-		hitSound.play();
+		Audio.play(hitSound);
 		killed = true;
 		setAnimation(Animation.create(0));
 		speedx = 0;
@@ -92,7 +93,7 @@ class Enemy extends DestructibleSprite {
 			projectile.speedx *= 0.7;
 			projectile.speedy *= 0.7;
 			projectile.creatureDamage = Math.round(projectile.creatureDamage * 0.5);
-			kha.Scene.the.addProjectile(projectile);
+			kha2d.Scene.the.addProjectile(projectile);
 			nextShootTime = TenUp.getInstance().currentGameTime + 1 + Random.getUpTo(2) + Random.getUpTo(2);
 		}
 	}

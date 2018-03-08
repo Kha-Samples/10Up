@@ -367,6 +367,7 @@ class TenUp {
 			g.color = Color.White;
 			
 			g.font = font;
+			g.fontSize = fontSize;
 			//painter.fillRect(0, y - 30, 1024, 5);
 			g.drawString("Left Mouse", 600, y - 25);
 			//painter.fillRect(0, y + 20, 1024, 5);
@@ -395,19 +396,32 @@ class TenUp {
 	}
 
 	function buttonDown(button : KeyCode) : Void {
+		if ( mode == MissionBriefing ) {
+			return;
+		}
+
 		switch (mode) {
 		case Game:
 			switch (button) {
-			case Up:
+			case Up, W:
 				Player.current().setUp();
-			case Left:
+			case Left, A:
 				Player.current().left = true;
-			case Right:
+			case Right, D:
 				Player.current().right = true;
 			case Control:
 				Player.current().prepareSpecialAbilityA(currentGameTime);
 			case Shift:
 				Player.current().prepareSpecialAbilityB(currentGameTime);
+			case Space:
+				mode = Pause;
+				if (mouseUpAction != null) {
+					mouseUpAction(currentGameTime);
+					mouseUpAction = null;
+				}
+				Player.current().right = false;
+				Player.current().left = false;
+				Player.current().up = false;
 			default:
 			}
 		case Pause:
@@ -416,6 +430,8 @@ class TenUp {
 					prevPlayer();
 				case Right:
 					nextPlayer();
+				case Space:
+					mode = Game;
 				default:
 			}
 		default:
@@ -423,14 +439,24 @@ class TenUp {
 	}
 	
 	function buttonUp(button : KeyCode) : Void {
+		if ( mode == MissionBriefing ) {
+			level.anyKey = true;
+			return;
+		}
+
+		if (mode == StartScreen) {
+			enterLevel(0);
+			return;
+		}
+
 		switch (mode) {
 		case Game:
 			switch (button) {
-			case Up:
+			case Up, W:
 				Player.current().up = false;
-			case Left:
+			case Left, A:
 				Player.current().left = false;
-			case Right:
+			case Right, D:
 				Player.current().right = false;
 			case Control:
 				Player.current().useSpecialAbilityA(currentGameTime);
@@ -475,71 +501,7 @@ class TenUp {
 		}
 		return false;
 	}
-	
-	function keyDown(key : KeyCode) : Void {
-		/*if (key == Key.SHIFT) shiftPressed = true;
 		
-		if ( mode == MissionBriefing ) {
-			return;
-		}
-		
-		if (key == Key.CHAR) {
-			switch (char) {
-				case 'a', 'A':
-					buttonDown(Button.LEFT);
-				case 'd', 'D':
-					buttonDown(Button.RIGHT);
-				case 'w', 'W':
-					buttonDown(Button.UP);
-				case 's', 'S':
-					buttonDown(Button.DOWN);
-			}
-			
-			if (mode == Mode.Game) {
-				if (char == " ") {
-					mode = Pause;
-					if (mouseUpAction != null) {
-						mouseUpAction(currentGameTime);
-						mouseUpAction = null;
-					}
-					Player.current().right = false;
-					Player.current().left = false;
-					Player.current().up = false;
-				}
-			}
-			else if (mode == Mode.Pause) {
-				if (char == " ") {
-					mode = Game;
-				}
-			}
-		}*/
-	}
-	
-	function keyUp(key : KeyCode) : Void {
-		//if (key != null && key == Key.SHIFT) shiftPressed = false;
-		/*if (key == Key.SHIFT) shiftPressed = false;
-		
-		if ( mode == MissionBriefing ) {
-			level.anyKey = true;
-			return;
-		}
-		
-		if (mode == StartScreen) {
-			enterLevel(0);
-		} else {
-			switch (char) {
-				case 'a', 'A':
-					buttonUp(Button.LEFT);
-				case 'd', 'D':
-					buttonUp(Button.RIGHT);
-				case 'w', 'W':
-					buttonUp(Button.UP);
-				case 's', 'S':
-					buttonUp(Button.DOWN);
-			}
-		}*/
-	}
-	
 	public var mouseX(default, null) : Float;
 	public var mouseY(default, null) : Float;
 	

@@ -63,7 +63,7 @@ class TenUp {
 		highscoreName = "";
 		mode = Mode.Loading;
 		minis = new Array<Image>();
-		System.init({width: 1024, height: 768, title: "10 Up"}, init);
+		System.init({width: width, height: height, title: "10 Up"}, init);
 	}
 	
 	public static function getInstance(): TenUp {
@@ -79,7 +79,7 @@ class TenUp {
 	}
 	
 	function init(): Void {
-		backbuffer = Image.createRenderTarget(1024, 768);
+		backbuffer = Image.createRenderTarget(width, height);
 		Assets.loadEverything(initStart);
 	}
 	
@@ -104,6 +104,7 @@ class TenUp {
 		logo.y = 0.5 * height - 0.5 * logo.height;
 		scene = Scene.the;
 		Scene.the.clear();
+		Scene.the.setSize(width, height);
 		Scene.the.setBackgroundColor(Color.fromBytes(0, 0, 0));
 		Scene.the.addHero( logo );
 		mode = StartScreen;

@@ -426,9 +426,9 @@ class TenUp {
 			}
 		case Pause:
 			switch (button) {
-				case Left:
+				case Left, A:
 					prevPlayer();
-				case Right:
+				case Right, D:
 					nextPlayer();
 				case Space:
 					mode = Game;
